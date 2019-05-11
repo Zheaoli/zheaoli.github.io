@@ -1,0 +1,81 @@
+# Menus
+menu:
+  主页: .
+  文章: archives
+  分类: categories
+  标签: tags
+  订阅: /atom.xml
+  关于我: about
+
+
+# Customize
+customize:
+    logo:
+        enabled: true
+        width: 40
+        height: 40
+        url: images/logo.png
+    profile:
+        enabled: true # Whether to show profile bar
+        avatar: css/images/avatar.png
+        gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
+        author: Manjusaka
+        author_title: Stay simple && Stay Naive
+        location: Beijing, China
+        follow: https://github.com/Zheaoli/
+    highlight: monokai
+    sidebar: right # sidebar position, options: left, right
+    thumbnail: true # enable posts thumbnail, options: true, false
+    favicon: # path to favicon
+    social_links:
+        github: https://github.com/Zheaoli/
+        rss: /atom.xml
+    social_link_tooltip: true # enable the social link tooltip, options: true, false
+
+# Widgets
+widgets:
+    - recent_posts
+    - category
+    - archive
+    - tag
+    - tagcloud
+    - links
+
+# Search
+search:
+    insight: true # you need to install `hexo-generator-json-content` before using Insight Search
+    swiftype: # enter swiftype install key here
+    baidu: false # you need to disable other search engines to use Baidu search, options: true, false
+
+# Comment
+
+comment:
+    disqus: manjusakablog # enter duoshuo shortname here
+
+# Share
+share: default # options: jiathis, bdshare, addtoany, default
+
+# Plugins
+plugins:
+    lightgallery: true # options: true, false
+    justifiedgallery: true # options: true, false
+    baidu_analytics: 56ca085ae4b8a4667f041cdd04856321 # enter Baidu Analytics hash key
+    
+# Miscellaneous
+miscellaneous:
+
+    links:
+        全国最好的问答社区: https://www.lundao.com/
+        Hexo: http://hexo.io
+        写代码的猴子: http://jaeger.itscoder.com
+        小天: http://brucezz.itscoder.com
+        用语: http://yongyu.itscoder.com
+        showzeng: http://showzeng.itscoder.com
+        extremej: http://extremej.itscoder.com
+        melodyxxx: http://melodyxxx.itscoder.com
+        melo: http://melo.itscoder.com
+        hymane: http://hymane.itscoder.com
+        imxie: http://imxie.itscoder.com
+        Jing's Blog: http://www.iamlj.com
+        laike9m's Blog: https://laike9m.com/
+        

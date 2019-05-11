@@ -1,0 +1,8 @@
+.deploy_git
+.idea
+.vscode
+config/
+node_modules/
+scaffolds/
+themes/
+public/
