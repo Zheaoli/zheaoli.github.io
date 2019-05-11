@@ -1,0 +1,24 @@
+env:
+  global:
+    - GH_REF: github.com/Zheaoli/zheaoli.github.io.git
+    - secure: "dJ33pGI0JefAJdrsC+9eVerSU8try/tTnEv9eLiNsbt8wuyf7rNKX3H/HU1P0+U/6gQ9Y+yFHj6t9kKKQ4oMatA9JTviyV8NCjCJcA7dyjbZTEM8W5khkXORz840mGYxXRI1KrhOvBUE5bGtV7vm7dwvt2/mOYpEUpv9LH9PkYQ9BRFTFn53YApvNuV9ff5DHuYd12ZeD1tTZn37Oiz0k4RaFZvGab79LiMpBSRONTN1Sq13rEpzxaegYPTTNZnjo9m5fiX4wWbgPb4AuUQReIPoKbtEk+njgk+MciVr+teiZc6AtvKfBtm9xHKDJNSFVlC1XpY6c7QiwCbxF0KSAObypRRftmJJOnM/tCTEYjnhvkIpGV/+1gK1fNFKQjPIzED/XskFbPfnf36VHE9qcEnvXoVqXul17jkjcyLw1lY4Ch9Gu69JfuDz6X0F4KLe2cvru6GgXFhuBUcYWuQ3xrMb1O8zIJ2zEc0NHYxDYrtKFJnpnmgl0z6G1/UAhS4929J6P2cMUQS1doaNJi+/EYgGteBSgEhwd6f0EjDnX1TL9wZHH3HtBmUHgP3bCxMTIpfmo9Cl9sre+XOabtn/8WCFvfWW8ylm1yawUUiJasV3AceYx6UdweLaOL52Qx7aivo0+wfVw4tuRHTTR58F2LVnVxiaHyuqlK6vIxwHx40="
+language: node_js
+
+node_js:
+  - 10
+
+install:
+  - npm install -g hexo-cli
+  - npm install
+
+script:
+  - hexo g
+
+after_script:
+  - cd public
+  - git init
+  - git config user.name "manjusaka"
+  - git config user.email "me@manjusaka.me"
+  - git add -A
+  - git commit -m "Update docs"
+  - git push -f "https://${GH_TOKEN}@${GH_REF}" master:master
