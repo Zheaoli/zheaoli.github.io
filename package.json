@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "3.9.0"
   },
   "dependencies": {
     "async": "^2.0.0",
+    "core-js": "^3.2.1",
     "dtrace-provider": "^0.8.5",
-    "hexo": "^3.3.5",
+    "hexo": "^3.9.0",
     "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
     "hexo-deployer-git": "^0.2.0",
     "hexo-generator-archive": "^0.1.4",
