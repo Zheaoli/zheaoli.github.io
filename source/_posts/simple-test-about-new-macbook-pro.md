@@ -125,7 +125,7 @@ categories: [生活,电子产品]
 
 啊对了，其实有朋友可能会关心，64G 的内存是否浪费，嗯，我看了下，其实对我而言，不算浪费
 
-![image](https://user-images.githubusercontent.com/7054676/69559599-33404980-0fe5-11ea-908b-c50492568bfb.png)
+![image](https://user-images.githubusercontent.com/7054676/69617885-e35c9380-1073-11ea-91ec-05b2b0ab424f.png)
 
 这是我写这篇文章时候的内存使用率，机器上开了三个 IDEA 项目，两个 Goland 项目，一个 PyCharm 项目，浏览器窗口若干，VSCode 窗口若干，用 Docker 跑了三个 ElasticSearch 节点做 HA 测试，一个 Kibana 节点，如果后续在开
 几个虚拟机，可能 64G 对我来说就是非常适合的了。不过每个人的场景不一样，这里我也就不对大家的选机做一个建议了（不然选错了可能就要被打QAQ）
