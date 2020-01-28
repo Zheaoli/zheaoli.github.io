@@ -279,7 +279,7 @@ select * from user where name='\'abc\';drop table user'
 
 缺点也有不少
 
-1. `Prepared Statement` 的二进制协议存在客户端兼容的问题，有些语言的客户端不一定会对 `Prepared Statement ` 提供二进制的协议支持
+1. `Prepared Statement` 的二进制协议存在客户端兼容的问题，有些语言的客户端不一定会对 `Prepared Statement` 提供二进制的协议支持
 2. 因为存在两次与数据库的通信，在密集进行 SQL 查询的情况下，可能会出现 I/O 瓶颈
 
 所以具体还是要根据场景来做 Trade-off 了
