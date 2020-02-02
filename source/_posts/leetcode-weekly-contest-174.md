@@ -158,7 +158,7 @@ class Solution:
 BTW 这段代码的 type hint 使用其实有点问题，我后面比赛完了改了一版
 
 ```python
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 
 
 class TreeNode:
@@ -198,7 +198,7 @@ class Solution:
     def maxProduct(self, root: TreeNode) -> int:
         total_sum,new_root = self.sum_node(root)
         result = 0
-        stack = []
+        stack:List[TreeNodeWithSum] = []
         node = new_root
         while node or stack:
             while node:
@@ -226,6 +226,7 @@ class Solution:
                 root.val, new_left_node, new_right_node, left_sum, right_sum
             ),
         )
+
 ```
 
 BTW，这道题因为数据太大，需要对 10^9+7 取模，我智障的忘了取模，WA 了两次，罚时罚哭。。。我真的太菜了。。
