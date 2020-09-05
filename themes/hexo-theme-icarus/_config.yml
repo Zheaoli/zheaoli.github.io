@@ -158,6 +158,9 @@ widgets:
         # Links to be shown in the links widget
         links:
             捕蛇者说: https://pythonhunter.org/
+            laike9m's Blog: https://laike9m.com/
+            Adam Wen's Blog: https://darkof.me/
+            卡瓦邦噶: https://www.kawabangga.com/
             写代码的猴子: http://jaeger.itscoder.com
             小天: http://brucezz.itscoder.com
             用语: http://yongyu.itscoder.com
@@ -168,9 +171,7 @@ widgets:
             hymane: http://hymane.itscoder.com
             imxie: http://imxie.itscoder.com
             Jing's Blog: http://www.iamlj.com
-            laike9m's Blog: https://laike9m.com/
-            Adam Wen's Blog: https://darkof.me/
-            卡瓦邦噶: https://www.kawabangga.com/
+            夏溪辰: https://xiaxichen.com
     -
         # Widget name
         type: category
