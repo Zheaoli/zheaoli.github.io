@@ -26,7 +26,7 @@ In [35]: %timeit 1073741823<<1
 
 In [37]: %timeit 1073741823*2                                                                                                                                                                                                                                                                           
 7.47 ns ± 0.0564 ns per loop (mean ± std. dev. of 7 runs, 100000000 loops each)
-``` 
+```
 
 我们发现几个很有趣的现象
 
