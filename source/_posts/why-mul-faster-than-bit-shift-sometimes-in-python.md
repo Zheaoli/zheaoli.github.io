@@ -1,5 +1,5 @@
 ---
-title: 简单聊聊进程中的信号处理
+title: 为什么有些时候 Python 中乘法比位运算更快
 type: tags
 date: 2020-11-06 22:09:00
 tags: [编程,Python,随笔]
