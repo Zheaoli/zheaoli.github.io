@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>详解Swift的类型检查器 - Manjusaka</title><meta description="原文链接: Exponential time complexity in the Swift type checker    原文作者: Matt Gallagher 译文出自: 掘金翻译计划 译者: Zheaoli 校对者: geeeeeeeeek, Graning  这篇文章将围绕曾不断使我重写代码的一些 Swift 编译器的报错信息展开：  错误：你的表达式太过于复杂，请将其分解为一些更"><meta property="og:type" content="blog"><meta property="og:title" content="详解Swift的类型检查器"><meta property="og:url" content="http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/"><meta property="og:site_name" content="Manjusaka"><meta property="og:description" content="原文链接: Exponential time complexity in the Swift type checker    原文作者: Matt Gallagher 译文出自: 掘金翻译计划 译者: Zheaoli 校对者: geeeeeeeeek, Graning  这篇文章将围绕曾不断使我重写代码的一些 Swift 编译器的报错信息展开：  错误：你的表达式太过于复杂，请将其分解为一些更"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/images/swift.jpg"><meta property="article:published_time" content="2016-08-02T16:22:50.000Z"><meta property="article:modified_time" content="2020-11-14T15:36:03.132Z"><meta property="article:author" content="Manjusaka"><meta property="article:tag" content="iOS"><meta property="article:tag" content="编程"><meta property="article:tag" content="Swift"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="images/swift.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/"},"headline":"Manjusaka","image":["http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/images/swift.jpg"],"datePublished":"2016-08-02T16:22:50.000Z","dateModified":"2020-11-14T15:36:03.132Z","author":{"@type":"Person","name":"Manjusaka"},"description":"原文链接: Exponential time complexity in the Swift type checker    原文作者: Matt Gallagher 译文出自: 掘金翻译计划 译者: Zheaoli 校对者: geeeeeeeeek, Graning  这篇文章将围绕曾不断使我重写代码的一些 Swift 编译器的报错信息展开：  错误：你的表达式太过于复杂，请将其分解为一些更"}</script><link rel="canonical" href="http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/"><link rel="icon" href="https://user-images.githubusercontent.com/7054676/56820343-2fe1b580-687e-11e9-8f6f-778df3a8eafd.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>详解Swift的类型检查器 - Manjusaka</title><meta description="原文链接: Exponential time complexity in the Swift type checker    原文作者: Matt Gallagher 译文出自: 掘金翻译计划 译者: Zheaoli 校对者: geeeeeeeeek, Graning  这篇文章将围绕曾不断使我重写代码的一些 Swift 编译器的报错信息展开：  错误：你的表达式太过于复杂，请将其分解为一些更"><meta property="og:type" content="blog"><meta property="og:title" content="详解Swift的类型检查器"><meta property="og:url" content="http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/"><meta property="og:site_name" content="Manjusaka"><meta property="og:description" content="原文链接: Exponential time complexity in the Swift type checker    原文作者: Matt Gallagher 译文出自: 掘金翻译计划 译者: Zheaoli 校对者: geeeeeeeeek, Graning  这篇文章将围绕曾不断使我重写代码的一些 Swift 编译器的报错信息展开：  错误：你的表达式太过于复杂，请将其分解为一些更"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/images/swift.jpg"><meta property="article:published_time" content="2016-08-02T16:22:50.000Z"><meta property="article:modified_time" content="2020-11-14T16:17:50.984Z"><meta property="article:author" content="Manjusaka"><meta property="article:tag" content="iOS"><meta property="article:tag" content="编程"><meta property="article:tag" content="Swift"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="images/swift.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/"},"headline":"Manjusaka","image":["http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/images/swift.jpg"],"datePublished":"2016-08-02T16:22:50.000Z","dateModified":"2020-11-14T16:17:50.984Z","author":{"@type":"Person","name":"Manjusaka"},"description":"原文链接: Exponential time complexity in the Swift type checker    原文作者: Matt Gallagher 译文出自: 掘金翻译计划 译者: Zheaoli 校对者: geeeeeeeeek, Graning  这篇文章将围绕曾不断使我重写代码的一些 Swift 编译器的报错信息展开：  错误：你的表达式太过于复杂，请将其分解为一些更"}</script><link rel="canonical" href="http://manjusaka.itscoder.com/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/"><link rel="icon" href="https://user-images.githubusercontent.com/7054676/56820343-2fe1b580-687e-11e9-8f6f-778df3a8eafd.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
             hm.src = "//hm.baidu.com/hm.js?56ca085ae4b8a4667f041cdd04856321";
@@ -63,10 +63,10 @@
 <p>当调用 <code>%%1</code> 时，将会使用 <code>(Float) -&gt; Float</code> 的实现，同时会将 <code>y</code> 作为 <code>Float</code> 类型处理，这和我们所期望的恰恰相反。在编译过程中，编译器选择将 <code>1</code> 作为 <code>Float</code> 处理，而不是作为 <code>Int</code> 处理，虽然作为 <code>Int</code> 处理也同样能正常工作。造成这样情况的原因是，编译器在对方法的进行泛型重载之前就已经先行确定变量的类型。这不是基于前后文一致性的做法，这是编译器对于避免类似于 <code>expression was too complex to be solved</code> 等报错信息以及性能优化上的一种妥协。</p>
 <h2 id="在代码中解决上诉问题"><a href="#在代码中解决上诉问题" class="headerlink" title="在代码中解决上诉问题"></a><a target="_blank" rel="noopener" href="http://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html#working-around-the-problem-in-our-code"></a>在代码中解决上诉问题</h2><p>通常来讲，<strong>Swift</strong> 里的显示代码太过复杂的缺陷并不是一个太大的问题，当然前提是你不会在单个表达式里使用两个或两个以上的下面列出的特性：</p>
 <ul>
-<li>方法重载（包括操作符重载）</li>
-<li>常量</li>
-<li>不明确类型的闭包    </li>
-<li>会引导 <strong>Swift</strong> 进行错误类型转换的表达式</li>
+<li>  方法重载（包括操作符重载）</li>
+<li>  常量</li>
+<li>  不明确类型的闭包    </li>
+<li>  会引导 <strong>Swift</strong> 进行错误类型转换的表达式</li>
 </ul>
 <p>一般而言，如果你不使用如上面所述的特性，那么你一般不会遇到类似于 <code>expression was too complex</code> 的报错信息。然而，如果选择是用了上面所诉的特性，那么你可能会面临一些让你感到困惑的问题。通常，在编写一个足够大小的方法和其余常规代码的时候，将会很容易用到上面这些特性，这意味着有些时候我们可能要仔细考虑怎样避免大量使用上面这些特性。</p>
 <p>你肯定是想只通过一点细微的修改来通过编译，而不是大量修改你的代码。接下来的一点小建议可能帮得上一些忙。</p>
@@ -99,11 +99,11 @@
 <p><img src="http://www.cocoawithlove.com/assets/blog/constraints_graph1.svg" alt="a simple constraints graph"></p>
 <p>每个节点的名字都以 <code>T</code> 开头（意味着需要待确定明确的类型），然后它们用来代表需要解决的类型约束或者方法重载。在这个图里，这些节点被如下的规则所约束：</p>
 <ol>
-<li><code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T2</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T0</code> 是一个传入 <code>(T1,T2)</code> 返回 <code>T3</code> 的方法</li>
-<li><code>T0</code> 是 <code>infix +</code> ，其在 <strong>Swift</strong> 里有28种实现</li>
-<li><code>T3</code> 与 <code>T4</code> 之间可以进行交换</li>
+<li> <code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T2</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T0</code> 是一个传入 <code>(T1,T2)</code> 返回 <code>T3</code> 的方法</li>
+<li> <code>T0</code> 是 <code>infix +</code> ，其在 <strong>Swift</strong> 里有28种实现</li>
+<li> <code>T3</code> 与 <code>T4</code> 之间可以进行交换</li>
 </ol>
 <blockquote>
 <p>小贴士: 在 <strong>Swift 2.X</strong> 中，<code>ExpressibleByIntegerLiteral</code> 的替代者是 <code>IntegerLiteralConvertible</code></p>
@@ -119,13 +119,13 @@
 <p><img src="http://www.cocoawithlove.com/assets/blog/constraints_graph2.svg" alt="a slightly more complex constraints graph"></p>
 <p>节点约束如下：</p>
 <ol>
-<li><code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T3</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T2</code> 是一个传入 <code>T3</code> 返回 <code>T4</code> 的方法</li>
-<li><code>T2</code> 是 <code>prefix -</code>，其在 <strong>Swift</strong> 里有6种实现</li>
-<li><code>T0</code> 是一个传入 <code>T1</code>、<code>T4</code>，返回 <code>T5</code> 的方法</li>
-<li><code>T0</code> 是 <code>infix +</code> ，其在 <strong>Swift</strong> 里有28种实现</li>
-<li><code>T5</code> 是 <code>Double</code> 类型</li>
+<li> <code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T3</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T2</code> 是一个传入 <code>T3</code> 返回 <code>T4</code> 的方法</li>
+<li> <code>T2</code> 是 <code>prefix -</code>，其在 <strong>Swift</strong> 里有6种实现</li>
+<li> <code>T0</code> 是一个传入 <code>T1</code>、<code>T4</code>，返回 <code>T5</code> 的方法</li>
+<li> <code>T0</code> 是 <code>infix +</code> ，其在 <strong>Swift</strong> 里有28种实现</li>
+<li> <code>T5</code> 是 <code>Double</code> 类型</li>
 </ol>
 <p>相较于上面的例子，这里多了两个约束，让我们看看类型约束系统会怎样处理这个例子。</p>
 <p>第一步：选择最小分离单元。这次是约束 4 ：“ <code>T2</code> 是 <code>prefix -</code>，在 <strong>Swift</strong> 里有6种实现”。最后系统选择了签名为 <code>(Float) -&gt; Float</code> 的实现。</p>
@@ -151,8 +151,8 @@
 </blockquote>
 <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>我们想实现如下两个目标：</p>
 <ol>
-<li>限制一个节点不应该与其余节点相互依赖或引用</li>
-<li>从前一个方法分析出来的分离单元应该与后一个方法分离出来的存在着交集，并进一步简化分离单元的两个约束条件。</li>
+<li> 限制一个节点不应该与其余节点相互依赖或引用</li>
+<li> 从前一个方法分析出来的分离单元应该与后一个方法分离出来的存在着交集，并进一步简化分离单元的两个约束条件。</li>
 </ol>
 <p>第一个目标，可以通过限制节点的约束路径实现。在 <strong>Swift</strong> 中，每个节点的约束是双向的，每个节点的约束都从表达式的每一个分支开始，然后依照着遍历主干-&gt;线性遍历子节点的方式不断传播。在这个过程中，我们可以有选择性的简单地合并相同的约束逻辑来组合这些约束，而不是从其余节点引用相对应的类型约束。</p>
 <p>第二个目标里，支持前面通过减少类型约束的传播复杂度来进一步简化相关约束条件。每个重载方法的分离单元之间最重要的交叉点是一个重载函数的输出，可能会作为另一个重载函数的输入。这个操作应该根据参数相互交叉的两个重载方法所产生的2维笛卡尔积来进行计算。对于其余的可能存在的交叉点来说，给出一个真正意义上的数学上的严格交叉证明是非常困难的，同时这样的证明是没有必要的，我们只需要复制 <strong>Swift</strong> 里在复杂情况下的对于类型选择的时所采用的贪婪策略即可。</p>
@@ -163,36 +163,36 @@
 <p><img src="http://www.cocoawithlove.com/assets/blog/constraints_graph2.svg" alt="a slightly more complex constraints graph"></p>
 <p>然后让我们也复习下以下节点约束：</p>
 <ol>
-<li><code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T3</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T2</code> 是一个传入 <code>T3</code> 返回 <code>T4</code> 的方法</li>
-<li><code>T2</code> 是 <code>prefix -</code>，其在 <strong>Swift</strong> 里有6种实现</li>
-<li><code>T0</code> 是一个传入 <code>T1</code>、<code>T4</code>，返回 <code>T5</code> 的方法</li>
-<li><code>T0</code> 是 <code>infix +</code> ，其在 <strong>Swift</strong> 里有28种实现</li>
-<li><code>T5</code> 是 <code>Double</code> 类型</li>
+<li> <code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T3</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T2</code> 是一个传入 <code>T3</code> 返回 <code>T4</code> 的方法</li>
+<li> <code>T2</code> 是 <code>prefix -</code>，其在 <strong>Swift</strong> 里有6种实现</li>
+<li> <code>T0</code> 是一个传入 <code>T1</code>、<code>T4</code>，返回 <code>T5</code> 的方法</li>
+<li> <code>T0</code> 是 <code>infix +</code> ，其在 <strong>Swift</strong> 里有28种实现</li>
+<li> <code>T5</code> 是 <code>Double</code> 类型</li>
 </ol>
 <h3 id="将节点约束从右至左传递"><a href="#将节点约束从右至左传递" class="headerlink" title="将节点约束从右至左传递"></a>将节点约束从右至左传递</h3><p>我们从右至左进行遍历（从叶子节点向主干遍历）。</p>
 <p>在节点约束从 <code>T3</code> 向 <code>T2</code> 传播时，添加了这样一个新的约束：“ <code>T2</code> 节点的输入值必须是一个由 <code>ExpressibleByIntegerLiteral</code> 转化而来的值”。现在在新的约束规则和原有规则同时发生作用后，一旦我们确认所有拥有 <code>T2</code> 的节点都被新规则约束成功之后，或者是与“特定操作重载优先于通用操作重载（比如在 <code>prefix -</code> 中 <code>Double</code>、 <code>Float</code> 或者是 <code>Float80</code> 会被优先重载）”这条规则冲突之时，便可以丢弃我们新建立的节点约束规则。在节点约束从 <code>T2</code> 向 <code>T4</code> 中传播的过程中，添加新约束为：“ <code>T4</code> 必须是 <code>prefix -</code> 所返回的6中类型的值之一，其中 <code>Double</code>、<code>Float</code> 或 <code>Float80</code> 优先被考虑）。在节点约束从 <code>T4</code> 朝 <code>T0</code> 传播的过程中，添加新约束为：“ <code>T0</code> 的第二个参数必须是从 <code>prefix -</code> 返回的6种参数里的任意一种演变而来，其中 <code>Double</code>、 <code>Float</code> 或 <code>Float80</code> 类型优先）。在结合 <code>T0</code> 已有的节点约束后，<code>T0</code> 的节点约束变为：“ <code>T0</code> 是 <code>infix +</code> 的6种实现之一，同时从右侧传入的参数是来自 <code>prefix -</code> 返回参数中的任意一种，在这个过程中类型是 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的参数优先被考虑）。在节点约束从 <code>T1</code> 朝 <code>T0</code> 传递之时，没有新的约束条件需要添加（在这里，<code>T0</code> 已经被我们所增加的约束条件严格约束了，同时，原本所使用的 <code>ExpressibleByIntegerLiteral</code> 类型已经被 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 中的任意一种类型所替代了）。在节点约束从 <code>T0</code> 向 <code>T5</code> 传播时，需新增加约束为：“ <code>T5</code> 是 <code>infix +</code> 的6种返回值中的一种，且 <code>infix +</code> 的第二个参数是来自 <code>prefix -</code> 的返回值，在这个过程中，<code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 类型优先被考虑）。在上述约束的共同作用下，我们可以最终确认 <code>T5</code> 的类型为 <code>Double</code>。</p>
 <p>经过上述过程的变动之后，整个节点约束集迭代成下面这个样子：</p>
 <ol>
-<li><code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T3</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
-<li><code>T2</code> 是一个传入 <code>T3</code> 返回 <code>T4</code> 的方法</li>
-<li><code>T2</code> 是 <code>prefix -</code> 的6种实现之一，同时为了满足在 <strong>Swift</strong> 中特殊操作重载优先级高于通用运算重载的原则，类型为 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的 <code>prefix -</code> 重载优先被考虑。</li>
-<li><code>T4</code> 是 <code>prefix -</code> 的六种返回值之一，同样为了满足在 <strong>Swift</strong> 中特殊操作重载优先级高于通用运算重载的原则，类型为 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的 <code>prefix -</code> 重载优先被考虑。</li>
-<li><code>T0</code> 是一个传入 <code>T1</code>、<code>T4</code>，返回 <code>T5</code> 的方法</li>
-<li><code>T0</code> 是 <code>infix +</code> 的6种实现之一，同时从右侧传入的参数是来自 <code>prefix -</code> 返回参数中的任意一种，在这个过程中为了满足在 <strong>Swift</strong> 中特殊操作重载优先级高于通用运算重载的原则，类型是 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的参数优先被考虑</li>
-<li><code>T5</code> 是 <code>Double</code> 类型</li>
+<li> <code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T3</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型</li>
+<li> <code>T2</code> 是一个传入 <code>T3</code> 返回 <code>T4</code> 的方法</li>
+<li> <code>T2</code> 是 <code>prefix -</code> 的6种实现之一，同时为了满足在 <strong>Swift</strong> 中特殊操作重载优先级高于通用运算重载的原则，类型为 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的 <code>prefix -</code> 重载优先被考虑。</li>
+<li> <code>T4</code> 是 <code>prefix -</code> 的六种返回值之一，同样为了满足在 <strong>Swift</strong> 中特殊操作重载优先级高于通用运算重载的原则，类型为 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的 <code>prefix -</code> 重载优先被考虑。</li>
+<li> <code>T0</code> 是一个传入 <code>T1</code>、<code>T4</code>，返回 <code>T5</code> 的方法</li>
+<li> <code>T0</code> 是 <code>infix +</code> 的6种实现之一，同时从右侧传入的参数是来自 <code>prefix -</code> 返回参数中的任意一种，在这个过程中为了满足在 <strong>Swift</strong> 中特殊操作重载优先级高于通用运算重载的原则，类型是 <code>Double</code>、 <code>Float</code> 或者 <code>Float80</code> 的参数优先被考虑</li>
+<li> <code>T5</code> 是 <code>Double</code> 类型</li>
 </ol>
 <h3 id="将节点约束从左至右传递"><a href="#将节点约束从左至右传递" class="headerlink" title="将节点约束从左至右传递"></a>将节点约束从左至右传递</h3><p>现在我们开始从左至右进行遍历（先遍历主干，后遍历叶子节点）。</p>
 <p>首先从 <code>T5</code> 开始遍历，约束 5 是：“ <code>T5</code> 是 <code>Double</code> 类型的节点”。这时我们为 <code>T0</code> 添加新的约束：“ <code>T0</code> 的返回值类型一定要是 <code>Double</code> 类型的”。在这个约束生效后，我们就可以排除除 <code>(Double, Double) -&gt; Double</code> 之外的 <code>infix +</code> 的重载了。节点约束继续从 <code>T0</code> 朝 <code>T1</code> 传递，根据 <code>infix +</code> 的<code>(Double, Double) -&gt; Double</code> 重载的参数要求，我们为 <code>T1</code> 创建一个新的约束： <code>T1</code> 一定是 <code>Double</code> 类型的。在多种约束的作用下，之前所提到的“<code>T1</code> 是 <code>ExpressibleByIntegerLiteral</code> 类型”变为“<code>T1</code> 是 <code>Double</code> 类型”。在节点约束从 <code>T0</code> 朝 <code>T4</code> ，根据 <code>infix +</code> 的第二个参数的要求，我们确定 <code>T4</code> 的类型为 <code>Double</code>。节点约束从 <code>T4</code> 朝 <code>T2</code> 传播的过程中，我们新增加一个约束：“ <code>T2</code> 的返回值一定为 <code>Double</code> 类型”。在以上规则共同作用下，我们可以确定 <code>T2</code> 为 <code>prefix -</code> 的参数类型为 <code>(Double) -&gt; Double</code> 重载。最后根据以上的约束，我们可以得知 ‘T3’ 的类型为 ‘Double’。</p>
 <p>最后整个类型约束系统编程下面这个样子：</p>
 <ol>
-<li><code>T1</code> 为 <code>Double</code> 类型。</li>
-<li><code>T3</code> 为 <code>Double</code> 类型。`</li>
-<li><code>T2</code> 是 <code>prefix -</code> 的参数为 <code>(Double) -&gt; Double</code> 类型的重载</li>
-<li><code>T0</code> 是 <code>infix +</code> 的参数为 <code>(Double, Double) -&gt; Double</code> 类型的重载</li>
-<li><code>T5</code> 为 <code>Double</code> 类型。</li>
+<li> <code>T1</code> 为 <code>Double</code> 类型。</li>
+<li> <code>T3</code> 为 <code>Double</code> 类型。`</li>
+<li> <code>T2</code> 是 <code>prefix -</code> 的参数为 <code>(Double) -&gt; Double</code> 类型的重载</li>
+<li> <code>T0</code> 是 <code>infix +</code> 的参数为 <code>(Double, Double) -&gt; Double</code> 类型的重载</li>
+<li> <code>T5</code> 为 <code>Double</code> 类型。</li>
 </ol>
 <p>好了，现在整个类型约束操作便已经告一段落了。</p>
 <p>唔，我提出这算法的目的是改善方法重载的相关操作，因此，我将方法重载的次数用 n 表示。然后我将平均每个函数重载次数用 m 表示。</p>
@@ -208,8 +208,8 @@
 <p>在这篇文章里<a target="_blank" rel="noopener" href="https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20160404/001650.html">“[swift-dev] A type-checking performance case study”</a>表明官方开发者认为类型约束系统采用时间复杂度为指数的算法是一件很正常的事儿。与其将时间放在优化算法上，还不如去重构标准库，使其更为合理。</p>
 <p>一点吐槽：</p>
 <ul>
-<li>现在看来本文的前面两章简直就是在做无用功，我应该静静的将其删除。</li>
-<li>我觉得我想法是正确的，类型约束系统应该进行大幅度改进，这样我们次啊不会被上面所提到的问题所困扰。</li>
+<li>  现在看来本文的前面两章简直就是在做无用功，我应该静静的将其删除。</li>
+<li>  我觉得我想法是正确的，类型约束系统应该进行大幅度改进，这样我们次啊不会被上面所提到的问题所困扰。</li>
 </ul>
 <p>友情提醒: 理论上将类型约束系统并不是整个语言最主要的一部分，因此如果其进行了改进，应该是在一个小版本迭代中进行发布，而不是一个大版本更新。</p>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><a target="_blank" rel="noopener" href="http://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html#conclusion"></a>结论</h2><p>在我使用 <strong>Swift</strong> 的经历里, <code>expression was too complex to be solved in reasonable time</code> 是一个经常出线的错误，而且我并不认为这是一个简单的错误。如果你在单个例子中是用了大量的方法或者是数学操作的时候，你应该定期看看这篇文章。</p>
