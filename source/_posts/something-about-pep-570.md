@@ -4,6 +4,7 @@ type: tags
 date: 2019-04-27 18:48:30
 tags: [Python,编程,PEP,编程技巧]
 categories: [编程,Python]
+toc: true
 ---
 
 最近沉迷与 MIT 6.824 这门分布式系统的课，无心写文章。不过看到 [PEP570](https://www.python.org/dev/peps/pep-0570) 被接受了，决定还是写篇水文随便聊聊 PEP 570

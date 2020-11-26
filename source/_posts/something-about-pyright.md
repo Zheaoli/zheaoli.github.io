@@ -4,6 +4,7 @@ type: tags
 date: 2019-03-24 22:48:30
 tags: [Python,吐槽,PEP484]
 categories: [编程,Python,PEP484]
+toc: true
 ---
 
 # 关于 pyright

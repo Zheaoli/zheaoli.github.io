@@ -4,6 +4,7 @@ type: tags
 date: 2016-12-15 20:55:03
 tags: [Python,编程,Flask,掘金翻译计划]
 categories: [编程,Python]
+toc: true
 ---
 > * 原文地址：[A Simple Object Model](http://aosabook.org/en/500L/a-simple-object-model.html)
 * 原文作者：[Carl Friedrich Bolz](https://twitter.com/cfbolz)

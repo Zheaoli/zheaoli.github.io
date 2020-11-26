@@ -4,6 +4,7 @@ type: tags
 date: 2020-02-23 21:00:00
 tags: [Python,编程,leetcode,刷题]
 categories: [编程,leetcode,刷题]
+toc: true
 ---
 
 emmmm，我的拖延症没救了，顺便加上这周沉迷 Kotlin ，这篇本应该周一就写完的题解拖到现在，= =然而这周双周赛，，我又得写两篇题解了。。。

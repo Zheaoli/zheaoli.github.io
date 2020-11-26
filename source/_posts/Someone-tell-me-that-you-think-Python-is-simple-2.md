@@ -4,6 +4,7 @@ type: tags
 date: 2016-12-28 10:02:57
 tags: [Python,编程,黑魔法,编程技巧]
 categories: [编程,Python]
+toc: true
 ---
 # 前言
 之前写过一篇[《听说你会 Python ？》](http://manjusaka.itscoder.com/2016/11/18/Someone-tell-me-that-you-think-Python-is-simple/)的文章，大家反响都还不错，那么我想干脆把这个文章做成一个系列，继续讲解一下 Python 当中那些不为人知的细节吧。然后之前在和师父川爷讨论面试的时候，川爷说了一句“要是我，我就考考你们怎么去实现一个 `namedtuple` ，好用，方便，又能区分人”，说者无心，听者有意，我于是决定在这次的文章中，和大家聊一聊 Python 中一个特殊的高阶数据结构， namedtuple 的实现。

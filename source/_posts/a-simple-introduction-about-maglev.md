@@ -4,6 +4,7 @@ type: tags
 date: 2020-05-23 03:09:00
 tags: [编程,分布式,论文,笔记,水文]
 categories: [编程,水文,论文]
+toc: true
 ---
 
 好久没博客了，来写个简单的读论文笔记吧，这篇文章是来自 Google 2016 年发表的一篇论文 [Maglev: A Fast and Reliable Software Network Load Balancer](https://research.google/pubs/pub44824/) 分享了他们内部从08年开始大规模使用的软负载均衡系统的实现。里面很多很有趣的细节，我看我能写多少，算多少吧

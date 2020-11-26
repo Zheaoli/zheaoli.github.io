@@ -4,6 +4,7 @@ type: tags
 date: 2019-03-28 22:00:00
 tags: [Unix,网络编程,编程]
 categories: [编程,网络编程]
+toc: true
 ---
 
 关于惊群问题，其实我是在去年开始去关注的。然后向 CPython 提了一个关于解决 `selector` 的惊群问题的补丁 [BPO-35517](https://bugs.python.org/issue35517)。现在大概来聊聊关于惊群问题那点事吧

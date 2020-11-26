@@ -4,6 +4,7 @@ type: tags
 date: 2020-03-20 16:00:00
 tags: [Python,编程,随笔]
 categories: [编程,Python,随笔]
+toc: true
 ---
 
 在知乎上看到一个很有意思的问题，[为什么TypeScript如此流行，却少见有人写带类型标注的Python？](https://www.zhihu.com/question/370231112/answer/1091038983)

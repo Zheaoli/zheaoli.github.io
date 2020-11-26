@@ -4,6 +4,7 @@ type: tags
 date: 2019-11-25 22:37:43
 tags: [电子产品,Apple,评测]
 categories: [生活,电子产品]
+toc: true
 ---
 
 从工作开始，一直就想买个 Mac，但是一直没有买成，虽说有公司配发的 Mac（这也让我从 Macbook Pro 2015 13寸到 Macbook Pro 2017 15寸，到 Macbook Pro 2017 15寸，到 Macbook Pro 2018 13寸，到 Macbook Pro 2018 15寸用了个遍，23333），但是没有自己的 Mac
