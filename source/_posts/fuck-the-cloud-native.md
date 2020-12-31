@@ -32,7 +32,7 @@ toc: true
 
 而一个践行云原生的组织，那么应该具备以下特质
 
-1. 重度 Kubernetes 或其余容器调度平台（如 Shopee 自研的 **eru2**[<sup>2</sup>]((#refer-anchor-2)）
+1. 重度 Kubernetes 或其余容器调度平台（如 Shopee 自研的 **eru2**[<sup>2</sup>](#refer-anchor-2)
 
 2. 具备完整的监控体系
 
