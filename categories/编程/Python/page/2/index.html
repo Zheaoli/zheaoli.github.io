@@ -9,7 +9,7 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
     
-        gtag('config', 'UA-154407994-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Manjusaka" type="application/atom+xml">
+        gtag('config', 'UA-154407994-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Manjusaka" type="application/atom+xml">
 </head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="https://user-images.githubusercontent.com/7054676/56820277-0a54ac00-687e-11e9-9f34-f79089938638.png" alt="Manjusaka" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/.">主页</a><a class="navbar-item" href="/archives">文章</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/atom.xml">订阅</a><a class="navbar-item" href="/about">关于我</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/Zheaoli"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">Categories</a></li><li><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></li><li class="is-active"><a href="#" aria-current="page">Python</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-02-23T02:54:21.000Z" title="2018-02-23T02:54:21.000Z">2018-02-23</time></span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a></span><span class="level-item">10 minutes read (About 1435 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/posts/2018/02/23/logging-process-safe/">日常辣鸡水文:关于 logging 的进程安全问题</a></h1><div class="content"><h2 id="日常辣鸡水文-关于-logging-的进程安全问题"><a href="#日常辣鸡水文-关于-logging-的进程安全问题" class="headerlink" title="日常辣鸡水文:关于 logging 的进程安全问题"></a>日常辣鸡水文:关于 logging 的进程安全问题</h2><p>团队聚餐喝了点酒，作为一个垃圾文档工程师来写一篇日常水文</p>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>现在团队的日志搜集方式从原本的 TCP 直传 logstash 的方式改进为写入一个单文件后，改用 FileBeat 来作为日志搜集的前端。但是这样时常带来一个问题，即日志丢失</p>
 <p>嗯，我们线上服务是 Gunicorn 启用多个 Worker 来处理的。这就有个问题了，我们都知道，logging 模块是 Thread Safe 的，在标准的 Log Handler 内部加了一系列锁来确保线程安全，但是 logging 直写文件是不是进程安全的呢？</p></div><a class="article-more button is-small size-small" href="/posts/2018/02/23/logging-process-safe/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-02-23T02:54:20.000Z" title="2018-02-23T02:54:20.000Z">2018-02-23</time></span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a></span><span class="level-item">24 minutes read (About 3584 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/posts/2018/02/23/something-about-flask-context/">Flask 中的 Context 初探</a></h1><div class="content"><h1 id="Flask-中的-Context-初探"><a href="#Flask-中的-Context-初探" class="headerlink" title="Flask 中的 Context 初探"></a>Flask 中的 Context 初探</h1><p>大家新年好！鉴于今年春晚非常好看，我觉得承受不起，于是来写点辣鸡水文娱乐下大家，这也是之前立的若干 Flag 中的一个</p>
@@ -51,6 +51,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
         });</script></body></html>

@@ -9,7 +9,7 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
     
-        gtag('config', 'UA-154407994-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Manjusaka" type="application/atom+xml">
+        gtag('config', 'UA-154407994-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Manjusaka" type="application/atom+xml">
 </head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="https://user-images.githubusercontent.com/7054676/56820277-0a54ac00-687e-11e9-9f34-f79089938638.png" alt="Manjusaka" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/.">主页</a><a class="navbar-item" href="/archives">文章</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/atom.xml">订阅</a><a class="navbar-item" href="/about">关于我</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/Zheaoli"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">Tags</a></li><li class="is-active"><a href="#" aria-current="page">async</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2017-06-07T15:51:14.000Z" title="2017-06-07T15:51:14.000Z">2017-06-07</time></span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a></span><span class="level-item">14 minutes read (About 2112 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/posts/2017/06/07/some-note-for-asyncio/">asyncio 笔记</a></h1><div class="content"><p>来源 <a target="_blank" rel="noopener" href="https://github.com/hhstore/annotated-py-asyncio">annotated-py-asyncio</a></p>
 <h1 id="阅读补充"><a href="#阅读补充" class="headerlink" title="阅读补充:"></a>阅读补充:</h1><h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念:"></a>1. 基本概念:</h2><h3 id="1-1-协程"><a href="#1-1-协程" class="headerlink" title="1.1 协程:"></a>1.1 协程:</h3><ul>
 <li>“协程 是为非抢占式多任务产生子程序的计算机程序组件，协程允许不同入口点在不同位置暂停或开始执行程序”。</li>
@@ -32,6 +32,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
         });</script></body></html>
