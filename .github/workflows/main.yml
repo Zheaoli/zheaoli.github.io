@@ -7,6 +7,8 @@ name: Build And Publish Blog
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -29,7 +31,16 @@ jobs:
         run: hexo g
 
       # Runs a set of commands using the runners shell
-      - name: Deploy 🚀
+      - name: Deploy To Master Repo🚀
+        if: ${{ github.ref == 'refs/heads/master'}}
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.PUBLSH_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: public # The folder the action should deploy.
+        
+      - name: Deploy To Test Repo🚀
+        if: ${{ github.ref != 'refs/heads/master'}}
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.PUBLSH_TOKEN }}
