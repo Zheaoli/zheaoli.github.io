@@ -31,23 +31,16 @@ jobs:
         run: hexo g
 
       # Runs a set of commands using the runners shell
-      - name: Deploy To Master Repo🚀
+      - name: Deploy To Repo🚀
         if: ${{ github.ref == 'refs/heads/master'}}
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.PUBLSH_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy.
-      - name: Deploy To Test Repo🚀
-        if: ${{ github.ref != 'refs/heads/master'}}
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.PUBLSH_TOKEN }}
-          BRANCH: test-pages # The branch the action should deploy to.
-          FOLDER: public # The folder the action should deploy.
       - name: Upload to Collect Repo
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.PUBLSH_TOKEN }}
-          BRANCH: build-${{ GITHUB_JOB }} # The branch the action should deploy to.
+          BRANCH: build-${{ github.run_id }} # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy.
