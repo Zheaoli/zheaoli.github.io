@@ -91,7 +91,7 @@ static int ip_finish_output(struct net *net, struct sock *sk, struct sk_buff *sk
 
 在这三个参数中，我们主要来将视线放在 `struct sk_buff *skb` 上。
 
-熟悉 Linux Kernel 协议栈实现的同学肯定对 `sk_buff` 这个数据结构非常非常熟悉了。这个数据结构是 Linux Kernel 中网络相关的核心数据结构。通过不断的便宜指针，这个数据结构能够很方便帮助我们确认我们待发送/已接收的数据在内存中所存放的位置。
+熟悉 Linux Kernel 协议栈实现的同学肯定对 `sk_buff` 这个数据结构非常非常熟悉了。这个数据结构是 Linux Kernel 中网络相关的核心数据结构。通过不断的偏移指针，这个数据结构能够很方便帮助我们确认我们待发送/已接收的数据在内存中所存放的位置。
 
 空口直说好像有点抽象，我们来看个图
 
