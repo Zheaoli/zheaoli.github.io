@@ -4,6 +4,7 @@ type: tags
 date: 2018-02-23 02:54:21
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+toc: true
 ---
 
 ## 日常辣鸡水文:关于 logging 的进程安全问题

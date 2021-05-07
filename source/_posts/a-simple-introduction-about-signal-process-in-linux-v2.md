@@ -4,6 +4,7 @@ type: tags
 date: 2020-11-07 21:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
+toc: true
 ---
 
 上次写了一个水文[简单聊聊进程中的信号处理](https://manjusaka.itscoder.com/posts/2020/10/24/a-simple-introduction-about-signal-process-in-linux/) ，师父看了后把我怒斥了一顿，表示上篇水文中的例子太 old style, too simple ,too naive。如果未来出了偏差，我也要负泽任的。吓得我连和妹子周年庆的文章都没写，先赶紧来重新水一篇文章，聊聊更优秀，更方便的信号处理方式

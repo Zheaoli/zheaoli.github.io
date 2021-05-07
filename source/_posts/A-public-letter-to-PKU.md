@@ -4,6 +4,7 @@ type: tags
 date: 2018-04-24 12:54:03
 tags: [社会,PKU]
 categories: [社会,PKU]
+toc: true
 ---
 
 # 岳昕：致北大师生与北大外国语学院的一封公开信

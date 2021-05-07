@@ -4,6 +4,7 @@ type: tags
 date: 2020-01-05 20:00:00
 tags: [Python,编程,MySQL]
 categories: [编程,Python,MySQL]
+toc: true
 ---
 
 好久没写文章了，新年还是得写点技术水文来保证下状态，正好最近遇到一个比较有意思的问题，就来简单聊聊一下关于 MySQL 中 Prepared Statements 吧

@@ -177,7 +177,7 @@ sidebar:
     # Left sidebar configurations
     left:
         # Whether the sidebar sticks to the top when page scrolls
-        sticky: false
+        sticky: true
     # Right sidebar configurations
     right:
         # Whether the sidebar sticks to the top when page scrolls
@@ -223,6 +223,7 @@ widgets:
             Adam Wen's Blog: 'https://darkof.me/'
             卡瓦邦噶: 'https://www.kawabangga.com/'
             写代码的猴子: 'http://jaeger.itscoder.com'
+            你好，耳先生: 'https://www.kilerd.me/'
             小天: 'http://brucezz.itscoder.com'
             用语: 'http://yongyu.itscoder.com'
             showzeng: 'http://showzeng.itscoder.com'
@@ -233,6 +234,7 @@ widgets:
             imxie: 'http://imxie.itscoder.com'
             Jing's Blog: 'http://www.iamlj.com'
             夏溪辰: 'https://xiaxichen.com'
+            ymkiux: 'https://ymkiux.github.io'
     # Categories widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -293,7 +295,7 @@ plugins:
     katex: false
     # Enable the MathJax math typesetting support
     # https://www.mathjax.org/
-    mathjax: false
+    mathjax: true
     # Enable the Outdated Browser plugin
     # http://outdatedbrowser.com/
     outdated_browser: false

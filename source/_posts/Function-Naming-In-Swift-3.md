@@ -4,6 +4,7 @@ type: tags
 date: 2016-10-09 22:13:04
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
+toc: true
 ---
 > * 原文地址：[Function Naming In Swift 3](http://inaka.net/blog/2016/09/16/function-naming-in-swift-3/)
 * 原文作者：[Pablo Villar](https://twitter.com/volbap)

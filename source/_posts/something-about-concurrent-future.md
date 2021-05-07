@@ -4,6 +4,7 @@ type: tags
 date: 2017-11-28 00:09:54
 tags: [Python,编程,并发编程,编程技巧,源码剖析]
 categories: [编程,Python]
+toc: true
 ---
 
 # 垃圾话

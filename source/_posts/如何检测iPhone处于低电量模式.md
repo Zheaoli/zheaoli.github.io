@@ -4,6 +4,7 @@ type: tags
 date: 2016-07-23 03:09:38
 tags: [iOS,编程,Objective-C]
 categories: [编程,翻译]
+toc: true
 ---
 >* 原文链接 : [Detecting low power mode](http://useyourloaf.com/blog/detecting-low-power-mode/)
 * 原文作者 : [useyourloaf](http://useyourloaf.com/)

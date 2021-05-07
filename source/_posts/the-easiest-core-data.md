@@ -4,6 +4,7 @@ type: tags
 date: 2016-09-01 22:36:07
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
+toc: true
 ---
 > * 原文地址：[The Easiest Core Data](http://albertodebortoli.com/blog/2016/08/05/the-easiest-core-data/)
 * 原文作者：[Alberto De Bortoli](http://albertodebortoli.com/)

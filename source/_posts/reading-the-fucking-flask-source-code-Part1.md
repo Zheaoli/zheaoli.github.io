@@ -4,6 +4,7 @@ type: tags
 date: 2016-08-09 15:54:20
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+toc: true
 ---
 >- 文章来源：itsCoder 的 [WeeklyBolg](https://github.com/itsCoder/weeklyblog) 项目
 >- itsCoder主页：[http://itscoder.com/](http://itscoder.com/)

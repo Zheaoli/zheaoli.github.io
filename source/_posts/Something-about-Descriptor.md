@@ -4,6 +4,7 @@ type: tags
 date: 2016-10-12 22:48:30
 tags: [Python,编程,协程,编程技巧]
 categories: [编程,Python]
+toc: true
 ---
 很久都没写 **Flask** 代码相关了，想想也真是惭愧，然并卵，这次还是不写 **Flask** 相关，不服你来打我啊（就这么贱，有本事咬我啊
 这次我来写一下 Python 一个很重要的东西，即 Descriptor （描述符）

@@ -4,6 +4,7 @@ type: tags
 date: 2016-09-11 10:27:15
 tags: [Python,编程,协程,编程技巧]
 categories: [编程,Python]
+toc: true
 ---
 >- 文章来源：itsCoder 的 [WeeklyBolg](https://github.com/itsCoder/weeklyblog) 项目
 >- itsCoder主页：[http://itscoder.com/](http://itscoder.com/)

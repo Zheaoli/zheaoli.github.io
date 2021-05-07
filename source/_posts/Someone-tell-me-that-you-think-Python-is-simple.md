@@ -4,6 +4,7 @@ type: tags
 date: 2016-11-18 22:37:43
 tags: [Python,编程,黑魔法,编程技巧]
 categories: [编程,Python]
+toc: true
 ---
 
 ## 前言

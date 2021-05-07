@@ -4,6 +4,7 @@ type: tags
 date: 2020-02-11 01:00:00
 tags: [Python,编程,leetcode,刷题]
 categories: [编程,leetcode,刷题]
+toc: true
 ---
 
 例行 Leetcode 周赛，这周双周赛，两场赛打下来，有点酸爽，先写个 BiWeekly 19 Contest 的题解吧

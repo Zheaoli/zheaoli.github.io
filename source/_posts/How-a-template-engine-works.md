@@ -4,6 +4,7 @@ type: tags
 date: 2016-08-13 22:48:55
 tags: [Python,编程,Flask,掘金翻译计划]
 categories: [编程,Python]
+toc: true
 ---
 > * 原文地址：[How a template engine works](https://fengsp.github.io/blog/2016/8/how-a-template-engine-works/)
 * 原文作者：[Shipeng Feng](https://twitter.com/_fengsp)

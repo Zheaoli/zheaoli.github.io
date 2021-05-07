@@ -4,6 +4,7 @@ type: tags
 date: 2017-12-28 22:00:00
 tags: [Python,编程,随笔,总结]
 categories: [编程,Python]
+toc: true
 ---
 
 本垃圾 API 搬运工程师又来了啊，= =今天因为 `Supervisor` 一个隐藏的参数配置，造成了一个重要项目的线上崩溃。= =我觉得还是有必要分享一波，所以写了一篇垃圾水文。

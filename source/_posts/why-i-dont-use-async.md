@@ -4,6 +4,7 @@ type: tags
 date: 2018-10-05 03:08:37
 tags: [Python,编程,随笔]
 categories: [编程,Python]
+toc: true
 ---
 
 # 去 async/await 之路
