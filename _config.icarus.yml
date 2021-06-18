@@ -78,6 +78,7 @@ navbar:
         分类: categories
         标签: tags
         订阅: /atom.xml
+        我的简历: resume
         关于我: about
     links:
         Download on GitHub:
