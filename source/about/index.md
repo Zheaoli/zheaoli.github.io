@@ -9,7 +9,9 @@ layout: "about"
 
 之前在某外卖厂，师从[松鼠奥利奥](https://blog.tonyseek.com/)中微服务中间件相关的开发
 
-现在 transfer 到某云，从事公有云的中间件开发，欢迎各位大佬提工单
+然后 transfer 到某云，从事公有云的中间件开发，<del>欢迎各位大佬提工单</del>
+
+现在在[太极图形](https://taichi.graphics/)，欢迎有兴趣的同学一起来做一些有意思的事情
 
 和几个朋友搞了一个播客，[『捕蛇者说』](https://pythonhunter.org)
 
