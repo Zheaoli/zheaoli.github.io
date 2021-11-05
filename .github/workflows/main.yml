@@ -26,7 +26,7 @@ jobs:
       - name: check modified files
         id: check_files
         run: |
-          echo "::set-output name=run_job::true"
+          echo "::set-output name=run_job::false"
     
 
       # Runs a single command using the runners shell
