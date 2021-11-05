@@ -33,7 +33,7 @@ jobs:
       - name: Install Package
         run: |
           if [[ ${{steps.check_files.outputs.run_job == true}} ]]; then
-            exit(0)
+            exit 0
           fi
           npm install -g hexo-cli && npm install
 
