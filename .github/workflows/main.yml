@@ -32,14 +32,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install Package
         run: |
-          if [[ ${{jobs.build.steps.check_files.outputs.run_job}} == true ]]; then
+          if [[ ${{steps.check_files.outputs.run_job}} == true ]]; then
             exit 0
           fi
           npm install -g hexo-cli && npm install
 
       - name: Generate Html File
         run: |
-          if [[ ${{jobs.build.steps.check_files.outputs.run_job}} == true ]]; then
+          if [[ ${{steps.check_files.outputs.run_job}} == true ]]; then
             exit 0
           fi
           hexo g
