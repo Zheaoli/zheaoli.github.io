@@ -38,7 +38,7 @@ jobs:
           npm install -g hexo-cli && npm install
 
       - name: Generate Html File
-        run:
+        run: |
           if [[ ${{steps.check_files.outputs.run_job == true}} ]]; then
             exit 0
           fi
