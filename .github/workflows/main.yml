@@ -32,6 +32,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install Package
         run: |
+          echo "${{steps.check_files.outputs.run_job}}"
           if [[ ${{steps.check_files.outputs.run_job == true}} ]]; then
             exit 0
           fi
