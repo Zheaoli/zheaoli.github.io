@@ -38,7 +38,11 @@ jobs:
           npm install -g hexo-cli && npm install
 
       - name: Generate Html File
-        run: hexo g
+        run:
+          if [[ ${{steps.check_files.outputs.run_job == true}} ]]; then
+            exit 0
+          fi
+          hexo g
 
       # Runs a set of commands using the runners shell
       - name: Deploy To Repo🚀
@@ -49,6 +53,7 @@ jobs:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: public # The folder the action should deploy.
       - name: Upload to Collect Repo
+        if: ${{ github.ref == 'refs/heads/master'}}
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.PUBLSH_TOKEN }}
