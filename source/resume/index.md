@@ -15,7 +15,7 @@
 ## About Me
 
 1. 自驱力较强，能主动去学习新技术并且推动落地实现，并回馈社区。
-2. PyCon China 2018/2019/2020 组织者，讲师。微软 Python 方向 MVP。
+2. PyCon China 2018/2019/2020/2021 组织者，讲师。微软 Python 方向 MVP。
 3. 多年 Python 经验，具备良好的编程规范 。熟练掌握 Python 相关的技术开发工作。了解 Go/Java，阅读过部分 Go/CPython 代码。
 4. 熟练使用 Flask/Gunicorn/Gevent/Django/Celery 等 Python Web 开发过程中所使用的工具与技术栈，并阅读过 Flask/Greenlet 等项目源码
 5. 了解 Kubernetes 及其周边生态。能利用 Kubernetes 进行 PaaS 平台开发。阅读过部分 Kubernetes 源码
