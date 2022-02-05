@@ -1,5 +1,5 @@
 # Version of the configuration file
-version: 4.0.0
+version: 5.0.0
 # Icarus theme variant, can be "default" or "cyberpunk"
 variant: default
 # Path or URL to the website's logo
@@ -8,6 +8,32 @@ logo: https://user-images.githubusercontent.com/7054676/56820277-0a54ac00-687e-1
 head:
     # URL or path to the website's icon
     favicon: https://user-images.githubusercontent.com/7054676/56820343-2fe1b580-687e-11e9-8f6f-778df3a8eafd.png
+    # Web application manifests configuration
+    # https://developer.mozilla.org/en-US/docs/Web/Manifest
+    manifest:
+        # Name of the web application (default to the site title)
+        name: 
+        # The displayed name of the web application
+        # when there is not enough space to display full name
+        short_name: 
+        # The start URL of the web application
+        start_url: 
+        # The default theme color for the application
+        theme_color: 
+        # A placeholder background color for the application page to display
+        # before its stylesheet is loaded
+        background_color: 
+        # The preferred display mode for the website
+        display: standalone
+        # Image files that can serve as application icons for different contexts
+        icons:
+            -
+                # The path to the image file
+                src: ''
+                # A string containing space-separated image dimensions
+                sizes: ''
+                # A hint as to the media type of the image
+                type: 
     # Open Graph metadata
     # https://hexo.io/docs/helpers.html#open-graph
     open_graph:
@@ -59,6 +85,12 @@ head:
         # Page author (article:author) (optional)
         # You should leave this blank for most of the time
         author: 
+        # Page publisher (optional)
+        # You should leave this blank for most of the time
+        publisher: 
+        # Page publisher logo (optional)
+        # You should leave this blank for most of the time
+        publisher_logo: 
         # Page images (optional)
         # You should leave this blank for most of the time
         image: 
@@ -168,10 +200,10 @@ comment:
 #         qrcode: ''
 # Share plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Share/
-# share:
-#     type: sharethis
-#     # URL to the ShareThis share plugin script
-#     install_url: ''
+share:
+    type: sharethis
+    # URL to the ShareThis share plugin script
+    install_url: ''
 # Sidebar configurations.
 # Please be noted that a sidebar is only visible when it has at least one widget
 sidebar:
@@ -182,7 +214,7 @@ sidebar:
     # Right sidebar configurations
     right:
         # Whether the sidebar sticks to the top when page scrolls
-        sticky: false
+        sticky: true
 # Sidebar widget configurations
 # http://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
 widgets:
@@ -212,6 +244,12 @@ widgets:
         # Where should the widget be placed, left sidebar or right sidebar
         position: left
         type: toc
+        # Whether to show the index of each heading
+        index: true
+        # Whether to collapse sub-headings when they are out-of-view
+        collapsed: true
+        # Maximum level of headings to show (1-6)
+        depth: 3
     # Recommendation links widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -247,8 +285,8 @@ widgets:
     # Recent posts widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
-        position: right
-        type: recent_posts
+        position: left
+        type: categories
     # Archives widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -294,12 +332,12 @@ plugins:
     hotjar:
         # Hotjar site id
         site_id: 
-    # Enable the KaTeX math typesetting supprot
+    # Enable the KaTeX math typesetting support
     # https://katex.org/
     katex: false
     # Enable the MathJax math typesetting support
     # https://www.mathjax.org/
-    mathjax: true
+    mathjax: false
     # Enable the Outdated Browser plugin
     # http://outdatedbrowser.com/
     outdated_browser: false
