@@ -288,16 +288,16 @@ widgets:
         # Where should the widget be placed, left sidebar or right sidebar
         position: left
         type: categories
-    # Archives widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: right
-        type: archives
-    # Tags widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: right
-        type: tags
+#     # Archives widget configurations
+#     -
+#         # Where should the widget be placed, left sidebar or right sidebar
+#         position: right
+#         type: archives
+#     # Tags widget configurations
+#     -
+#         # Where should the widget be placed, left sidebar or right sidebar
+#         position: right
+#         type: tags
     # Google FeedBurner email subscription widget configurations
 # Plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/
