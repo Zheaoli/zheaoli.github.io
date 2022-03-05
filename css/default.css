@@ -10808,7 +10808,7 @@ article.article .article-tags {
   color: #7a7a7a;
 }
 article.article .article-meta {
-  overflow-x: auto;
+  overflow-x: false;
   margin-bottom: 0.5rem;
 }
 article.article .content {
