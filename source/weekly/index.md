@@ -8,3 +8,4 @@
 6. [2022年3月第二周](/weekly/2022-03-week2.html)
 7. [2022年3月第三周](/weekly/2022-03-week3.html)
 8. [2022年3月第四周](/weekly/2022-03-week4.html)
+9. [2022年4月第一周](/weekly/2022-04-week1.html)
