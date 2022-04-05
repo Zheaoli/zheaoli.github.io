@@ -3,7 +3,7 @@ title: Leetcode Weekly Contest 287 题解
 type: tags
 date: 2022-04-05 21:00:00
 tags: [Python,编程,leetcode,刷题]
-categories: [编程,leetcode,刷题]
+categories: [编程,刷题]
 toc: true
 ---
 
