@@ -241,9 +241,10 @@ class Encrypter:
         self.counter = Counter(self.encrypt(item) for item in dictionary)
 
     def encrypt(self, word1: str) -> str:
-        return "".join(self.index[letter] for letter in word1)
+        return "".join(self.index.get(letter, " ") for letter in word1)
 
     def decrypt(self, word2: str) -> int:
         return self.counter[word2]
+
 ```
 
