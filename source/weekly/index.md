@@ -10,4 +10,4 @@
 8. [2022年3月第四周](/weekly/2022-03-week4.html)
 9. [2022年4月第一周](/weekly/2022-04-week1.html)
 10. [2022年4月第二周](/weekly/2022-04-week2.html)
-11. [2022年4月第二周](/weekly/2022-04-week3.html)
+11. [2022年4月第三周](/weekly/2022-04-week3.html)
