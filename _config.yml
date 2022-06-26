@@ -46,3 +46,7 @@ deploy:
   type: git
   repo: git@github.com:Zheaoli/zheaoli.github.io.git
   branch: master
+mmedia:
+  aplayer:
+    js: https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js
+    css: https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css
