@@ -277,11 +277,6 @@ widgets:
         # Where should the widget be placed, left sidebar or right sidebar
         position: left
         type: categories
-    # Recent posts widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: categories
     # Archives widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
