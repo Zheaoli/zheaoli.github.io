@@ -272,6 +272,7 @@ widgets:
             imxie: 'http://imxie.itscoder.com'
             Jing's Blog: 'http://www.iamlj.com'
             ymkiux: 'https://ymkiux.github.io'
+            Irony: 'https://suyan.moe/'
     # Categories widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
