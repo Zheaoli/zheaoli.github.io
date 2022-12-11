@@ -68,3 +68,4 @@ db.json
 token
 
 package-lock.json
+.vscode
