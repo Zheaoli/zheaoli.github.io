@@ -1,7 +1,7 @@
 ---
 title: Stay Simple, Stay Naive
 type: tags
-date: 2022-01-02 03:00:00
+date: 2023-01-02 03:00:00
 tags: [随笔,总结]
 categories: [随笔,总结,秀恩爱]
 toc: true
