@@ -5,6 +5,9 @@
   "hexo": {
     "version": "6.3.0"
   },
+  "scripts": {
+    "build": "hexo g"
+  },
   "dependencies": {
     "async": "^3.2.0",
     "bulma-stylus": "0.8.0",
