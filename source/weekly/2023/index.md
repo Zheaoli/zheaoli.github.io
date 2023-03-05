@@ -8,3 +8,4 @@
 6. [2023年第六周](/weekly/2023/2023-week6.html)
 7. [2023年第七周](/weekly/2023/2023-week7.html)
 8. [2023年第八周](/weekly/2023/2023-week8.html)
+9. [2023年第九周](/weekly/2023/2023-week9.html)
