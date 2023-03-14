@@ -7,7 +7,7 @@
 ## 个人信息
 
 * 本科/西华大学/信息工程（2012 ~ 2016）
-* 工作年限：4 年
+* 工作年限：6 年
 * 技术博客：https://manjusaka.itscoder.com 
 * 期望职位：中间件开发
 * 期望城市：北京
@@ -25,7 +25,7 @@
 
 ## 工作经历
 
-### 2021.09-至今 Senior Engineer@Taichi Graphics
+### 2021.09-2022.06 Senior Engineer@Taichi Graphics
 
 工作内容：
 
