@@ -79,7 +79,7 @@ toc: true
 
 然后整体的效果如下
 
-![v2](https://i.imgur.com/2Z2ZQ8h.jpeg)
+![v2](https://i.imgur.com/kXgbRQa.jpeg)
 
 但是在使用几天后，我发现了新的问题：我对容量的预估严重不足！
 
