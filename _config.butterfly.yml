@@ -871,10 +871,6 @@ CDN:
   custom_format:
 
   option:
-    main: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/js/main.js
-    utils: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/js/utils.js
-    translate: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/js/tw_cn.js
-    local_search: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/js/search/local-search.js
     # main_css: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/css/index.css
     # algolia_js:
     # algolia_search_v4:
