@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2023/2023-week5.html</loc>
+    <loc>https://manjusaka.blog/weekly/2022/2022-02-week4.html</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2023/2023-week6.html</loc>
+    <loc>https://manjusaka.blog/weekly/2022/2022-03-week1.html</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2023/2023-week7.html</loc>
+    <loc>https://manjusaka.blog/weekly/2022/2022-03-week2.html</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -38,25 +38,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2023/2023-week8.html</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/weekly/2023/2023-week9.html</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/weekly/2023/index.html</loc>
+    <loc>https://manjusaka.blog/weekly/2022/2022-03-week3.html</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -605,6 +587,150 @@
   </url>
   
   <url>
+    <loc>https://manjusaka.blog/weekly/2023/2023-week5.html</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2023/2023-week6.html</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2023/2023-week7.html</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2023/2023-week8.html</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2023/2023-week9.html</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2023/index.html</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2017/11/27/something-about-concurrent-future/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2018/02/22/something-about-decorator/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2019/07/02/something-about-file-system-watch/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2018/02/22/something-about-flask-context/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2019/04/27/something-about-pep-570/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2019/03/24/something-about-pyright/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2016/09/11/something-about-yield-in-python/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2019/11/03/somethng-between-me-pycon-china/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2019/03/28/somthing-about-thundering-herd/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2023/01/07/special-case-no-space-left-on-device/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://manjusaka.blog/posts/2023/01/01/stay-simple-stay-naive/</loc>
     
     <lastmod>2023-06-19</lastmod>
@@ -821,7 +947,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-02-week4.html</loc>
+    <loc>https://manjusaka.blog/posts/2018/07/07/She-thought-she-can-survive-from-sexual-assualt/</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -830,7 +956,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-03-week1.html</loc>
+    <loc>https://manjusaka.blog/posts/2016/12/28/Someone-tell-me-that-you-think-Python-is-simple-2/</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -839,7 +965,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-03-week2.html</loc>
+    <loc>https://manjusaka.blog/posts/2016/11/18/Someone-tell-me-that-you-think-Python-is-simple/</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -848,7 +974,97 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-03-week3.html</loc>
+    <loc>https://manjusaka.blog/posts/2016/10/12/Something-about-Descriptor/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2016/07/22/Swift-3-0-%E6%96%B0%E5%A2%9E%E5%AE%89%E5%85%A8%E7%89%B9%E6%80%A7%E7%9A%84%E4%B8%80%E7%82%B9%E6%99%AE%E5%8F%8A/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2021/11/22/a-litte-introduction-about-nohdr-filed-in-skbuff/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2018/02/22/a-little-idea-about-sanic/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2021/08/24/a-little-problem-about-posix-node-js-execsync/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2020/03/20/a-simple-history-about-type-hint-in-python/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2021/04/11/a-simple-introduce-about-ci-cd/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2023/03/12/a-simple-introduction-about-iac/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2020/05/22/a-simple-introduction-about-maglev/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2022/01/31/a-simple-introduction-about-network-monitoring-in-linux-kernel/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2020/11/07/a-simple-introduction-about-signal-process-in-linux-v2/</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -1082,96 +1298,6 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/posts/2017/11/27/something-about-concurrent-future/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2018/02/22/something-about-decorator/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2019/07/02/something-about-file-system-watch/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2018/02/22/something-about-flask-context/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2019/04/27/something-about-pep-570/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2019/03/24/something-about-pyright/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2016/09/11/something-about-yield-in-python/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2019/11/03/somethng-between-me-pycon-china/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2019/03/28/somthing-about-thundering-herd/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2023/01/07/special-case-no-space-left-on-device/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://manjusaka.blog/posts/2018/04/24/A-Fact-Sheet-By-PKU/</loc>
     
     <lastmod>2023-06-19</lastmod>
@@ -1236,132 +1362,6 @@
   
   <url>
     <loc>https://manjusaka.blog/posts/2016/08/13/How-a-template-engine-works/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2018/07/07/She-thought-she-can-survive-from-sexual-assualt/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2016/12/28/Someone-tell-me-that-you-think-Python-is-simple-2/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2016/11/18/Someone-tell-me-that-you-think-Python-is-simple/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2016/10/12/Something-about-Descriptor/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2016/07/22/Swift-3-0-%E6%96%B0%E5%A2%9E%E5%AE%89%E5%85%A8%E7%89%B9%E6%80%A7%E7%9A%84%E4%B8%80%E7%82%B9%E6%99%AE%E5%8F%8A/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2021/11/22/a-litte-introduction-about-nohdr-filed-in-skbuff/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2018/02/22/a-little-idea-about-sanic/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2021/08/24/a-little-problem-about-posix-node-js-execsync/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2020/03/20/a-simple-history-about-type-hint-in-python/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2021/04/11/a-simple-introduce-about-ci-cd/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2023/03/12/a-simple-introduction-about-iac/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2020/05/22/a-simple-introduction-about-maglev/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2022/01/31/a-simple-introduction-about-network-monitoring-in-linux-kernel/</loc>
-    
-    <lastmod>2023-06-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2020/11/07/a-simple-introduction-about-signal-process-in-linux-v2/</loc>
     
     <lastmod>2023-06-19</lastmod>
     
@@ -1901,13 +1901,6 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/categories/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2023-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://manjusaka.blog/categories/%E9%9A%8F%E7%AC%94/%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2023-06-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1950,13 +1943,6 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/categories/%E6%8A%80%E6%9C%AF/%E6%9D%82%E8%AE%B0/</loc>
-    <lastmod>2023-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://manjusaka.blog/categories/%E9%9A%8F%E7%AC%94/%E6%80%BB%E7%BB%93/%E7%A7%80%E6%81%A9%E7%88%B1/</loc>
     <lastmod>2023-06-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1965,6 +1951,20 @@
   
   <url>
     <loc>https://manjusaka.blog/categories/%E5%B7%A5%E5%85%B7/%E8%BE%93%E5%85%A5%E6%B3%95/Rime/</loc>
+    <lastmod>2023-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/categories/%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2023-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/categories/%E6%8A%80%E6%9C%AF/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2023-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

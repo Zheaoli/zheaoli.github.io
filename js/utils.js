@@ -79,21 +79,31 @@ const btf = {
     const hour = minute * 60
     const day = hour * 24
     const month = day * 30
-    const { dateSuffix } = GLOBAL_CONFIG
 
-    if (!more) return parseInt(dateDiff / day)
+    let result
+    if (more) {
+      const monthCount = dateDiff / month
+      const dayCount = dateDiff / day
+      const hourCount = dateDiff / hour
+      const minuteCount = dateDiff / minute
 
-    const monthCount = dateDiff / month
-    const dayCount = dateDiff / day
-    const hourCount = dateDiff / hour
-    const minuteCount = dateDiff / minute
-
-    if (monthCount > 12) return datePost.toISOString().slice(0, 10)
-    if (monthCount >= 1) return `${parseInt(monthCount)} ${dateSuffix.month}`
-    if (dayCount >= 1) return `${parseInt(dayCount)} ${dateSuffix.day}`
-    if (hourCount >= 1) return `${parseInt(hourCount)} ${dateSuffix.hour}`
-    if (minuteCount >= 1) return `${parseInt(minuteCount)} ${dateSuffix.min}`
-    return dateSuffix.just
+      if (monthCount > 12) {
+        result = datePost.toISOString().slice(0, 10)
+      } else if (monthCount >= 1) {
+        result = parseInt(monthCount) + ' ' + GLOBAL_CONFIG.date_suffix.month
+      } else if (dayCount >= 1) {
+        result = parseInt(dayCount) + ' ' + GLOBAL_CONFIG.date_suffix.day
+      } else if (hourCount >= 1) {
+        result = parseInt(hourCount) + ' ' + GLOBAL_CONFIG.date_suffix.hour
+      } else if (minuteCount >= 1) {
+        result = parseInt(minuteCount) + ' ' + GLOBAL_CONFIG.date_suffix.min
+      } else {
+        result = GLOBAL_CONFIG.date_suffix.just
+      }
+    } else {
+      result = parseInt(dateDiff / day)
+    }
+    return result
   },
 
   loadComment: (dom, callback) => {
@@ -186,9 +196,10 @@ const btf = {
   },
 
   unwrap: el => {
-    const parent = el.parentNode
-    if (parent && parent !== document.body) {
-      parent.replaceChild(el, parent)
+    const elParentNode = el.parentNode
+    if (elParentNode !== document.body) {
+      elParentNode.parentNode.insertBefore(el, elParentNode)
+      elParentNode.parentNode.removeChild(elParentNode)
     }
   },
 
@@ -210,7 +221,13 @@ const btf = {
     const service = GLOBAL_CONFIG.lightbox
 
     if (service === 'mediumZoom') {
-      mediumZoom(ele, { background: 'var(--zoom-bg)' })
+      const zoom = mediumZoom(ele)
+      zoom.on('open', e => {
+        const photoBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#121212' : '#fff'
+        zoom.update({
+          background: photoBg
+        })
+      })
     }
 
     if (service === 'fancybox') {
@@ -226,30 +243,7 @@ const btf = {
         Fancybox.bind('[data-fancybox]', {
           Hash: false,
           Thumbs: {
-            showOnStart: false
-          },
-          Images: {
-            Panzoom: {
-              maxScale: 4
-            }
-          },
-          Carousel: {
-            transition: 'slide'
-          },
-          Toolbar: {
-            display: {
-              left: ['infobar'],
-              middle: [
-                'zoomIn',
-                'zoomOut',
-                'toggle1to1',
-                'rotateCCW',
-                'rotateCW',
-                'flipX',
-                'flipY'
-              ],
-              right: ['slideshow', 'thumbs', 'close']
-            }
+            autoStart: false
           }
         })
         window.fancyboxRun = true
@@ -295,13 +289,5 @@ const btf = {
     const scrollPercentRounded = Math.round(scrollPercent * 100)
     const percentage = (scrollPercentRounded > 100) ? 100 : (scrollPercentRounded <= 0) ? 0 : scrollPercentRounded
     return percentage
-  },
-
-  addModeChange: (name, fn) => {
-    if (window.themeChange && window.themeChange[name]) return
-    window.themeChange = {
-      ...window.themeChange,
-      [name]: fn
-    }
   }
 }
