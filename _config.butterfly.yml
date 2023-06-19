@@ -283,7 +283,7 @@ comments:
 # https://disqus.com/
 disqus:
   shortname: manjusakablog
-  apikey: e7a83726e93e4f169081b2dde3d1f4ae # For newest comments widget
+  apikey: 2BAbSHa448JyWKTl0btIcddWc9DamjERgBMPGyayZCcFMRkeHREpcZZaISzj5zFV # For newest comments widget
 
 # Alternative Disqus - Render comments with Disqus API
 # DisqusJS 評論系統，可以實現在網路審查地區載入 Disqus 評論列表，兼容原版
