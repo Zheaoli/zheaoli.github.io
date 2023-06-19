@@ -14,6 +14,14 @@ index 815cdd1..fa924d9 100644
 +    //- ad
 +    if theme.ad && theme.ad.page
 +      .ads-wrap-page!=theme.ad.page
+diff --git a/node_modules/hexo-theme-butterfly/layout/includes/page/categories.pug b/node_modules/hexo-theme-butterfly/layout/includes/page/categories.pug
+index 79153c8..7cf828e 100644
+--- a/node_modules/hexo-theme-butterfly/layout/includes/page/categories.pug
++++ b/node_modules/hexo-theme-butterfly/layout/includes/page/categories.pug
+@@ -1 +1,2 @@
++#categories-chart.js-pjax
+ .category-lists!= list_categories()
+\ No newline at end of file
 diff --git a/node_modules/hexo-theme-butterfly/layout/category.pug b/node_modules/hexo-theme-butterfly/layout/category.pug
 index 234a0af..c1bfb81 100644
 --- a/node_modules/hexo-theme-butterfly/layout/category.pug
