@@ -57,3 +57,84 @@ charts:
   postsCalendar_Title: #文章发布日历 # 设置发布日历的标题，默认为空
   categoriesChart_Title: # 设置分类统计的标题，默认为空
   categoriesRadar_Title: # 设置分类雷达的标题，默认为空
+minify:
+  preview: false ## 本地预览时是否压缩
+  exclude: ['*.min.*']
+  js:
+    enable: true
+    sourceMap:
+      enable: false ## 生成 sourceMap
+      ## 将 sourceMappingURL 插入压缩后的 js 文件，如果为 false 则需要在浏览器开发者工具中手动添加 sourceMap
+      sourceMappingURL: false ## //# sourceMappingURL=xxx.js.map
+    ## 详细配置: https://github.com/terser/terser#minify-options
+    options: {}
+  css:
+    enable: true
+    ## 详细配置: https://github.com/clean-css/clean-css#compatibility-modes
+    options: {}
+  html:
+    enable: true
+    ## 详细配置: https://github.com/kangax/html-minifier#options-quick-reference
+    options:
+      minifyJS: true # Compressed JavaScript
+      minifyCSS: true # CSS Compressed
+      removeComments: true # Remove the comments
+      collapseWhitespace: true # Delete any extra space
+      removeAttributeQuotes: true # Delete attribute quotes
+  image:
+    enable: true
+    svg:
+      enable: true
+      ## 详细配置: https://github.com/imagemin/imagemin-svgo#imageminsvgooptionsbuffer
+      options: {}
+    jpg:
+      enable: true
+      ## 详细配置: https://github.com/imagemin/imagemin-jpegtran#options
+      options: {}
+    png:
+      enable: true
+      ## 详细配置: https://github.com/imagemin/imagemin-pngquant#options
+      options: {}
+    gif:
+      enable: true
+      ## 详细配置: https://www.npmjs.com/package/imagemin-gifsicle#options
+      options: {}
+    webp:
+      enable: true
+      ## 详细配置: https://github.com/imagemin/imagemin-webp#options
+      options: {}
+  font:
+    enable: true
+    ## 详细配置: https://github.com/Lete114/fontmin-spider#api
+    options: {}
+# hexo-butterfly-swiper
+# see https://akilar.top/posts/8e1264d1/
+swiper:
+  enable: true # 开关
+  priority: 1 #过滤器优先权
+  enable_page: all # 应用页面
+  timemode: date #date/updated
+  layout: # 挂载容器类型
+    type: id
+    name: recent-posts
+    index: 0
+  default_descr: 再怎么看我也不知道怎么描述它的啦！
+  swiper_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css #swiper css依赖
+  swiper_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js #swiper js依赖
+  custom_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css # 适配主题样式补丁
+  custom_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js # swiper初始化方法
+# tag-plugins-plus
+# see https://akilar.top/posts/615e2dec/
+tag_plugins:
+  enable: true # 开关
+  priority: 1 #过滤器优先权
+  issues: false #issues标签依赖注入开关
+  link:
+    placeholder: https://cdn.jsdelivr.net/gh/youngjuning/images@main/1680881735797.png #link_card标签默认的图标图片
+  CDN:
+    anima: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css #动画标签anima的依赖
+    jquery: https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js #issues标签依赖
+    issues: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/issues.js #issues标签依赖
+    iconfont: //at.alicdn.com/t/font_2032782_8d5kxvn09md.js #参看https://akilar.top/posts/d2ebecef/
+    carousel: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js
+    tag_plugins_css: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css
