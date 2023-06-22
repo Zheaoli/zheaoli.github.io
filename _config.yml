@@ -139,10 +139,17 @@ tag_plugins:
     carousel: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js
     tag_plugins_css: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css
 algolia:
-  appId: "XD463XL9QZ"
-  apiKey: "264afba4c9678d11bd38b9a36032f3c7"
-  adminApiKey: "344c5e830eb8738380e0f73618e1607e"
+  appId: "DL1RURGHTB"
+  apiKey: "b5dcaa5bc8475b89a2d8bf9f25f0b3ec"
+  adminApiKey: "b3f8d00518744b033edc7ec3be4c3175"
   chunkSize: 5000
   indexName: "manjusaka.blog"
   fields:
-  - content:strip:truncate,0,500
+    - content:strip:truncate,0,500
+    - excerpt:strip
+    - gallery
+    - permalink
+    - photos
+    - slug
+    - tags
+    - title
