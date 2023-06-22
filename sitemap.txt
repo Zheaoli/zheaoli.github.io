@@ -1,8 +1,4 @@
 https://manjusaka.blog/weekly/index.html
-https://manjusaka.blog/weekly/2022/2022-06-week3.html
-https://manjusaka.blog/weekly/2022/2022-06-week4.html
-https://manjusaka.blog/weekly/2022/2022-07-week1.html
-https://manjusaka.blog/weekly/2022/2022-07-week2.html
 https://manjusaka.blog/weekly/2022/2022-07-week3.html
 https://manjusaka.blog/weekly/2022/2022-07-week4.html
 https://manjusaka.blog/weekly/2022/2022-07-week5.html
@@ -52,10 +48,8 @@ https://manjusaka.blog/weekly/2023/2023-week5.html
 https://manjusaka.blog/weekly/2023/2023-week6.html
 https://manjusaka.blog/weekly/2023/2023-week7.html
 https://manjusaka.blog/weekly/2023/2023-week8.html
-https://manjusaka.blog/weekly/2023/index.html
 https://manjusaka.blog/weekly/2023/2023-week9.html
-https://manjusaka.blog/posts/2022/11/12/the-road-back-to-windows/
-https://manjusaka.blog/posts/2023/01/26/what-I-can-learn-from-a-refactor-project/
+https://manjusaka.blog/weekly/2023/index.html
 https://manjusaka.blog/posts/2017/08/13/what-the-fuck-about-flask-part1/
 https://manjusaka.blog/posts/2017/12/28/what-the-fuck-supvisor/
 https://manjusaka.blog/posts/2023/06/19/why-do-I-love-ultraman/
@@ -68,10 +62,10 @@ https://manjusaka.blog/posts/2016/07/22/%E5%9C%A8Swift%E4%B8%AD%E5%AE%9E%E7%8E%B
 https://manjusaka.blog/posts/2016/07/22/%E5%A5%BD%E4%B8%8E%E5%9D%8F%EF%BC%8CSwift%E9%9D%A2%E9%9D%A2%E8%A7%82-Part2/
 https://manjusaka.blog/posts/2016/07/22/%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8BiPhone%E5%A4%84%E4%BA%8E%E4%BD%8E%E7%94%B5%E9%87%8F%E6%A8%A1%E5%BC%8F/
 https://manjusaka.blog/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/
-https://manjusaka.blog/archives/index.html
 https://manjusaka.blog/about/index.html
-https://manjusaka.blog/resume/index.html
+https://manjusaka.blog/archives/index.html
 https://manjusaka.blog/categories/index.html
+https://manjusaka.blog/resume/index.html
 https://manjusaka.blog/tags/index.html
 https://manjusaka.blog/weekly/2022/2022-02-week1.html
 https://manjusaka.blog/weekly/2022/2022-02-week2.html
@@ -92,7 +86,10 @@ https://manjusaka.blog/weekly/2022/2022-05-week4.html
 https://manjusaka.blog/weekly/2022/2022-05-week5.html
 https://manjusaka.blog/weekly/2022/2022-06-week1.html
 https://manjusaka.blog/weekly/2022/2022-06-week2.html
-https://manjusaka.blog/posts/2022/01/31/a-simple-introduction-about-network-monitoring-in-linux-kernel/
+https://manjusaka.blog/weekly/2022/2022-06-week3.html
+https://manjusaka.blog/weekly/2022/2022-06-week4.html
+https://manjusaka.blog/weekly/2022/2022-07-week1.html
+https://manjusaka.blog/weekly/2022/2022-07-week2.html
 https://manjusaka.blog/posts/2020/11/07/a-simple-introduction-about-signal-process-in-linux-v2/
 https://manjusaka.blog/posts/2020/10/24/a-simple-introduction-about-signal-process-in-linux/
 https://manjusaka.blog/posts/2021/02/13/a-simple-introduction-about-the-init-process-in-container/
@@ -118,8 +115,8 @@ https://manjusaka.blog/posts/2020/01/05/simple-introdution-about-sql-prepared/
 https://manjusaka.blog/posts/2019/11/25/simple-test-about-new-macbook-pro/
 https://manjusaka.blog/posts/2017/06/07/some-note-for-asyncio/
 https://manjusaka.blog/posts/2020/06/29/some-tips-about-kubernetes-and-container/
-https://manjusaka.blog/posts/2017/11/27/something-about-concurrent-future/
 https://manjusaka.blog/posts/2021/05/07/something-I-want-to-share-about-sex-assault1/
+https://manjusaka.blog/posts/2017/11/27/something-about-concurrent-future/
 https://manjusaka.blog/posts/2018/02/22/something-about-decorator/
 https://manjusaka.blog/posts/2019/07/02/something-about-file-system-watch/
 https://manjusaka.blog/posts/2018/02/22/something-about-flask-context/
@@ -132,6 +129,8 @@ https://manjusaka.blog/posts/2023/01/07/special-case-no-space-left-on-device/
 https://manjusaka.blog/posts/2023/01/01/stay-simple-stay-naive/
 https://manjusaka.blog/posts/2020/03/01/talk-about-full-text-search-in-mysql/
 https://manjusaka.blog/posts/2016/09/01/the-easiest-core-data/
+https://manjusaka.blog/posts/2022/11/12/the-road-back-to-windows/
+https://manjusaka.blog/posts/2023/01/26/what-I-can-learn-from-a-refactor-project/
 https://manjusaka.blog/posts/2018/04/24/A-Fact-Sheet-By-PKU/
 https://manjusaka.blog/posts/2018/04/24/A-Fact-Sheet/
 https://manjusaka.blog/posts/2016/12/15/A-Simple-Object-Model/
@@ -152,6 +151,7 @@ https://manjusaka.blog/posts/2020/03/20/a-simple-history-about-type-hint-in-pyth
 https://manjusaka.blog/posts/2021/04/11/a-simple-introduce-about-ci-cd/
 https://manjusaka.blog/posts/2023/03/12/a-simple-introduction-about-iac/
 https://manjusaka.blog/posts/2020/05/22/a-simple-introduction-about-maglev/
+https://manjusaka.blog/posts/2022/01/31/a-simple-introduction-about-network-monitoring-in-linux-kernel/
 https://manjusaka.blog/404.html
 https://manjusaka.blog/
 https://manjusaka.blog/tags/%E7%A4%BE%E4%BC%9A/

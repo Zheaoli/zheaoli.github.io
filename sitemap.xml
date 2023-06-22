@@ -11,42 +11,6 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-06-week3.html</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-06-week4.html</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-07-week1.html</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/weekly/2022/2022-07-week2.html</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://manjusaka.blog/weekly/2022/2022-07-week3.html</loc>
     
     <lastmod>2023-06-22</lastmod>
@@ -488,15 +452,6 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/weekly/2023/index.html</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://manjusaka.blog/weekly/2023/2023-week9.html</loc>
     
     <lastmod>2023-06-22</lastmod>
@@ -506,16 +461,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/posts/2022/11/12/the-road-back-to-windows/</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://manjusaka.blog/posts/2023/01/26/what-I-can-learn-from-a-refactor-project/</loc>
+    <loc>https://manjusaka.blog/weekly/2023/index.html</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -632,15 +578,6 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/archives/index.html</loc>
-    
-    <lastmod>2023-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://manjusaka.blog/about/index.html</loc>
     
     <lastmod>2023-06-22</lastmod>
@@ -650,7 +587,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/resume/index.html</loc>
+    <loc>https://manjusaka.blog/archives/index.html</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -660,6 +597,15 @@
   
   <url>
     <loc>https://manjusaka.blog/categories/index.html</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/resume/index.html</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -848,7 +794,34 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/posts/2022/01/31/a-simple-introduction-about-network-monitoring-in-linux-kernel/</loc>
+    <loc>https://manjusaka.blog/weekly/2022/2022-06-week3.html</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2022/2022-06-week4.html</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2022/2022-07-week1.html</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/weekly/2022/2022-07-week2.html</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -1082,7 +1055,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/posts/2017/11/27/something-about-concurrent-future/</loc>
+    <loc>https://manjusaka.blog/posts/2021/05/07/something-I-want-to-share-about-sex-assault1/</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -1091,7 +1064,7 @@
   </url>
   
   <url>
-    <loc>https://manjusaka.blog/posts/2021/05/07/something-I-want-to-share-about-sex-assault1/</loc>
+    <loc>https://manjusaka.blog/posts/2017/11/27/something-about-concurrent-future/</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -1200,6 +1173,24 @@
   
   <url>
     <loc>https://manjusaka.blog/posts/2016/09/01/the-easiest-core-data/</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2022/11/12/the-road-back-to-windows/</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2023/01/26/what-I-can-learn-from-a-refactor-project/</loc>
     
     <lastmod>2023-06-22</lastmod>
     
@@ -1380,6 +1371,15 @@
   
   <url>
     <loc>https://manjusaka.blog/posts/2020/05/22/a-simple-introduction-about-maglev/</loc>
+    
+    <lastmod>2023-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://manjusaka.blog/posts/2022/01/31/a-simple-introduction-about-network-monitoring-in-linux-kernel/</loc>
     
     <lastmod>2023-06-22</lastmod>
     
