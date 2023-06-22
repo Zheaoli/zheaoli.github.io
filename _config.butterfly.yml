@@ -868,7 +868,7 @@ CDN:
     translate: https://manjusaka.blog/js/tw_cn.js
     local_search: https://manjusaka.blog/js/search/local-search.js
     # main_css: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/css/index.css
-    # algolia_js:
+    algolia_js: https://manjusaka.blog/js/search/algolia.js
     # algolia_search_v4:
     # instantsearch_v4:
     # pjax:
