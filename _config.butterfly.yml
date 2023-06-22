@@ -315,7 +315,7 @@ waline:
 # utterances
 # https://utteranc.es/
 utterances:
-  repo: youngjuning/youngjuning.github.io
+  repo: Zheaoli/zheaoli.github.io
   # Issue Mapping: pathname/url/title/og:title
   issue_term: og:title
   # Theme: github-light/github-dark/github-dark-orange/icy-dark/dark-blue/photon-dark
@@ -437,15 +437,7 @@ ad:
 # Verification (站長驗證)
 # --------------------------------------
 
-site_verification:
-  # Google Webmaster tools verification.
-  # See: https://search.google.com/search-console
-  - name: google-site-verification
-    content: ohZ0A8YKJu755suq7WOIJkLGDfj3BGU4isb8RKI5Cj8
-  # Baidu Webmaster tools verification.
-  # See: https://ziyuan.baidu.com/site
-  - name: baidu-site-verification
-    content: codeva-seFAiiGXVd
+
 
 # Beautify/Effect (美化/效果)
 # --------------------------------------
