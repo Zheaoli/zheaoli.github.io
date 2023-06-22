@@ -11,7 +11,7 @@
     "server": "hexo clean && hexo server",
     "post": "hexo new",
     "draft": "hexo new draft",
-    "algolia": "hexo algolia"
+    "public": "hexo g & hexo algolia"
   },
   "hexo": {
     "version": "6.3.0"
