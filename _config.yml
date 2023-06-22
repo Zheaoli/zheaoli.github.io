@@ -140,8 +140,6 @@ tag_plugins:
     tag_plugins_css: https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css
 algolia:
   appId: "DL1RURGHTB"
-  apiKey: "b5dcaa5bc8475b89a2d8bf9f25f0b3ec"
-  adminApiKey: "b3f8d00518744b033edc7ec3be4c3175"
   chunkSize: 5000
   indexName: "manjusaka.blog"
   fields:
