@@ -1,7 +1,4 @@
 https://www.manjusaka.blog/weekly/index.html
-https://www.manjusaka.blog/weekly/2022/2022-08-week4.html
-https://www.manjusaka.blog/weekly/2022/2022-09-week1.html
-https://www.manjusaka.blog/weekly/2022/2022-09-week2.html
 https://www.manjusaka.blog/weekly/2022/2022-09-week3.html
 https://www.manjusaka.blog/weekly/2022/2022-09-week4.html
 https://www.manjusaka.blog/weekly/2022/2022-10-week1.html
@@ -53,7 +50,6 @@ https://www.manjusaka.blog/weekly/2023/2023-week7.html
 https://www.manjusaka.blog/weekly/2023/2023-week8.html
 https://www.manjusaka.blog/weekly/2023/2023-week9.html
 https://www.manjusaka.blog/weekly/2023/index.html
-https://www.manjusaka.blog/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/
 https://www.manjusaka.blog/posts/2016/07/22/%E5%85%B3%E4%BA%8EPostCSS%E7%9A%84%E4%B8%80%E7%82%B9%E5%B0%8F%E7%A7%91%E6%99%AE/
 https://www.manjusaka.blog/posts/2016/07/22/%E5%9C%A8Swift%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%92%A4%E9%94%80%E5%8A%9F%E8%83%BD/
 https://www.manjusaka.blog/posts/2016/07/22/%E5%A5%BD%E4%B8%8E%E5%9D%8F%EF%BC%8CSwift%E9%9D%A2%E9%9D%A2%E8%A7%82-Part2/
@@ -93,6 +89,9 @@ https://www.manjusaka.blog/weekly/2022/2022-07-week5.html
 https://www.manjusaka.blog/weekly/2022/2022-08-week1.html
 https://www.manjusaka.blog/weekly/2022/2022-08-week2.html
 https://www.manjusaka.blog/weekly/2022/2022-08-week3.html
+https://www.manjusaka.blog/weekly/2022/2022-08-week4.html
+https://www.manjusaka.blog/weekly/2022/2022-09-week1.html
+https://www.manjusaka.blog/weekly/2022/2022-09-week2.html
 https://www.manjusaka.blog/posts/2020/12/31/fuck-the-cloud-native/
 https://www.manjusaka.blog/posts/2023/06/16/how-do-I-build-homelab/
 https://www.manjusaka.blog/posts/2021/04/17/how-to-tracing-package-in-the-linux-kernel/
@@ -134,6 +133,7 @@ https://www.manjusaka.blog/posts/2023/06/19/why-do-I-love-ultraman/
 https://www.manjusaka.blog/posts/2018/02/22/why-i-dont-recommend-sanic/
 https://www.manjusaka.blog/posts/2018/10/04/why-i-dont-use-async/
 https://www.manjusaka.blog/posts/2022/11/22/why-i-love-the-open-source-community/
+https://www.manjusaka.blog/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/
 https://www.manjusaka.blog/posts/2018/04/24/A-Fact-Sheet-By-PKU/
 https://www.manjusaka.blog/posts/2018/04/24/A-Fact-Sheet/
 https://www.manjusaka.blog/posts/2016/12/15/A-Simple-Object-Model/

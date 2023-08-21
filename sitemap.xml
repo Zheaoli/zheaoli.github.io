@@ -11,33 +11,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-08-week4.html</loc>
-    
-    <lastmod>2023-08-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week1.html</loc>
-    
-    <lastmod>2023-08-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week2.html</loc>
-    
-    <lastmod>2023-08-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week3.html</loc>
     
     <lastmod>2023-08-21</lastmod>
@@ -497,15 +470,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/</loc>
-    
-    <lastmod>2023-08-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/posts/2016/07/22/%E5%85%B3%E4%BA%8EPostCSS%E7%9A%84%E4%B8%80%E7%82%B9%E5%B0%8F%E7%A7%91%E6%99%AE/</loc>
     
     <lastmod>2023-08-21</lastmod>
@@ -849,6 +813,33 @@
   
   <url>
     <loc>https://www.manjusaka.blog/weekly/2022/2022-08-week3.html</loc>
+    
+    <lastmod>2023-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-08-week4.html</loc>
+    
+    <lastmod>2023-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week1.html</loc>
+    
+    <lastmod>2023-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week2.html</loc>
     
     <lastmod>2023-08-21</lastmod>
     
@@ -1218,6 +1209,15 @@
   
   <url>
     <loc>https://www.manjusaka.blog/posts/2022/11/22/why-i-love-the-open-source-community/</loc>
+    
+    <lastmod>2023-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/</loc>
     
     <lastmod>2023-08-21</lastmod>
     
