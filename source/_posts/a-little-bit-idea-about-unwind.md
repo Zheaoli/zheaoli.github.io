@@ -9,6 +9,8 @@ toc: true
 
 随手记录一些关于用户态栈回溯（Unwind）的一些杂记和想法。
 
+<!--more-->
+
 ## 正文
 
 昨晚三点过刚吃完药躺在床上休息的时候，突然想到了 @yihong0618 的之前在群里的一个想法
@@ -197,3 +199,7 @@ probe process("/lib64/libpq.so").function("PQfinish") {
 所以遇到问题的时候，可能优先考虑编译一些带着埋点的二进制文件。有可能你搞 print 大法都比 unwind 更好用（XD
 
 差不多这样
+
+最后，推荐一个雄文
+
+https://maskray.me/blog/2020-11-08-stack-unwinding
