@@ -69,3 +69,4 @@ token
 
 package-lock.json
 .vscode
+.vercel
