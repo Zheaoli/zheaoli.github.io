@@ -10,6 +10,7 @@ menu:
     归档: /archives/ || fas fa-archive
     随便逛逛: /random/ || fas fa-random
   周报: /weekly/ || fas fa-newspaper
+  刷题: /leetcode/ || fas fa-newspaper
   我的||fas fa-heart:
     关于: /about/ || fas fa-spa
     周报: /weekly/ || fas fa-newspaper
