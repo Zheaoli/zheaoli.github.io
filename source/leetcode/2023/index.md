@@ -6,3 +6,4 @@
 4. [2023-09-01: leetcode-0338](/leetcode/2023/09-01-leetcode-0338.html)
 5. [2023-09-02: leetcode-2707](/leetcode/2023/09-02-leetcode-2707.html)
 6. [2023-09-03: leetcode-0062](/leetcode/2023/09-03-leetcode-0062.html)
+7. [2023-09-04: leetcode-0141](/leetcode/2023/09-04-leetcode-0141.html)
