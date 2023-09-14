@@ -11,96 +11,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-11-week2.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-11-week3.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-11-week4.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week1.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week2.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week3.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week4.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week5.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/index.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week1.html</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/weekly/2023/2023-week10.html</loc>
     
     <lastmod>2023-09-14</lastmod>
@@ -956,7 +866,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2017/06/07/some-note-for-asyncio/</loc>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-11-week2.html</loc>
     
     <lastmod>2023-09-14</lastmod>
     
@@ -965,7 +875,79 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2020/06/29/some-tips-about-kubernetes-and-container/</loc>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-11-week3.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-11-week4.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week1.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week2.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week3.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week4.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week5.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/index.html</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week1.html</loc>
     
     <lastmod>2023-09-14</lastmod>
     
@@ -1226,7 +1208,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/archives/index.html</loc>
+    <loc>https://www.manjusaka.blog/about/index.html</loc>
     
     <lastmod>2023-09-14</lastmod>
     
@@ -1235,7 +1217,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/about/index.html</loc>
+    <loc>https://www.manjusaka.blog/archives/index.html</loc>
     
     <lastmod>2023-09-14</lastmod>
     
@@ -1424,6 +1406,15 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/posts/2021/02/11/do-anything-you-want/</loc>
     
     <lastmod>2023-09-14</lastmod>
@@ -1434,15 +1425,6 @@
   
   <url>
     <loc>https://www.manjusaka.blog/posts/2019/11/04/for-one-year-anniversary/</loc>
-    
-    <lastmod>2023-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/</loc>
     
     <lastmod>2023-09-14</lastmod>
     
@@ -1596,6 +1578,24 @@
   
   <url>
     <loc>https://www.manjusaka.blog/posts/2019/11/25/simple-test-about-new-macbook-pro/</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2017/06/07/some-note-for-asyncio/</loc>
+    
+    <lastmod>2023-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2020/06/29/some-tips-about-kubernetes-and-container/</loc>
     
     <lastmod>2023-09-14</lastmod>
     
