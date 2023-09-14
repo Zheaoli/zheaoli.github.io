@@ -44,7 +44,7 @@ social:
   fab fa-github: https://github.com/ZheaoLi || Github
   fas fa-envelope: mailto:me@manjusaka.me|| Email
   fab fa-twitter: https://twitter.com/Manjusaka_Lee || 推特
-  fab fa-feed: /atom.xml || RSS
+  fab fa-rss: /atom.xml || RSS
 
 # search (搜索)
 # see https://butterfly.js.org/posts/ceeb73f/#搜索系統
