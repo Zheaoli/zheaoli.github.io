@@ -44,7 +44,7 @@ social:
   fab fa-github: https://github.com/ZheaoLi || Github
   fas fa-envelope: mailto:me@manjusaka.me|| Email
   fab fa-twitter: https://twitter.com/Manjusaka_Lee || 推特
-  fab fa-rss: /atom.xml || RSS
+  fa-solid fa-feed: /atom.xml || RSS
 
 # search (搜索)
 # see https://butterfly.js.org/posts/ceeb73f/#搜索系統
@@ -905,7 +905,7 @@ CDN:
     # fireworks:
     # click_heart:
     # ClickShowText:
-    # fontawesomeV6:
+    # fontawesomeV6: https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css
     # flickr_justified_gallery_js:
     # flickr_justified_gallery_css:
     # aplayer_css:
