@@ -25,3 +25,4 @@
 23. [2023-09-20: leetcode-1658](/leetcode/2023/09-20-leetcode-1658.html)
 24. [2023-09-22: leetcode-0392](/leetcode/2023/09-22-leetcode-0392.html)
 25. [2023-09-23: leetcode-1048](/leetcode/2023/09-23-leetcode-1048.html)
+26. [2023-09-24: leetcode-0799](/leetcode/2023/09-24-leetcode-0799.html)
