@@ -30,3 +30,4 @@
 28. [2023-09-26: leetcode-0316](/leetcode/2023/09-26-leetcode-0316.html)
 29. [2023-09-27: leetcode-0880](/leetcode/2023/09-27-leetcode-0880.html)
 30. [2023-09-28: leetcode-0896](/leetcode/2023/09-28-leetcode-0896.html)
+31. [2023-09-30: leetcode-0456](/leetcode/2023/09-30-leetcode-0456.html)
