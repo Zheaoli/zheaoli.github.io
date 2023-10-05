@@ -93,7 +93,7 @@ OK，在大致了解了 Python 的栈帧的一些入门知识后，我们接着�
 
 #### trace 的尝试
 
-Python 目前对于 Trace 的尝试最早可以追溯到2014年，在 3.6 发布前夕，Python 提供了 DTrace 的支持，参见 [<sup>Systemtap and DTrace support</sup>](#refer-anchor-1)
+Python 目前对于 Trace 的尝试最早可以追溯到2014年，在 3.6 发布前夕，Python 提供了 DTrace 的支持，参见 Systemtap and DTrace support[<sup>1</sup>](#refer-anchor-1)
 
 DTrace 是在 Unix/Linux 下提供的一种用户预置一些埋点的基础设施。在对应的函数预置埋点后，对应位置的调用可以触发外部的注册程序（包含 SystemTap/eBPF 等），从而实现对于一些调用时的动态 trace。
 
@@ -219,7 +219,7 @@ OK 基于 X86 的调用约定，rbi 用于存放函数第一个参数，即我�
 但是目前基于 DTrace 的方案有这样一些问题
 
 1. 不通用，需要在不同的平台上来反汇编获取对应的寄存器，同时不同的 Python 版本的寄存器位置也不一样（3.9 以下是 r15， 3.10/3.11 是 rbx）
-2. Python 官方对于 Dtrace 的上心，导致 API 时不时的失灵，比如今天从4月份到现在，Dtrace function__entry 的 probe 点因为 PEP 669 的实现失效至今没法修，参见 [<sup>Missing DTrace probes</sup>](#refer-anchor-2)
+2. Python 官方对于 Dtrace 的上心，导致 API 时不时的失灵，比如今天从4月份到现在，Dtrace function__entry 的 probe 点因为 PEP 669 的实现失效至今没法修，参见 Missing DTrace probes[<sup>2</sup>](#refer-anchor-2)
 3. 粒度太粗了，每个函数都需要过一次 function__entry， 性能地狱
 
 #### perf 类采样的尝试
@@ -233,9 +233,9 @@ OK 基于 X86 的调用约定，rbi 用于存放函数第一个参数，即我�
 
 我们都知道，对于非 NATIVE CODE 来说，perf 很多时候没有办法生效，因为你找不到对应的地址和具体的符号之间的映射，也无从谈起去采样。
 
-好在 2009 年 Linux 3.x 之后，perf 提供新的功能，它允许用户往 `/tmp/perf-%d.map` 文件中写入地址与符号之间的映射，这样 perf 就可以通过这个文件来解析地址了。具体可以参见 [<sup>perf report: Add support for profiling JIT generated code share</sup>](#refer-anchor-3)
+好在 2009 年 Linux 3.x 之后，perf 提供新的功能，它允许用户往 `/tmp/perf-%d.map` 文件中写入地址与符号之间的映射，这样 perf 就可以通过这个文件来解析地址了。具体可以参见 perf report: Add support for profiling JIT generated code share[<sup>3</sup>](#refer-anchor-3)
 
-在 Java/Node.js 都对于这个功能有了支持后，Python 也在 3.12 中提供了对于这个功能的支持，具体可以参见 [<sup>gh-96143: Allow Linux perf profiler to see Python calls</sup>](#refer-anchor-4)
+在 Java/Node.js 都对于这个功能有了支持后，Python 也在 3.12 中提供了对于这个功能的支持，具体可以参见 gh-96143: Allow Linux perf profiler to see Python calls[<sup>4</sup>](#refer-anchor-4)
 
 这个功能的实现其实是一种局部的 JIT，我们来看看具体的实现
 
