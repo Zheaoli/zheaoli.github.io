@@ -41,3 +41,4 @@
 39. [2023-10-11: leetcode-2251](/leetcode/2023/10-11-leetcode-2251.html)
 40. [2023-10-13: leetcode-0746](/leetcode/2023/10-13-leetcode-0746.html)
 41. [2023-10-14: leetcode-2742](/leetcode/2023/10-14-leetcode-2742.html)
+42. [2023-10-15: leetcode-1269](/leetcode/2023/10-15-leetcode-1269.html)
