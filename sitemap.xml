@@ -11,60 +11,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week1.html</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week2.html</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week3.html</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week4.html</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-10-week1.html</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-10-week2.html</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/weekly/2022/2022-10-week3.html</loc>
     
     <lastmod>2023-10-18</lastmod>
@@ -1109,6 +1055,78 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week1.html</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week2.html</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week3.html</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-09-week4.html</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-10-week1.html</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-10-week2.html</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2020/03/01/talk-about-full-text-search-in-mysql/</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2016/09/01/the-easiest-core-data/</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/posts/2023/10/05/the-perf-feature-python-312/</loc>
     
     <lastmod>2023-10-18</lastmod>
@@ -1424,6 +1442,24 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2021/02/11/do-anything-you-want/</loc>
+    
+    <lastmod>2023-10-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/posts/2019/11/04/for-one-year-anniversary/</loc>
     
     <lastmod>2023-10-18</lastmod>
@@ -1712,24 +1748,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2020/03/01/talk-about-full-text-search-in-mysql/</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2016/09/01/the-easiest-core-data/</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/posts/2018/04/24/A-Fact-Sheet-By-PKU/</loc>
     
     <lastmod>2023-10-18</lastmod>
@@ -1974,24 +1992,6 @@
   
   <url>
     <loc>https://www.manjusaka.blog/posts/2018/12/31/about-me-2019/</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/</loc>
-    
-    <lastmod>2023-10-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2021/02/11/do-anything-you-want/</loc>
     
     <lastmod>2023-10-18</lastmod>
     
