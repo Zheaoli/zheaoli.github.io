@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>开源可能没你想的那么难</title>
+      <link href="//posts/2023/10/24/open-source-is-simple-than-you-think/"/>
+      <url>//posts/2023/10/24/open-source-is-simple-than-you-think/</url>
+      
+        <content type="html"><![CDATA[<p>去参与社区？难吗？其实不难，只是你想的很难，或者说难是你给自己找的借口</p><span id="more"></span><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>很多人觉得参与进开源社区很难，无外乎几个原因</p><ol><li>觉得自己技术栈不符合</li><li>觉得没啥事可以做</li><li>觉得太难了</li></ol><p>我自己对于这个观点表示不太认可，所以我从九月中旬开始，用了一个月时间，利用 <a href="https://github.com/apache/incubator-opendal">incubator-opendal</a> 做了一个实验，为什么会选择这个项目？原因以下几点</p><ol><li>Rust 对于我来说是一门我非常不熟悉的语言，相当于我跨技术栈去做一些事情</li><li>我自己之前是做网关和容器相关的偏多，存储方面对于我来说不是在我的好球区</li></ol><p>所以我想看一下，我自己作为 fresh man 能在这个社区里面做什么事</p><p>截止到今天，我整体的提交记录如下</p><p><img src="https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/2fcdab1e-e516-4811-8901-8cf52ae6bcb5" alt="提交记录"></p><p>整体的花费的时间接近34h</p><p><img src="https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/bc2c35f8-60f0-4de6-b884-2a59d5c5a0de" alt="项目时间统计"></p><p><img src="https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/4f2d7f00-e74e-482e-a486-26c62946c6cf" alt="项目时间统计"></p><p>整体工作内容横跨了几个方面</p><ol><li>多个 Service 的支持（MySQL/Sqlite/MongoDB）</li><li>拾掇拾掇了 CI，参与 Action 的重构</li><li>把整体 Layer 的文档覆盖了</li><li>把可观测性的部分做了不少改进</li></ol><p>而截止到目前，还有很多工作需要去继续跟进，比如</p><ol><li>基于 DTrace 的进程调试支持</li><li>可观测性的几个 Layer 的完善</li><li>Layer 的测试补全</li></ol><p>大概总结一下就是通过这一个月的历练，我自己 Rust 熟练度得到了极大的提升（感谢 @Xuanwo 的不杀之恩），我自己对于整个社区的运作的理解也得到了印证。从我个人的角度来说，这次一次实验算是符合我的预期：很多时候开源没你想的那么难。</p><p>首先一点，我要纠正一个我经常见到的一个错误的观点“社区里只有那些技术难度很大，很有挑战的工作才是有价值的”。完全错误的观点，我之前和 @Xuanwo 以及 @Tison 有一个共同的观点是，很多工作并不是一开始就变得困难，而是一点点的需求形成。同时一个社区里往往存在很多关系到用户体验，必须要有人去做，但是受限于精力，已有的维护者暂时没法去做的事情。这些都是非常有价值的。</p><p>比如说我过去一个月内，花了不少的精力，将相关 Service 的文档补全，是个很典型的例子。这一些活，对于后续进入社区的成员来说，价值非常的大，但是做起来很苦逼，所以一直搁置到现在。这些活都会是一个良好的切入点。那么可能有人要问一个问题了，你去做这些脏活累活值吗？这个问题就需要去从你参与开源社区的出发点去讨论了，是去获取 reputation，然后升职加薪？还是 just for fun？如果是前者，那肯定不值，这位同学你肯定也不想在你的晋升答辩上协商善于做脏活累活吧（逃。如果是后者，我个人觉得很值，而且我自己也乐在其中，因为实际上在梳理整个文档，做很多脏活累活的过程中，实际上是 push 我去完整的梳理 OpenDAL 相关的 Service 和一些背后的逻辑。这个过程无论是对于我技术栈的提升还是对于项目本身的理解的提升都是蛮大的</p><p>说到另外一个问题，就是很多人的畏难情绪，我不只一次将一些合适的 Issue 放到不同群里，但是得到的回复通常是“我不会xx，该怎么办？”。学啊？而且很多时候熟不熟练真的没那么重要的，我记得在实现 OpenDAL 里面一些 Service 过程中，发现了一个优化点，<a href="https://github.com/apache/incubator-opendal/issues/3220">feat: change blocking_x in async_x call to tokio::task::blocking_spawn</a>，在我发到一些群里后，一位正在学习 Rust 的群友接下来这个任务，而且完成的很好。实际上去做自己最熟悉的东西是不太会给你打来成长的，去跳出舒适区，去和不同人交流，去做一些自己不熟悉的事情，才是最好的成长方式。</p><p><img src="https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/fea7e1f9-acaf-4658-838a-989c003782da" alt="和群友的一些交流"></p><p>最后还有一点非常的重要，你自己经历的珍贵，你自己可能都没意识到。每个人不同的职业，学习经历会塑造一个人不同的看问题的视角，而不同的视角是一个社区最珍贵的财富。其实这个月里，我对于 OpenDAL 可观测性相关的 Layer 的工作（包括完善 Metric，目前正在实现中的引入进程调试工具等工作）实际上就是来自于我作为一个 SRE 对于可观测性基本本能。而我这样一些 SRE 的视角，也给 OpenDAL 带来了整个稳定性相关功能的迭代与进步。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实说了这么多，千言万语汇聚成一句话，如果你想去参与开源社区，那么就去勇敢参与，不需要给自己设限。你一定会在你不断的参与的过程中得到许许多多的收获，认识不同的人与事。</p><p>开源真没你想的那么难</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+          <category> 杂记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 编程 </tag>
+            
+            <tag> 杂记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>聊聊 Python 3.12 中 perf 的原生支持</title>
       <link href="//posts/2023/10/05/the-perf-feature-python-312/"/>
       <url>//posts/2023/10/05/the-perf-feature-python-312/</url>
