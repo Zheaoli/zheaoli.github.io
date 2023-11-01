@@ -11,6 +11,114 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week2.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week3.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week4.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week5.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2022/index.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week1.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week10.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week11.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week12.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week13.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week14.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/weekly/2023/2023-week15.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/weekly/2023/2023-week16.html</loc>
     
     <lastmod>2023-11-01</lastmod>
@@ -344,7 +452,124 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/leetcode/index.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/resume/index.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/tags/index.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-16-leetcode-0119.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-17-leetcode-1361.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-18-leetcode-2050.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-19-leetcode-0844.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-20-leetcode-0341.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-21-leetcode-1425.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-22-leetcode-1793.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-30-leetcode-1356.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/10-31-leetcode-2433.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/11-01-leetcode-0501.html</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/leetcode/2023/index.html</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -749,7 +974,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week2.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2018/02/22/why-i-dont-recommend-sanic/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -758,7 +983,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week3.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2018/10/04/why-i-dont-use-async/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -767,7 +992,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week4.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2022/11/22/why-i-love-the-open-source-community/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -776,7 +1001,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/2022-12-week5.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -785,7 +1010,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2022/index.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2016/07/22/%E5%85%B3%E4%BA%8EPostCSS%E7%9A%84%E4%B8%80%E7%82%B9%E5%B0%8F%E7%A7%91%E6%99%AE/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -794,61 +1019,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week1.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week10.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week11.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week12.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week13.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week14.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/weekly/2023/2023-week15.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2016/07/22/%E5%9C%A8Swift%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%92%A4%E9%94%80%E5%8A%9F%E8%83%BD/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -903,24 +1074,6 @@
   
   <url>
     <loc>https://www.manjusaka.blog/categories/index.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/leetcode/index.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/resume/index.html</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1307,7 +1460,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-16-leetcode-0119.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2018/12/31/i-have-girlfriend/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1316,7 +1469,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-17-leetcode-1361.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2023/08/10/is-it-possible-to-lose-the-signal-in-linux/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1325,7 +1478,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-18-leetcode-2050.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2017/02/10/it-s-my-way/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1334,7 +1487,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-19-leetcode-0844.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2020/02/10/leetcode-biweekly-contest-19/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1343,7 +1496,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-20-leetcode-0341.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2020/02/02/leetcode-weekly-contest-174/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1352,7 +1505,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-21-leetcode-1425.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2020/02/23/leetcode-weekly-contest-176/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1361,7 +1514,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-22-leetcode-1793.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2022/04/05/leetcode-weekly-contest-287/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1370,25 +1523,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-30-leetcode-1356.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/10-31-leetcode-2433.html</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/leetcode/2023/index.html</loc>
+    <loc>https://www.manjusaka.blog/posts/2018/02/22/logging-process-safe/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1667,7 +1802,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2018/02/22/why-i-dont-recommend-sanic/</loc>
+    <loc>https://www.manjusaka.blog/posts/2018/04/24/A-Fact-Sheet/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1676,7 +1811,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2018/10/04/why-i-dont-use-async/</loc>
+    <loc>https://www.manjusaka.blog/posts/2016/12/15/A-Simple-Object-Model/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1685,7 +1820,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2022/11/22/why-i-love-the-open-source-community/</loc>
+    <loc>https://www.manjusaka.blog/posts/2018/04/24/A-public-letter-to-PKU/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1694,7 +1829,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/</loc>
+    <loc>https://www.manjusaka.blog/posts/2022/08/07/A-simple-introduction-about-cpu-and-memory-limit-in-docker/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1703,7 +1838,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2016/07/22/%E5%85%B3%E4%BA%8EPostCSS%E7%9A%84%E4%B8%80%E7%82%B9%E5%B0%8F%E7%A7%91%E6%99%AE/</loc>
+    <loc>https://www.manjusaka.blog/posts/2016/10/25/Declarative-API-Design-in-Swift/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1712,7 +1847,16 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2016/07/22/%E5%9C%A8Swift%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%92%A4%E9%94%80%E5%8A%9F%E8%83%BD/</loc>
+    <loc>https://www.manjusaka.blog/posts/2016/10/09/Function-Naming-In-Swift-3/</loc>
+    
+    <lastmod>2023-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/posts/2016/08/13/How-a-template-engine-works/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
@@ -1955,142 +2099,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/posts/2018/12/31/i-have-girlfriend/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2023/08/10/is-it-possible-to-lose-the-signal-in-linux/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2017/02/10/it-s-my-way/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2020/02/10/leetcode-biweekly-contest-19/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2020/02/02/leetcode-weekly-contest-174/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2020/02/23/leetcode-weekly-contest-176/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2022/04/05/leetcode-weekly-contest-287/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2018/02/22/logging-process-safe/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/posts/2018/04/24/A-Fact-Sheet-By-PKU/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2018/04/24/A-Fact-Sheet/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2016/12/15/A-Simple-Object-Model/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2018/04/24/A-public-letter-to-PKU/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2022/08/07/A-simple-introduction-about-cpu-and-memory-limit-in-docker/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2016/10/25/Declarative-API-Design-in-Swift/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2016/10/09/Function-Naming-In-Swift-3/</loc>
-    
-    <lastmod>2023-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/posts/2016/08/13/How-a-template-engine-works/</loc>
     
     <lastmod>2023-11-01</lastmod>
     
