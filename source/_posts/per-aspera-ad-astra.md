@@ -52,6 +52,8 @@ swiper_index: 5
 
 差不多是这样，如果说 2023 年是足够 tough 的一年，那么被爱与希望环绕着的我，也好歹算是走了出来
 
+![小狗](https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/820e2a75-cc1f-49b5-87d9-11fb5a00156f)
+
 ## 感情
 
 感情继续进入了第五个年头，可能还会有剩下很多个年头
@@ -67,6 +69,8 @@ swiper_index: 5
 啊！荆澈同学今年还给我买了变身器，她让我扛不住的时候按下变身器变身成奥特曼就好了！
 
 Gaia！（超大声
+
+![变身](https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/9e50dd06-e592-4b9b-a878-78f449e33ae3)
 
 ## 工作与技术
 
@@ -109,6 +113,8 @@ Gaia！（超大声
 
 仔细想想也还挺有时不我待之感
 
+![我的 GitHub](https://github.com/Zheaoli/zheaoli.github.io/assets/7054676/baf17e19-a65a-4c43-822c-0e2e3cb56df3)
+
 ## 总结
 
 差不多这样吧。对照了一下去年列的 OKR，今年其实有不少没有完成，但是我还是想冒昧给自己一个 3.75（XD， 毕竟我活下来了（阿里味太重了（不是
@@ -120,4 +126,3 @@ Per aspera, Ad astra
 我很喜欢的翻译是
 
 > 循此苦旅，终抵星辰
-
