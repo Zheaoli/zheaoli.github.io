@@ -17,13 +17,13 @@ Python 3.12 绝对是一个史诗级版本，在我心目中，它对于 Python 
 
 理解我这一个观点，我们来说一下 Python 的几大痛点：
 
-1. Python 的可调式性，可观测性问题。历史上 Python 中做 Cost 的消耗极大，同时没有足够的手段可以从旁路去观察 Python 的运行时行为
+1. Python 的可调试性，可观测性问题。历史上 Python 中做 Cost 的消耗极大，同时没有足够的手段可以从旁路去观察 Python 的运行时行为
 2. Python GIL 问题，这个老生长谈了，不多说
 3. Python 的 C API/ABI 问题，之前暴露的 C API/ABI 通常和 CPython VM 实现细节耦合，导致跨版本兼容性会是一个问题
 
 而这样一些问题，Python 3.12 上都有了极大的进步
 
-1. PEP 669， GH-96143 极大提升了 Python 的可观测性，可调式性
+1. PEP 669， GH-96143 极大提升了 Python 的可观测性，可调试性
 2. PEP 684， A Per-Interpreter GIL， 提升 Python 进程内性能，为后续的 non-GIL 打下了良好的基础
 3. PEP 697 全新的 C API，进一步解耦 API/ABI 与 CPython VM 实现细节的耦合
 
