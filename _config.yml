@@ -157,3 +157,5 @@ algolia:
       - excerpt:strip
       - slug
       - title
+      - permalink
+      - path
