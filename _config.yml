@@ -143,11 +143,17 @@ algolia:
   chunkSize: 5000
   indexName: "manjusaka.blog"
   fields:
-    - content:strip:truncate,0,500
-    - excerpt:strip
-    - gallery
-    - permalink
-    - photos
-    - slug
-    - tags
-    - title
+    post_fields:
+      - content:strip:truncate,0,500
+      - excerpt:strip
+      - gallery
+      - permalink
+      - photos
+      - slug
+      - tags
+      - title
+    page_fields:
+      - content:strip:truncate,0,500
+      - excerpt:strip
+      - slug
+      - title
