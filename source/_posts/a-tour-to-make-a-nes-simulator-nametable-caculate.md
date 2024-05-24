@@ -23,6 +23,7 @@ NES 红白机的渲染过程相对来说比较复杂，为了讲今天的 mirror
 
 我们四个 nametables 的布局是这样的
 
+| Name | Name |
 | A | B |
 |---|---|
 | C | D |
