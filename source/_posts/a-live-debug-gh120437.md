@@ -1,9 +1,9 @@
 ---
 title: Debug 日志：CPython GH-120437
 type: tags
-date: 2024-05-12 01:00:00
-tags: [编程,Linux,笔记,水文]
-categories: [编程,Linux]
+date: 2024-06-20 03:40:00
+tags: [编程,CPython,笔记,水文]
+categories: [编程,CPython]
 toc: true
 ---
 
