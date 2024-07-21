@@ -282,9 +282,9 @@ static inline void Py_INCREF(PyObject *op)
 
 <div id="reference1"></div>
 
-1. [GH-121528](https://github.com/python/cpython/issues/121528)
+1. <https://github.com/python/cpython/issues/121528>
 
 <div id="reference2"></div>
 
-2. [GH-116115](https://github.com/python/cpython/pull/116115)
+2. <https://github.com/python/cpython/pull/116115>
 
