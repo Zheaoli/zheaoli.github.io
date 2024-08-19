@@ -15,7 +15,7 @@ Gevent 还是 asyncio 这一直是个经典的问题，在这里我们直接用�
 
 Lin Wei 老师珠玉在前
 
-![HiRedis](https://imgur.com/Jk2ubDY)
+![HiRedis](https://imgur.com/Jk2ubDY.png)
 
 给出了 asyncio 和 Gevnet 的极限性能。 在这里我们看到了 asyncio 配合 uvloop 基本上是 Gevent 的 double 了
 
@@ -259,19 +259,19 @@ OK， 我们现在来公布测试结果
 
 Django:
 
-![django](https://imgur.com/28P4bcT)
+![django](https://imgur.com/28P4bcT.png)
 
 FastAPI
 
-![FastAPI](https://imgur.com/T1xiYZe)
+![FastAPI](https://imgur.com/T1xiYZe.png)
 
 Flask
 
-![Flask](https://imgur.com/mUkzLNf)
+![Flask](https://imgur.com/mUkzLNf.png)
 
 Starlette 
 
-![Starlette](https://imgur.com/8Fu8vST)
+![Starlette](https://imgur.com/8Fu8vST.png)
 
 Django 毫无疑问的最后，其余三者的性能是 Flask + Gevent > Starlette > FastAPI，后三个框架 CPU 占用率均 > 90%
 
@@ -281,15 +281,15 @@ Django 毫无疑问的最后，其余三者的性能是 Flask + Gevent > Starlet
 
 Flask
 
-![Flask](https://imgur.com/9DjHr00)
+![Flask](https://imgur.com/9DjHr00.png)
 
 FastAPI
 
-![FastAPI](https://imgur.com/4hq7gqo)
+![FastAPI](https://imgur.com/4hq7gqo.png)
 
 Starlette
 
-![Starlette](https://imgur.com/Pugbi7M)
+![Starlette](https://imgur.com/Pugbi7M.png)
 
 Starlette > FastAPI > Flask + Gevent
 
