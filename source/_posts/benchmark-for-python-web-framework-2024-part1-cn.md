@@ -249,9 +249,10 @@ app = Starlette(debug=False, routes=routes)
 然后部署方式如下
 
 1. 各服务都部署在 K8S 上，POD 类型为 Guaranteed
-2. 服务限制 6Core 的 CPU
-3. Django 和 Flask 基于 Gevent + Gunicorn 进行部署，利用 Greenify 对二进制进行 Patch
-4. FastAPI 和 Starlette 基于 uvicorn 进行部署，使用 uvloop 作为 event loop
+2. 所有镜像都基于 3.12 构建
+3. 服务限制 6Core 的 CPU
+4. Django 和 Flask 基于 Gevent + Gunicorn 进行部署，利用 Greenify 对二进制进行 Patch
+5. FastAPI 和 Starlette 基于 uvicorn 进行部署，使用 uvloop 作为 event loop
 
 OK， 我们现在来公布测试结果
 

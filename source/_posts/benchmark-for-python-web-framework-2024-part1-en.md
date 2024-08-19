@@ -249,9 +249,10 @@ app = Starlette(debug=False, routes=routes)
 The deployment method is as follows:
 
 1. All services are deployed on K8S, with POD type as Guaranteed
-2. Services are limited to 6 Core CPU
-3. Django and Flask are deployed based on Gevent + Gunicorn, using Greenify to patch the binary
-4. FastAPI and Starlette are deployed based on uvicorn, using uvloop as the event loop
+2. All image is built base on the Python 3.12
+3. Services are limited to 6 Core CPU
+4. Django and Flask are deployed based on Gevent + Gunicorn, using Greenify to patch the binary
+5. FastAPI and Starlette are deployed based on uvicorn, using uvloop as the event loop
 
 OK, now let's reveal the test results.
 
