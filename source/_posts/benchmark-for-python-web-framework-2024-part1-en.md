@@ -15,7 +15,7 @@ The choice between Gevent and asyncio has always been a classic question. Here, 
 
 Professor Lin Wei has set a high standard:
 
-![HiRedis](https://imgur.com/Jk2ubDY.png)
+![HiRedis](https://i.imgur.com/Jk2ubDY.png)
 
 This graph shows the extreme performance of asyncio and Gevent. We can see that asyncio with uvloop is basically double the performance of Gevent.
 
@@ -260,19 +260,19 @@ OK, now let's reveal the test results.
 
 Django:
 
-![django](https://imgur.com/28P4bcT.png)
+![django](https://i.imgur.com/28P4bcT.png)
 
 FastAPI:
 
-![FastAPI](https://imgur.com/T1xiYZe.png)
+![FastAPI](https://i.imgur.com/T1xiYZe.png)
 
 Flask:
 
-![Flask](https://imgur.com/mUkzLNf.png)
+![Flask](https://i.imgur.com/mUkzLNf.png)
 
 Starlette:
 
-![Starlette](https://imgur.com/8Fu8vST.png)
+![Starlette](https://i.imgur.com/8Fu8vST.png)
 
 Django is undoubtedly the last, while the performance of the other three is Flask + Gevent > Starlette > FastAPI. The CPU usage of the latter three frameworks is all > 90%.
 
@@ -282,15 +282,15 @@ To be on the safe side, we conducted an idle test on the latter three frameworks
 
 Flask:
 
-![Flask](https://imgur.com/9DjHr00.png)
+![Flask](https://i.imgur.com/9DjHr00.png)
 
 FastAPI:
 
-![FastAPI](https://imgur.com/4hq7gqo.png)
+![FastAPI](https://i.imgur.com/4hq7gqo.png)
 
 Starlette:
 
-![Starlette](https://imgur.com/Pugbi7M.png)
+![Starlette](https://i.imgur.com/Pugbi7M.png)
 
 Starlette > FastAPI > Flask + Gevent
 
