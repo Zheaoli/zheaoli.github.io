@@ -30,6 +30,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace: null
+  exclude_languages: ['mermaid']
 default_category: uncategorized
 category_map: null
 tag_map: null

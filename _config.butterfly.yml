@@ -748,7 +748,8 @@ mermaid:
   theme:
     light: default
     dark: dark
-
+  code_write: true
+  
 # Note (Bootstrap Callout)
 note:
   # Note tag style values:
