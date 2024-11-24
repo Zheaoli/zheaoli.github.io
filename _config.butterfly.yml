@@ -50,6 +50,10 @@ social:
 # see https://butterfly.js.org/posts/ceeb73f/#搜索系統
 # --------------------------------------
 
+search:
+  use: algolia_search
+  placeholder: Search
+
 # Algolia search
 algolia_search:
   enable: true
