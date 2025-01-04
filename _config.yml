@@ -128,6 +128,13 @@ tag_plugins:
   issues: false #issues标签依赖注入开关
   link:
     placeholder: https://cdn.jsdelivr.net/gh/youngjuning/images@main/1680881735797.png #link_card标签默认的图标图片
+  CDN:
+    anima: https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css #动画标签anima的依赖
+    jquery: https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js #issues标签依赖
+    issues: https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/issues.js #issues标签依赖
+    iconfont: //at.alicdn.com/t/font_2032782_8d5kxvn09md.js #参看https://akilar.top/posts/d2ebecef/
+    carousel: https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js
+    tag_plugins_css: https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css
 algolia:
   appId: "DL1RURGHTB"
   chunkSize: 5000
