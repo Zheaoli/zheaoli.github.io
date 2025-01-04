@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Saka 馬鹿</title>
+      <link href="//posts/2025/01/04/saka-is-baka/"/>
+      <url>//posts/2025/01/04/saka-is-baka/</url>
+      
+        <content type="html"><![CDATA[<p>这篇博客是我在刷题群内的 2025 年的第一次分享整理的演讲稿。主要是完整复盘了过去几年里我犯下的两个比较典型的低级错误。</p><p>希望大家能看的开心</p><span id="more"></span><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>首先来看一下我们抽象后的架构</p><p><img src="https://i.imgur.com/4nVkyxt.png" alt="架构"></p><p>很平平常规的一个架构。而我犯的两次相对低级的错误分别是在数据的入口和数据落点上。OK 那么我们分别来看一下我犯下的错误</p><p>首先要分享的是我搞出的一个核心数据库删除的事故。在介绍事故现场之前，我将先介绍下下当时我们整体资源管理的结构</p><ol><li>我们基于 Terraform 管理资源</li><li>熟悉 Terraform 的同学都知道，Terraform 很重要的一点就是需要一个介质来存储当前 infra 的 state，这样能让后续的操作基于状态来实现 diff</li><li>我们当时的 state 是存储在 local fs ，state 文件跟随着 Git Repo 一起变更</li><li>我们基于目录划分不同业务需要的 AWS Infra 所对应的 Terraform 描述</li><li>关键设施没有开启删除保护</li></ol><p><img src="https://i.imgur.com/3WQ1eSg.png" alt="目录结构"></p><p>OK，我们继续往前讲，我们来激活一下事故现场的回忆</p><ol><li>事故当天，需要给一个新的业务需要一个 AWS Aurora 实例</li><li>我直接复制了一个目录，然后重命名为新业务名</li><li>删除一些不必要的 TF 声明后，我就直接开始 terraform apply 了</li><li>因为将之前的 TF State 文件迁移到了新目录，同时修改了 TF 声明。Terraform 会判定需要删除以往的资源。在 apply 阶段的 destory 提示被我忽略</li><li>于是数据库没了.jpg</li></ol><p>让我们先快进到事故的处理</p><ol><li>在接到报警发现异常后，先第一时间中断 Terraform 执行并同步所有关联同事。</li><li>将所有关联服务流量 cutoff 并同步客服团队</li><li>基于已有快照重建数据库</li><li>大约事发1.5h后，恢复业务流量</li></ol><p>非常刺激的一次经历。反思的部分我们放在后面。我们快进到第二次事故。CDN 变更事故。还是和之前一样先介绍一下大致的背景</p><ol><li>我们的 CDN 因为处于成本，和架构统一的考虑，使用的是 AWS 的 Cloudflare</li><li>CDN 前面套了一层基础的 WAF 来处理一些恶意流量</li><li>会有一些业务脚本调用 AWS API 来触发 CDN 的 invalid 操作</li><li>我们当时在处理反爬虫的一些事情，需要额外更新一些 WAF Rule</li></ol><p>那么梅开二度，让我们继续激活一下事故现场的回忆</p><ol><li>给 WAF 直接上了官方推荐的 Anti Bot Rule</li><li>因为当时 WAF Rule 不支持灰度功能，所以没有做灰度</li><li>由于 AWS Anti Bot rule 会将 Android/iOS 的 UA 识别为 Bot，导致客户端流量跌0</li></ol><p>继续快进到事故现场的处理</p><ol><li>立刻进入熔断流程，切断相关流量并同步客服团队</li><li>由于业务调用 AWS 触发了 AWS 账号的 rate limit，所以无法第一时间解除对应的 WAF 规则</li><li>先停止业务脚本调用</li><li>大约在事发40min后，AWS rate limit 解除，我们将 WAF 规则回滚到之前的版本，恢复业务流量</li></ol><p>痛苦的回忆先告一段落。我们来复盘一下我们这两个事故中的共性问题。首先务虚的说核心还是对生产抱有<strong>侥幸</strong>。那么从技术上来说存在哪些问题呢？</p><ol><li>核心基础设施保护设置不到位</li><li>核心基础设施变更 Review 缺乏</li><li>缺少关键变更的灰度机制</li><li>对于业务方使用基础设施的手段缺乏监控和治理（在事故2中，如果不存在 rate limit 的时间，那么整个故障时间可以缩短在 10 min 以内）</li></ol><p>所以围绕这样几个点，在事故发生后的一段时间内我在逐步推进一些改进</p><ol><li>我们统一将 terraform state 从 local fs + git 的组合中解放出来，迁移到了 S3 存储，这样为后续 Terraform workflow 改造打下基础</li><li>我们引入 <a href="https://www.runatlantis.io/">Atlantis</a> 来管理 Terraform 的 PR Review。对于核心基础设施的变更需要 double review</li><li>巡检其余 Redis/MySQL/Kafka 等基础设施，统一开启删除保护/二次验证</li><li>对于 CDN 这类变更引入如下流程（实际上分为 AWS 支持灰度前后）<ol><li>支持灰度前<ol><li>我们会从我们自建的网关中提取出一部分镜像 Query 流量</li><li>新建一个 CDN 实例</li><li>将新规则完整应用在新实例上后，进行流量重放，验证规则的有效性</li></ol></li><li>大约在2023年中后，AWS 对于 WAF 之类的规则新增了灰度的一些支持<ol><li>我们会在 AWS WAF 中新建一个规则，action 仅为统计</li><li>在确认规则不会存在误伤后，我们会将 action 修改为目标需求</li></ol></li></ol></li><li>我们在事后统一盘点了业务侧对于基础设施 API 的一些使用情况，将相关问题统一治理</li></ol><p>实际上在事故1和2中，我自己还有一些其余的建议给看到这篇文章的同学</p><ol><li>在事故发生后，如果预计恢复时间比较长，请第一时间将服务降级/切断入口流量。避免在恢复阶段流量不断进来同时存在缓存雪崩等情况下连锁反应导致恢复时间急剧增加</li><li>对于数据库等数据关键数据落地点，一定要存在下面这样一些 action<ol><li>备份一定需要做<ol><li>基于业务的重要性以及备份成本选择备份周期</li><li>PITR 增量和全量备份都需要做</li></ol></li><li>一定需要定时对备份进行重建测试，目的主要有以下一些<ol><li>验证备份的有效性（对于使用云厂商的数据库备份可靠性相对还好，自研工具做 fs snapshot 的需要特别注意）</li><li>验证不同规模下数据恢复的时间，在事故发生后对于恢复周期有个预期（在事故1中，因为我们之前没做过类似的演练，所以完全没法给出个时间点）（这里我们得到的一个参考时间经验公式是 9分钟/GB 的恢复时间）</li></ol></li></ol></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>差不多就这样，希望大家能从我的分享中得到一些启发。最后，希望大家在新的一年里都能够顺利，事事顺心。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+          <category> 随笔 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 编程 </tag>
+            
+            <tag> 随笔 </tag>
+            
+            <tag> 人生 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>本当の僕らをありがとう</title>
       <link href="//posts/2024/12/31/at-the-end-of-2024/"/>
       <url>//posts/2024/12/31/at-the-end-of-2024/</url>
