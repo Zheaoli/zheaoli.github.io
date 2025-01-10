@@ -7,25 +7,40 @@
 ## 个人信息
 
 * 本科/西华大学/信息工程（2012 ~ 2016）
-* 工作年限：6 年
-* 技术博客：https://manjusaka.itscoder.com 
-* 期望职位：中间件开发
-* 期望城市：北京
+* 工作年限：8 年
+* 技术博客：<https://manjusaka.blog>
 
 ## About Me
 
 1. 自驱力较强，能主动去学习新技术并且推动落地实现，并回馈社区。
-2. PyCon China 2018/2019/2020/2021 组织者，讲师。微软 Python 方向 MVP。
-3. 多年 Python 经验，具备良好的编程规范 。熟练掌握 Python 相关的技术开发工作。了解 Go/Java，阅读过部分 Go/CPython 代码。
-4. 熟练使用 Flask/Gunicorn/Gevent/Django/Celery 等 Python Web 开发过程中所使用的工具与技术栈，并阅读过 Flask/Greenlet 等项目源码
-5. 了解 Kubernetes 及其周边生态。能利用 Kubernetes 进行 PaaS 平台开发。阅读过部分 Kubernetes 源码
-6. 了解 TCP/HTTP1.x ，并阅读过开源社区部分实现
-7. 了解 Linux Kernel，并阅读过部分实现。同时对 Linux 中的一些新技术如 eBPF 有所涉猎并有落地经验  
-8. 能力较为全面，能同时承担技术社区 PR/布道/运营等工作
+2. PyCon China 2018 ~ 2024 组织者，讲师。微软 Python 方向 MVP。
+3. 具备大规模集群维护能力，同时具备大规模数据平台维护能力
+4. 多年 Python 经验，具备良好的编程规范 。熟练掌握 Python 相关的技术开发工作。了解 Go/Java，阅读过部分 Go/CPython 代码。
+5. 熟练使用 Flask/Gunicorn/Gevent/Django/Celery 等 Python Web 开发过程中所使用的工具与技术栈，并阅读过 Flask/Greenlet 等项目源码
+6. 了解 Kubernetes 及其周边生态。能利用 Kubernetes 进行 PaaS 平台开发。阅读过部分 Kubernetes 源码
+7. 了解 TCP/HTTP1.x ，并阅读过开源社区部分实现
+8. 了解 Linux Kernel，并阅读过部分实现。同时对 Linux 中的一些新技术如 eBPF 有所涉猎并有落地经验  
+9. 能力较为全面，能同时承担技术社区 PR/布道/运营等工作
 
 ## 工作经历
 
-### 2021.09-2022.06 Senior Engineer@Taichi Graphics
+### 2022.04-2024.12  Senior SRE/Blockchain Engineer@debank.com & rabby.io
+
+工作内容
+
+1. 负责整体业务平台维护
+2. 负责整体业务平台稳定性
+3. 部分区块链项目开发
+
+工作成果
+
+1. 基于 K8S 完成整体业务代码托管，高效集成 CI/CD Workflow
+2. 建立持续监控-反馈-迭代体系，将业务报错率从 5% 降至 0.5%
+3. 基于 OpenTelementry 完成业务平台与区块链项目的全链路追踪
+4. 持续调研新技术，将 isto 等前沿技术落地/自研业务特化组件以提升整体系统稳定性与可观测性
+5. 基于 TiDB 构建 PB 级数据平台，持续跟进数据治理，Match 业务数据侧稳定性需求
+
+### 2021.09-2022.04 Senior Engineer@Taichi Graphics
 
 工作内容：
 
