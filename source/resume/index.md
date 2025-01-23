@@ -24,7 +24,7 @@
 
 ## 工作经历
 
-### 2022.04-2024.12  Senior SRE/Blockchain Engineer@debank.com & rabby.io
+### 2022.04-2024.12  Senior SRE@debank.com & rabby.io
 
 工作内容
 
@@ -38,7 +38,8 @@
 2. 建立持续监控-反馈-迭代体系，将业务报错率从 5% 降至 0.5%
 3. 基于 OpenTelementry 完成业务平台与区块链项目的全链路追踪
 4. 持续调研新技术，将 isto 等前沿技术落地/自研业务特化组件以提升整体系统稳定性与可观测性
-5. 基于 TiDB 构建 PB 级数据平台，持续跟进数据治理，Match 业务数据侧稳定性需求
+5. 自研基础组件，完成数百条区块链节点云原生化并增强可观测性与流量治理能力
+6. 基于 TiDB 构建 PB 级数据平台，持续跟进数据治理，Match 业务数据侧稳定性需求
 
 ### 2021.09-2022.04 Senior Engineer@Taichi Graphics
 
