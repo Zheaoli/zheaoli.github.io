@@ -2,8 +2,8 @@
 title: 简单聊聊奥特曼中很有趣的细节
 type: tags
 date: 2024-02-20 17:00:00
-tags: [人生,杂记]
-categories: [人生,杂记]
+tags: [杂记,人生]
+categories: [杂记,人生]
 toc: true
 description: ヒーロが必要なんだよ，金城君。ヒーローが必要なんだ！
 swiper_index: 6

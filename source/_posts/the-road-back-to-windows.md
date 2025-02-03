@@ -2,8 +2,8 @@
 title: 重回 Windows 之路
 type: tags
 date: 2022-11-12 12:27:15
-tags: [技术,杂记]
-categories: [技术,杂记]
+tags: [杂记,技术]
+categories: [杂记,技术]
 toc: true
 ---
 

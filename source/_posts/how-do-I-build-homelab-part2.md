@@ -3,7 +3,7 @@ title: "家庭 Homelab 升级计划: v2"
 type: tags
 date: 2023-12-28 20:00:00
 tags: [Homelab,Linux,笔记,水文]
-categories: [Homelab]
+categories: [生活,电子产品,Homelab]
 toc: true
 description: 人生嘛，Homelab 图个乐子
 swiper_index: 3

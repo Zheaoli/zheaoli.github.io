@@ -2,8 +2,8 @@
 title: 从一个重构项目中能学到什么东西
 type: tags
 date: 2023-01-27 00:00:00
-tags: [技术,杂记]
-categories: [技术,杂记]
+tags: [杂记,技术]
+categories: [杂记,技术]
 toc: true
 ---
 

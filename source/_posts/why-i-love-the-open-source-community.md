@@ -2,8 +2,8 @@
 title: 我所热爱的开源社区 
 type: tags
 date: 2022-11-23 04:00:00
-tags: [技术,杂记]
-categories: [技术,杂记]
+tags: [杂记,技术]
+categories: [杂记,技术]
 toc: true
 ---
 

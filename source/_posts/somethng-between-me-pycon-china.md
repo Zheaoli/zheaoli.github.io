@@ -2,8 +2,8 @@
 title: 我与 PyCon China 这两年
 type: tags
 date: 2019-11-03 22:27:15
-tags: [人生,杂记]
-categories: [人生,杂记]
+tags: [杂记,人生]
+categories: [杂记,人生]
 toc: true
 ---
 

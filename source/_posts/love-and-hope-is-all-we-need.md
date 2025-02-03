@@ -2,8 +2,8 @@
 title: 聊聊公益和助学
 type: tags
 date: 2023-06-26 02:00:00
-tags: [人生,杂记]
-categories: [人生,杂记]
+tags: [杂记,人生]
+categories: [杂记,人生]
 toc: true
 description: 很多时候，帮助人不需要那么多理由
 cover: https://github.com/Zheaoli/yuque-py/assets/7054676/ea9460a2-e351-4b73-9f82-7aef6cd20c33
