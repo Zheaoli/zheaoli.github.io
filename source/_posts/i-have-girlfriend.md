@@ -3,7 +3,7 @@ title: 听说我有女朋友
 type: tags
 date: 2019-01-01 00:00:00
 tags: [秀恩爱]
-categories: [随笔,总结,秀恩爱]
+categories: [杂记,总结,秀恩爱]
 toc: true
 ---
 

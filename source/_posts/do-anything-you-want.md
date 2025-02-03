@@ -2,8 +2,8 @@
 title: 但行好事，莫问前程
 type: tags
 date: 2021-02-11 13:00:00
-tags: [随笔,总结]
-categories: [随笔,总结,秀恩爱]
+tags: [杂记,总结]
+categories: [杂记,总结,秀恩爱]
 toc: true
 ---
 

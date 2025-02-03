@@ -2,7 +2,7 @@
 title: 好了，现在你的知识也是我的了.jpg
 type: tags
 date: 2024-12-07 02:00:00
-tags: [编程,随笔,人生]
+tags: [编程,杂记,人生]
 categories: [编程,随笔]
 toc: true
 ---

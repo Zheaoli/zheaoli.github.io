@@ -2,8 +2,8 @@
 title: Stay Simple, Stay Naive
 type: tags
 date: 2023-01-02 03:00:00
-tags: [随笔,总结]
-categories: [随笔,总结,秀恩爱]
+tags: [杂记,总结]
+categories: [杂记,总结,秀恩爱]
 toc: true
 ---
 

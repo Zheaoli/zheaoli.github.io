@@ -3,7 +3,7 @@ title: 简单吐槽一下摇曳露营的台配
 type: tags
 date: 2025-02-04 02:00:00
 tags: [摇曳露营,动画,随笔]
-categories: [随笔,ACG,摇曳露营]
+categories: [杂记,ACG,摇曳露营]
 toc: true
 ---
 

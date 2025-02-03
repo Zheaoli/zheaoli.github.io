@@ -2,8 +2,8 @@
 title: 她曾以为自己能逃开教授的手丨人间
 type: tags
 date: 2018-07-08 02:54:21
-tags: [人间世]
-categories: [人间世]
+tags: [杂记,社会]
+categories: [杂记,社会]
 toc: true
 ---
 

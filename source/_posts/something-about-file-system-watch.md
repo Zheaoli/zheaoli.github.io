@@ -2,7 +2,7 @@
 title: Linux 上关于 inotify 的小笔记
 type: tags
 date: 2019-07-02 21:35:00
-tags: [Linux,编程,随笔,总结]
+tags: [Linux,编程,杂记,总结]
 categories: [编程,Linux]
 toc: true
 ---

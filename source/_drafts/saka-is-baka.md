@@ -2,7 +2,7 @@
 title: Saka 馬鹿
 type: tags
 date: 2025-01-05 02:30:00
-tags: [编程,随笔,人生]
+tags: [编程,杂记,人生]
 categories: [编程,随笔]
 toc: true
 ---

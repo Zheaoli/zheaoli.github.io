@@ -2,7 +2,7 @@
 title: Supervisor 的一个隐藏坑
 type: tags
 date: 2017-12-28 22:00:00
-tags: [Python,编程,随笔,总结]
+tags: [Python,编程,杂记,总结]
 categories: [编程,Python]
 toc: true
 ---

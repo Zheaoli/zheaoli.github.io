@@ -2,7 +2,7 @@
 title: OpenDAL 0.51 版本代号 “本当の僕らをありがとう。” 背后的故事
 type: tags
 date: 2024-12-15 02:30:00
-tags: [编程,随笔,人生]
+tags: [编程,杂记,人生]
 categories: [编程,随笔]
 toc: true
 ---

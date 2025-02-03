@@ -2,8 +2,8 @@
 title: 本当の僕らをありがとう
 type: tags
 date: 2024-12-31 23:00:00
-tags: [随笔,总结]
-categories: [随笔,总结,秀恩爱]
+tags: [杂记,总结]
+categories: [杂记,总结,秀恩爱]
 toc: true
 swiper_index: 6
 ---

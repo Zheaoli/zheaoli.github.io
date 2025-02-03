@@ -2,8 +2,8 @@
 title: 蓝莲花公益小组简报
 type: tags
 date: 2023-01-19 19:00:00
-tags: [随笔,总结]
-categories: [随笔,总结]
+tags: [杂记,总结]
+categories: [杂记,总结]
 toc: true
 ---
 
