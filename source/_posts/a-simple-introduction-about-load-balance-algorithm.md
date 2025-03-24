@@ -231,12 +231,14 @@ class WeightedRoundRobinStrategy(RoundRobinStrategy):
         total = 0
         for node in nodes:
             total += node.weight
-            if not best_node or node.weight > best_node.weight:
+            node.current_weight = node.weight
+            if not best_node or node.current_weight > best_node.current_weight:
                 best_node = node
         if not best_node:
             raise NoNodesAvailableError
-        best_node.weight -= total
+        best_node.current_weight -= total
         return best_node
+
 ```
 
 这里新增的 current_weight 的作用很简单，
