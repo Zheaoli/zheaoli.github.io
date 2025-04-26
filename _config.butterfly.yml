@@ -751,7 +751,7 @@ mermaid:
   # built-in themes: default/forest/dark/neutral
   theme:
     light: default
-    dark: dark
+    dark: default
   code_write: true
   
 # Note (Bootstrap Callout)
