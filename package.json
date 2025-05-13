@@ -19,7 +19,7 @@
   "dependencies": {
     "hexo": "^7.3.0",
     "hexo-algoliasearch": "github:Zheaoli/hexo-algoliasearch#support-page-index",
-    "hexo-bilibili-bangumi": "^1.11.0",
+    "hexo-bilibili-bangumi": "^1.11.1",
     "hexo-butterfly-charts": "^1.1.4",
     "hexo-butterfly-douban": "^1.2.5",
     "hexo-butterfly-footer-marcus": "^1.1.4",
