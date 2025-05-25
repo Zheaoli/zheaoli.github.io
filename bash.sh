@@ -1,2 +1,2 @@
-hexo g
+hexo generate
 hexo algolia
