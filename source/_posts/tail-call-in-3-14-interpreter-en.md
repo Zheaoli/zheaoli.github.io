@@ -5,7 +5,6 @@ date: 2025-07-02 23:49:00
 tags: [Programming, Linux, Python, Notes, Random]
 categories: [Programming, Python]
 toc: true
-swiper_index: 0
 ---
 
 I've been overwhelmed by security work lately, so let me switch to something lighter to relax my mind.
