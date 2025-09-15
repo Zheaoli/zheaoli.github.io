@@ -17,7 +17,7 @@
     "version": "7.3.0"
   },
   "dependencies": {
-    "hexo": "^7.3.0",
+    "hexo": "^8.0.0",
     "hexo-algoliasearch": "github:Zheaoli/hexo-algoliasearch#support-page-index",
     "hexo-bilibili-bangumi": "^2.0.0",
     "hexo-butterfly-charts": "^1.1.4",
