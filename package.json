@@ -36,12 +36,12 @@
     "hexo-generator-tag": "^2.0.0",
     "hexo-minify": "^1.8.0",
     "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-kramed": "^0.1.4",
+    "hexo-renderer-kramed": "^0.1.2",
     "hexo-renderer-pug": "^3.0.0",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
-    "hexo-tag-dplayer": "^0.3.3",
-    "hexo-theme-butterfly": "5.5.1",
+    "hexo-tag-dplayer": "^0.1.6",
+    "hexo-theme-butterfly": "5.5.3",
     "hexo-wordcount": "^6.0.1",
     "yamljs": "^0.3.0"
   }
