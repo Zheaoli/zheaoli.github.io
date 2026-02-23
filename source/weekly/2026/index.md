@@ -7,3 +7,4 @@
 5. [2026 年第五周](/weekly/2026/2026-week05.html)
 6. [2026 年第六周](/weekly/2026/2026-week06.html)
 7. [2026 年第七周](/weekly/2026/2026-week07.html)
+8. [2026 年第八周](/weekly/2026/2026-week08.html)
