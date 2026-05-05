@@ -8,13 +8,13 @@ toc: true
 swiper_index: 0
 ---
 
-最近给一个推理后端服务做 perf，跑了一发 py-spy 出来火焰图，盯着看了一会儿，发现 `pydantic.main.__init__` 这一条在主热路径上占了一个让人挺难绷的比例。做了几轮调整之后顺手把这件事记一下——核心想说的是：**对一个 web 服务来说，数据校验从来不是免费的，pydantic 也一样。它有它的边界，越界使用就要付出对应的代价。**
+最近给一个后端服务做 perf，跑了一发 py-spy 出来火焰图，盯着看了一会儿，发现 `pydantic.main.__init__` 这一条在主热路径上占了一个让人挺难绷的比例。做了几轮调整之后顺手把这件事记一下——核心想说的是：**对一个 web 服务来说，数据校验从来不是免费的，pydantic 也一样。它有它的边界，越界使用就要付出对应的代价。**
 
 <!--more-->
 
 ## 起因：火焰图里看到的东西
 
-某个推荐链路服务，写法上挺标准——`FastAPI + uvicorn + pydantic + psycopg`，业务里所有"长得像数据"的东西，从 DB 行、内部传递的中间态、到 API response，全部都用 `BaseModel` 表达。看起来一致、规整，review 起来也舒服。
+某个内部业务服务，写法上挺标准——`FastAPI + uvicorn + pydantic + psycopg`，业务里所有"长得像数据"的东西，从 DB 行、内部传递的中间态、到 API response，全部都用 `BaseModel` 表达。看起来一致、规整，review 起来也舒服。
 
 直到我们因为 P95 不太好看，跑了一发 py-spy：
 
@@ -76,11 +76,11 @@ __init__ 入口
 from dataclasses import dataclass
 
 @dataclass(slots=True)
-class CandidateItem:
+class RowEntry:
     id: str
-    score: float
-    rank: int
-    bucket: str
+    value: float
+    position: int
+    category: str
 ```
 
 `slots=True` 让实例不再有 `__dict__`，每次构造省一份哈希表分配，访问字段也直接走 C 层 slot。配合 beartype 的运行时类型检查（如果你像我们一样在 `__init__.py` 里 `beartype_this_package()`），整体的"类型安全度"和你用 pydantic 是同一个量级的，但开销低得多。
@@ -91,34 +91,34 @@ class CandidateItem:
 from psycopg.rows import class_row
 
 # 之前：BaseModel
-class CandidateItem(BaseModel):
+class RowEntry(BaseModel):
     id: str
-    score: float
-    rank: int
-    bucket: str
+    value: float
+    position: int
+    category: str
 
 # 之后：dataclass，调用方一行不用改
 @dataclass(slots=True)
-class CandidateItem:
+class RowEntry:
     id: str
-    score: float
-    rank: int
-    bucket: str
+    value: float
+    position: int
+    category: str
 
-async def fetch_candidates(conn, n: int) -> list[CandidateItem]:
-    async with conn.cursor(row_factory=class_row(CandidateItem)) as cur:
+async def fetch_entries(conn, n: int) -> list[RowEntry]:
+    async with conn.cursor(row_factory=class_row(RowEntry)) as cur:
         await cur.execute(
-            "SELECT id, score, rank, bucket FROM candidates ORDER BY rank LIMIT %s",
+            "SELECT id, value, position, category FROM entries ORDER BY position LIMIT %s",
             (n,),
         )
         return await cur.fetchall()
 ```
 
-调用侧的体感和原来一模一样——你照样有 `.id`、`.score`、`.rank`，照样能被 ty / mypy 检查类型，照样能 `for item in items: ...`。差别只是火焰图里那条粗柱子掉下去了。
+调用侧的体感和原来一模一样——你照样有 `.id`、`.value`、`.position`，照样能被 ty / mypy 检查类型，照样能 `for item in items: ...`。差别只是火焰图里那条粗柱子掉下去了。
 
 ## 一个完整的"边界感"示例
 
-把上面的话翻成代码。假设我们要做一个 `/recommend` 接口，从 DB 取候选、做点轻量计算、然后返给调用方：
+把上面的话翻成代码。假设我们要做一个 `/items` 接口，从 DB 取数据、做点轻量计算、然后返给调用方：
 
 ```python
 from dataclasses import dataclass
@@ -128,79 +128,79 @@ from psycopg.rows import class_row
 
 # ---- API 边界：必须 pydantic ----
 
-class RecommendRequest(BaseModel):
+class ListItemsRequest(BaseModel):
     """Request 来自外部，schema 必须严格校验。"""
     user_id: str = Field(min_length=1, max_length=64)
     limit: int = Field(default=20, ge=1, le=100)
-    bucket: str | None = None
+    category: str | None = None
 
-class RecommendItem(BaseModel):
+class ItemView(BaseModel):
     """Response 决定对外契约和 JSON 序列化方式。"""
     id: str
-    score: float
-    rank: int
+    value: float
+    position: int
 
-class RecommendResponse(BaseModel):
-    items: list[RecommendItem]
+class ListItemsResponse(BaseModel):
+    items: list[ItemView]
     total: int
 
 # ---- 内部数据容器：dataclass 就够 ----
 
 @dataclass(slots=True)
-class CandidateRow:
+class RowEntry:
     """从 DB 读出来的一行，schema 完全可控，不需要再校验一次。"""
     id: str
-    score: float
-    rank: int
-    bucket: str
-    raw_score: float
+    value: float
+    position: int
+    category: str
+    raw_value: float
 
 @dataclass(slots=True)
-class ScoredCandidate:
+class ProcessedEntry:
     """中间计算态，只在内部函数之间传。"""
     id: str
-    final_score: float
-    rank: int
+    final_value: float
+    position: int
 
 # ---- 业务实现 ----
 
-async def fetch_candidates(conn, bucket: str | None, n: int) -> list[CandidateRow]:
-    sql = "SELECT id, score, rank, bucket, raw_score FROM candidates"
+async def fetch_entries(conn, category: str | None, n: int) -> list[RowEntry]:
+    sql = "SELECT id, value, position, category, raw_value FROM entries"
     params: tuple = ()
-    if bucket is not None:
-        sql += " WHERE bucket = %s"
-        params = (bucket,)
-    sql += " ORDER BY rank LIMIT %s"
+    if category is not None:
+        sql += " WHERE category = %s"
+        params = (category,)
+    sql += " ORDER BY position LIMIT %s"
     params = (*params, n)
 
-    async with conn.cursor(row_factory=class_row(CandidateRow)) as cur:
+    async with conn.cursor(row_factory=class_row(RowEntry)) as cur:
         await cur.execute(sql, params)
         return await cur.fetchall()
 
-def rerank(rows: list[CandidateRow], user_id: str) -> list[ScoredCandidate]:
+def process_entries(rows: list[RowEntry], user_id: str) -> list[ProcessedEntry]:
     # 纯内部计算，所有输入输出都来自我们自己
     return [
-        ScoredCandidate(
+        ProcessedEntry(
             id=r.id,
-            final_score=r.score * _user_factor(user_id, r.bucket),
-            rank=i,
+            final_value=r.value * _compute_factor(user_id, r.category),
+            position=i,
         )
         for i, r in enumerate(rows)
     ]
 
 router = APIRouter()
 
-@router.post("/recommend")
-async def recommend(
-    req: RecommendRequest,                    # pydantic 校验入参
+@router.post("/items")
+async def list_items(
+    req: ListItemsRequest,                    # pydantic 校验入参
     conn = Depends(get_conn),
-) -> RecommendResponse:                       # pydantic 决定出参 shape
-    rows = await fetch_candidates(conn, req.bucket, req.limit)   # dataclass
-    scored = rerank(rows, req.user_id)                            # dataclass
-    return RecommendResponse(
-        items=[RecommendItem(id=s.id, score=s.final_score, rank=s.rank)
-               for s in scored],
-        total=len(scored),
+) -> ListItemsResponse:                       # pydantic 决定出参 shape
+    rows = await fetch_entries(conn, req.category, req.limit)    # dataclass
+    processed = process_entries(rows, req.user_id)                # dataclass
+    return ListItemsResponse(
+        items=[ItemView(id=p.id, value=p.final_value, position=p.position)
+               for p in processed],
+        total=len(processed),
     )
 ```
 
