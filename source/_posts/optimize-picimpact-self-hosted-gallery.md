@@ -1,5 +1,5 @@
 ---
-title: 优化日志：给自建图床 PicImpact 做一次性能大保健
+title: 优化日志：给自建图床 PicImpact 做一次大范围性能优化
 type: tags
 date: 2026-06-01 00:30:00
 tags: [编程,前端,性能优化,笔记,水文]
