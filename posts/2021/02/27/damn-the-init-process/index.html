@@ -1,0 +1,763 @@
+<!DOCTYPE html><html lang="en"><head>
+  
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/2.0.0" theme-name="Stellar" theme-version="2.0.0">
+  <link rel="canonical" href="https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/" data-stellar-page-meta="">
+  
+  <meta name="generator" content="Hexo 8.0.0">
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin=""><link rel="preconnect" href="https://cdn.pixabay.com" crossorigin=""><link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin=""><link rel="preconnect" href="https://giscus.app" crossorigin="">
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title data-stellar-page-meta="">继续爆论容器中的一号进程 - Manjusaka</title>
+  <script data-stellar-script="core">
+    (function () {
+      var key = 'stellar:v2:leftbar-state';
+      var fallback = "expanded";
+      try {
+        var value = localStorage.getItem(key);
+        document.documentElement.dataset.leftbarState = value === 'collapsed' || value === 'expanded' ? value : fallback;
+      } catch (error) {
+        document.documentElement.dataset.leftbarState = fallback;
+      }
+    })();
+  </script>
+
+  <meta name="description" content="上周的文章聊了关于容器中的一号进程的一些概况后，在我师父某川(可以去 GitHub 找他玩，jschwinger23) 的指导与配合下，我们一起对目前主流的被广泛使用的两个容器中一号进程的实现 dumb-init 和 tini 做了一番探究，继续写个水文来爆论一番。" data-stellar-page-meta="">
+<meta property="og:type" content="article" data-stellar-page-meta="">
+<meta property="og:title" content="继续爆论容器中的一号进程" data-stellar-page-meta="">
+<meta property="og:url" content="https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/" data-stellar-page-meta="">
+<meta property="og:site_name" content="Manjusaka" data-stellar-page-meta="">
+<meta property="og:description" content="上周的文章聊了关于容器中的一号进程的一些概况后，在我师父某川(可以去 GitHub 找他玩，jschwinger23) 的指导与配合下，我们一起对目前主流的被广泛使用的两个容器中一号进程的实现 dumb-init 和 tini 做了一番探究，继续写个水文来爆论一番。" data-stellar-page-meta="">
+<meta property="og:locale" content="en_US" data-stellar-page-meta="">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg" data-stellar-page-meta="">
+<meta property="article:author" content="Manjusaka" data-stellar-page-meta="">
+<meta property="article:published_time" content="2021-02-27T19:00:00.000Z" data-stellar-page-meta="">
+<meta property="article:modified_time" content="2026-11-23T22:22:45.000Z" data-stellar-page-meta="">
+<meta property="article:tag" content="Linux" data-stellar-page-meta="">
+<meta property="article:tag" content="水文" data-stellar-page-meta="">
+<meta property="article:tag" content="笔记" data-stellar-page-meta="">
+<meta property="article:tag" content="编程" data-stellar-page-meta="">
+<meta name="twitter:card" content="summary_large_image" data-stellar-page-meta="">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg" data-stellar-page-meta="">
+<meta name="twitter:creator" content="@Manjusaka_Lee" data-stellar-page-meta=""><meta name="twitter:title" content="继续爆论容器中的一号进程" data-stellar-page-meta="">
+  
+  
+  <meta name="keywords" content="编程,Linux,笔记,水文" data-stellar-page-meta="">
+
+  <!-- feed -->
+  
+    
+
+    
+      
+        <link rel="alternate" href="/atom.xml" title="Manjusaka" type="application/atom+xml">
+      
+    
+  
+
+  <link rel="preload" href="/css/main.css?v=2.0.0" as="style">
+  <link rel="stylesheet" href="/css/main.css?v=2.0.0">
+  <style>:root{--text-loading:"Loading";--text-loading-error:"Failed to load. Please try again later."}</style>
+
+
+  
+
+  
+
+  <script type="application/ld+json" data-stellar-page-meta="">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"dateCreated":"2021-02-27T19:00:00+00:00","dateModified":"2026-11-23T22:22:45+00:00","datePublished":"2021-02-27T19:00:00+00:00","description":"上周的文章聊了关于容器中的一号进程的一些概况后，在我师父某川(可以去 GitHub 找他玩，jschwinger23) 的指导与配合下，我们一起对目前主流的被广泛使用的两个容器中一号进程的实现 dumb-init 和 tini 做了一番探究，继续写个水文来爆论一番。","headline":"继续爆论容器中的一号进程","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/"},"publisher":{"@type":"Organization","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"url":"https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/","image":["https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg"],"keywords":"编程, Linux, 笔记, 水文","thumbnailUrl":"https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg"}</script>
+  
+
+  <link rel="stylesheet" href="/css/stellar-icons.css?v=7c185ad1a9a79674">
+  <link rel="preload" as="script" href="/js/stellar-icons.js?v=dd617eebf14c02bb">
+  
+  
+</head>
+<body data-page-type="content" data-page-layout="post" data-article-style="tech"><div data-stellar-runtime-region="" id="site-cover" class="site-cover"></div><div class="site-shell" id="start" data-regions="leftbar rightbar"><div class="site-workspace">
+<aside data-stellar-runtime-region="" id="leftbar-region" class="site-region site-region--leftbar" data-region="leftbar" aria-label="Leftbar"><div class="site-region__surface ui-surface"><div class="site-region__decoration" aria-hidden="true"></div><div class="site-region__viewport"><header class="site-region__header site-region__zone site-region__zone--top">
+    <div class="widget-instance widget-instance--brand" data-widget-id="leftbar:fixed:brand" data-presentation="leftbar" data-leftbar-rail="">
+<header class="brand-header brand-header--regular brand-header--site"><div class="brand-wrap"><a class="brand-image brand-image--avatar" href="/"><img no-lazy="" src="https://avatars.githubusercontent.com/u/7054676?v=4" alt="" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></a><a class="brand-title" href="/"><div class="brand-name">Manjusaka</div><div class="brand-tagline cap">写代码的香港记者</div></a></div><div class="brand-search">
+
+<div class="ui-collection" data-layout="list" data-variant="nav" data-density="auto">
+  
+    
+<button class="ui-collection__item ui-interactive card-hover card-hover--spotlight search-trigger has-hover-surface" type="button" title="Search" aria-label="Search" data-shell-action="open-search" data-search-instance="leftbar-brand-search" data-search-domain="blog" data-search-domain-label="Blog" data-search-domain-blog="true">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Adapted from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3M3 13h3M3 18h8M16.83 13.83l3.76 3.76"></path><circle cx="14" cy="11" r="4"></circle></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Search</span>
+      
+      
+    </span>
+  
+  <kbd class="search-shortcut" aria-hidden="true">⌘K</kbd>
+
+  
+</button>
+
+  
+</div>
+
+
+</div></header>
+</div>
+  </header>
+  <div class="site-region__body site-region__zone site-region__zone--body">
+    <div class="widget-instance widget-instance--menu" data-widget-id="leftbar:fixed:menu" data-presentation="leftbar" data-leftbar-rail="">
+
+
+<nav class="menu dis-select">
+<div class="ui-collection" data-layout="list" data-variant="nav" data-density="auto">
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight is-active" href="/" title="博客" aria-current="page">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"></path><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">博客</span>
+      
+      
+    </span>
+  
+  
+  <span class="ui-collection__indicator"></span>
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/weekly/" title="周报">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.94.94 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.96.96 0 0 0 .783-.073a.94.94 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031q.17-.008.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371q.277-.162.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"></path><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8 8 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.1 1.1 0 0 1 .492-.13q.071 0 .138.01c.175.029.315.1.354.12l.009.005l.749.356z"></path><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"></path><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">周报</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/leetcode/" title="刷题">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M12.8324 21.8013C15.9583 21.1747 20 18.926 20 13.1112C20 7.8196 16.1267 4.29593 13.3415 2.67685C12.7235 2.31757 12 2.79006 12 3.50492V5.3334C12 6.77526 11.3938 9.40711 9.70932 10.5018C8.84932 11.0607 7.92052 10.2242 7.816 9.20388L7.73017 8.36604C7.6304 7.39203 6.63841 6.80075 5.85996 7.3946C4.46147 8.46144 3 10.3296 3 13.1112C3 20.2223 8.28889 22.0001 10.9333 22.0001C11.0871 22.0001 11.2488 21.9955 11.4171 21.9858C11.863 21.9296 11.4171 22.085 12.8324 21.8013Z" opacity=".5"></path><path d="M8 18.4442C8 21.064 10.1113 21.8742 11.4171 21.9858C11.863 21.9296 11.4171 22.085 12.8324 21.8013C13.871 21.4343 15 20.4922 15 18.4442C15 17.1465 14.1814 16.3459 13.5401 15.9711C13.3439 15.8564 13.1161 16.0008 13.0985 16.2273C13.0429 16.9454 12.3534 17.5174 11.8836 16.9714C11.4685 16.4889 11.2941 15.784 11.2941 15.3331V14.7439C11.2941 14.3887 10.9365 14.1533 10.631 14.3346C9.49507 15.0085 8 16.3949 8 18.4442Z"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">刷题</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/categories/" title="分类">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C18.8345 6 20.1506 6 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z" opacity=".5"></path><path d="M20 6.23751C19.9992 5.94016 19.9949 5.76263 19.9746 5.60842C19.7974 4.26222 18.7381 3.2029 17.3919 3.02567C17.1969 3 16.9647 3 16.5003 3H9.98828C10.1042 3.10392 10.2347 3.23445 10.45 3.44975L11.0003 4C11.8161 4.81578 12.2239 5.22367 12.7124 5.49543C12.9807 5.64471 13.2653 5.7626 13.5606 5.84678C14.0982 6 14.675 6 15.8287 6H16.2024C17.9814 6 19.1593 6 20 6.23751Z"></path><path fill-rule="evenodd" d="M12.25 10C12.25 9.58579 12.5858 9.25 13 9.25H18C18.4142 9.25 18.75 9.58579 18.75 10C18.75 10.4142 18.4142 10.75 18 10.75H13C12.5858 10.75 12.25 10.4142 12.25 10Z" clip-rule="evenodd"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">分类</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/tags/" title="标签">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M10.7226 3.20068C10.8335 2.80158 10.5998 2.38817 10.2007 2.27731C9.80163 2.16645 9.38822 2.40011 9.27736 2.79921L7.76327 8.24995H4C3.58579 8.24995 3.25 8.58573 3.25 8.99995C3.25 9.41416 3.58579 9.74995 4 9.74995H7.3466L5.81882 15.2499H2C1.58579 15.2499 1.25 15.5857 1.25 15.9999C1.25 16.4142 1.58579 16.7499 2 16.7499H5.40216L4.27736 20.7992C4.1665 21.1983 4.40016 21.6117 4.79927 21.7226C5.19837 21.8334 5.61178 21.5998 5.72264 21.2007L6.95895 16.7499H14.4022L13.2774 20.7992C13.1665 21.1983 13.4002 21.6117 13.7993 21.7226C14.1984 21.8334 14.6118 21.5998 14.7226 21.2007L15.959 16.7499H20C20.4142 16.7499 20.75 16.4142 20.75 15.9999C20.75 15.5857 20.4142 15.2499 20 15.2499H16.3756L17.9034 9.74995H22C22.4142 9.74995 22.75 9.41416 22.75 8.99995C22.75 8.58573 22.4142 8.24995 22 8.24995H18.3201L19.7226 3.20068C19.8335 2.80158 19.5998 2.38817 19.2007 2.27731C18.8016 2.16645 18.3882 2.40011 18.2774 2.79921L16.7633 8.24995H9.32006L10.7226 3.20068ZM14.8188 15.2499L16.3466 9.74995H8.9034L7.37562 15.2499H14.8188Z" clip-rule="evenodd"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">标签</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/archives/" title="归档">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M6.94028 2C7.35614 2 7.69326 2.32421 7.69326 2.72414V4.18487C8.36117 4.17241 9.10983 4.17241 9.95219 4.17241H13.9681C14.8104 4.17241 15.5591 4.17241 16.227 4.18487V2.72414C16.227 2.32421 16.5641 2 16.98 2C17.3958 2 17.733 2.32421 17.733 2.72414V4.24894C19.178 4.36022 20.1267 4.63333 20.8236 5.30359C21.5206 5.97385 21.8046 6.88616 21.9203 8.27586L22 9H2.92456H2V8.27586C2.11571 6.88616 2.3997 5.97385 3.09665 5.30359C3.79361 4.63333 4.74226 4.36022 6.1873 4.24894V2.72414C6.1873 2.32421 6.52442 2 6.94028 2Z"></path><path d="M21.9995 14.0001V12.0001C21.9995 11.161 21.9963 9.66527 21.9834 9H2.00917C1.99626 9.66527 1.99953 11.161 1.99953 12.0001V14.0001C1.99953 17.7713 1.99953 19.6569 3.1711 20.8285C4.34267 22.0001 6.22829 22.0001 9.99953 22.0001H13.9995C17.7708 22.0001 19.6564 22.0001 20.828 20.8285C21.9995 19.6569 21.9995 17.7713 21.9995 14.0001Z" opacity=".5"></path><path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z"></path><path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z"></path><path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z"></path><path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z"></path><path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z"></path><path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">归档</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/about/" title="关于">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20" opacity=".5"></path><path d="M12 6a3 3 0 1 0 0 6a3 3 0 0 0 0-6m0 7.5c-3.04 0-5.5 1.57-5.5 3.5c0 .65.28 1.26.77 1.77A7.96 7.96 0 0 0 12 20.5a7.96 7.96 0 0 0 4.73-1.73c.49-.51.77-1.12.77-1.77c0-1.93-2.46-3.5-5.5-3.5"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">关于</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+</div>
+
+</nav>
+
+</div>
+    <div class="widgets widget-stack widget-stack--leftbar widget-stack--body"><div class="widget-instance widget-instance--recent" data-widget-id="leftbar:1:recent" data-presentation="leftbar">
+
+<widget class="widget-wrapper slide-up recent-widget">
+  
+    <div class="widget-header dis-select">
+      <span class="name">Recent Update</span>
+      
+    </div>
+  
+  <div class="widget-body"><div class="ui-collection" data-layout="list" data-variant="nav" data-density="compact">
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2020/11/06/why-mul-faster-than-bit-shift-sometimes-in-python/" title="为什么有些时候 Python 中乘法比位运算更快">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">为</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">为什么有些时候 Python 中乘法比位运算更快</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2016/07/22/%E5%85%B3%E4%BA%8EPostCSS%E7%9A%84%E4%B8%80%E7%82%B9%E5%B0%8F%E7%A7%91%E6%99%AE/" title="关于PostCSS的一点小科普">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">关</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">关于PostCSS的一点小科普</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2016/07/22/%E5%9C%A8Swift%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%92%A4%E9%94%80%E5%8A%9F%E8%83%BD/" title="在Swift中实现撤销功能">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">在</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">在Swift中实现撤销功能</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2016/07/22/%E5%A5%BD%E4%B8%8E%E5%9D%8F%EF%BC%8CSwift%E9%9D%A2%E9%9D%A2%E8%A7%82-Part2/" title="好与坏，Swift面面观 Part2">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">好</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">好与坏，Swift面面观 Part2</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2016/07/22/%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8BiPhone%E5%A4%84%E4%BA%8E%E4%BD%8E%E7%94%B5%E9%87%8F%E6%A8%A1%E5%BC%8F/" title="如何检测iPhone处于低电量模式">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">如</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">如何检测iPhone处于低电量模式</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2016/08/02/%E8%AF%A6%E8%A7%A3Swift%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8/" title="详解Swift的类型检查器">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">详</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">详解Swift的类型检查器</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2022/11/12/the-road-back-to-windows/" title="重回 Windows 之路">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">重</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">重回 Windows 之路</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2023/10/05/the-perf-feature-python-312/" title="聊聊 Python 3.12 中 perf 的原生支持">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">聊</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">聊聊 Python 3.12 中 perf 的原生支持</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2024/12/14/the-story-behind-the-opendal-0.51/" title="OpenDAL 0.51 版本代号 “本当の僕らをありがとう。” 背后的故事">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">O</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">OpenDAL 0.51 版本代号 “本当の僕らをありがとう。” 背后的故事</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2023/01/26/what-I-can-learn-from-a-refactor-project/" title="从一个重构项目中能学到什么东西">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">从</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">从一个重构项目中能学到什么东西</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+</div></div>
+  
+</widget>
+
+
+</div></div>
+  </div>
+  <footer class="site-region__footer">
+    <div class="site-region__footer-actions"><div class="widget-instance widget-instance--actions" data-widget-id="leftbar:fixed:actions" data-presentation="leftbar">
+<div class="region-actions social-wrap ui-collection" data-layout="inline" data-variant="nav" data-density="compact"><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="GitHub" href="https://github.com/Zheaoli" target="_blank" rel="external nofollow noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="default:github" aria-hidden="true"></svg></span></a><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="X" href="https://twitter.com/Manjusaka_Lee" target="_blank" rel="external nofollow noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="share:x" aria-hidden="true"></svg></span></a><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="Email" href="mailto:me@manjusaka.me" rel="noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="share:email" aria-hidden="true"></svg></span></a><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="RSS" href="/atom.xml" rel="noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="default:rss" aria-hidden="true"></svg></span></a></div>
+</div></div>
+    <div class="site-region__system ui-collection" data-layout="inline" data-variant="nav" data-density="compact">
+      <div class="site-region__settings"><div class="widget-instance widget-instance--settings" data-widget-id="leftbar:fixed:settings" data-presentation="leftbar" data-leftbar-rail="">
+<a class="settings-widget ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/settings/" data-profile-provider="giscus" data-profile-identity-enabled="false" data-profile-fallback-avatar="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg" data-settings-placement="leftbar" data-settings-label="Settings" aria-label="Settings" title="Settings">
+  <span class="settings-widget__avatar" aria-hidden="true">
+    <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M12.4277 2C11.3139 2 10.2995 2.6007 8.27081 3.80211L7.58466 4.20846C5.55594 5.40987 4.54158 6.01057 3.98466 7C3.42773 7.98943 3.42773 9.19084 3.42773 11.5937V12.4063C3.42773 14.8092 3.42773 16.0106 3.98466 17C4.54158 17.9894 5.55594 18.5901 7.58466 19.7915L8.27081 20.1979C10.2995 21.3993 11.3139 22 12.4277 22C13.5416 22 14.5559 21.3993 16.5847 20.1979L17.2708 19.7915C19.2995 18.5901 20.3139 17.9894 20.8708 17C21.4277 16.0106 21.4277 14.8092 21.4277 12.4063V11.5937C21.4277 9.19084 21.4277 7.98943 20.8708 7C20.3139 6.01057 19.2995 5.40987 17.2708 4.20846L16.5847 3.80211C14.5559 2.6007 13.5416 2 12.4277 2Z" clip-rule="evenodd" opacity=".5"></path><path d="M12.4277 8.25C10.3567 8.25 8.67773 9.92893 8.67773 12C8.67773 14.0711 10.3567 15.75 12.4277 15.75C14.4988 15.75 16.1777 14.0711 16.1777 12C16.1777 9.92893 14.4988 8.25 12.4277 8.25Z"></path></g></svg></span>
+  </span>
+  <span class="settings-widget__name ui-collection__title">Settings</span>
+</a>
+</div></div>
+      <button type="button" class="leftbar-state-toggle ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" aria-label="Collapse leftbar" aria-expanded="true" data-shell-action="toggle-leftbar"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M3.172 4.172C2 5.343 2 7.229 2 11v2c0 3.771 0 5.657 1.172 6.828S6.229 21 10 21h5V3h-5C6.229 3 4.343 3 3.172 4.172" clip-rule="evenodd" opacity=".5"></path><path fill="currentColor" d="M5.5 9.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm1 4a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zM22 13v-2c0-3.771 0-5.657-1.172-6.828c-.974-.975-3.192-1.139-5.828-1.166v17.988c2.636-.027 4.854-.191 5.828-1.166C22 18.657 22 16.771 22 13"></path></svg></span></button>
+    </div>
+  </footer></div></div></aside>
+<main data-stellar-runtime-region="" class="site-main" id="main">
+
+
+<div class="article-banner-wrap slide-up"><div class="article banner top" style="--bg-url:url('https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg')"><img class="lazy bg" data-src="https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1280" height="849" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[72.2581,13.42,47.7468,1]}" data-stellar-image-source="https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg">
+  <div class="content" data-text-adaptive="split">
+    <div class="banner-mask banner-mask-top" aria-hidden="true"></div><div class="banner-mask banner-mask-bottom" aria-hidden="true"></div>
+    <div class="top bread-nav footnote"><div class="top-row"><div class="left" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BC%96%E7%A8%8B/Linux/">Linux</a>
+</div><div class="right"><span class="cap reading">4251 words · 15 min read</span></div></div><div class="meta-row">
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2021-02-27T19:00:00.000Z">2021-02-28</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-11-23T22:22:45.000Z">2026-11-24</time></span></div>
+</div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>继续爆论容器中的一号进程</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div></div>
+<article class="md-text content slide-up"><script src="/assets/js/DPlayer.min.js"> </script><p>上周的文章聊了关于容器中的一号进程的一些概况后，在我师父某川(可以去 GitHub 找他玩，<a href="https://github.com/jschwinger23" rel="external nofollow noreferrer" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>jschwinger23</a>) 的指导与配合下，我们一起对目前主流的被广泛使用的两个容器中一号进程的实现 dumb-init 和 tini 做了一番探究，继续写个水文来爆论一番。</p>
+<span id="more"></span>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="我们为什么需要一个一号进程，我们希望的一号进程需要承担怎样的职责？"><a href="#我们为什么需要一个一号进程，我们希望的一号进程需要承担怎样的职责？" class="headerlink" title="我们为什么需要一个一号进程，我们希望的一号进程需要承担怎样的职责？"></a>我们为什么需要一个一号进程，我们希望的一号进程需要承担怎样的职责？</h3><p>在继续聊关于 dumb-init 和 tini 的相关爆论之前，我们需要来 review 一个问题。我们为什么需要一个一号进程？以及我们所选择的一号进程需要承担怎么样的职责</p>
+<p>其实我们在容器场景下需要一号进程托管在前面实际上有两种主要的场景，</p>
+<ol>
+<li><p>对于容器内 Graceful Upgrade 二进制这种场景，主流的一种做法之一是 fork 一个新的进程，exec 新的二进制文件，新进程处理新链接，老进程处理老链接。（Nginx 就采用这种方案）</p>
+</li>
+<li><p>没有正确的处理信号转发以及进程回收的情况</p>
+</li>
+<li><p>一些如同 calico-node 的场景么，我们出于方便打包的考虑，将多个二进制运行在同一容器中</p>
+</li>
+</ol>
+<p>对于第一种其实需要说的没有太多，我们来看一下第二点的测试</p>
+<p>我们先准备一个最简单 Python 文件，<strong>demo1.py</strong></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">10000</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>然后依照常规，我们开始用一个 bash 脚本裹一下</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">python /root/demo1.py</span><br></pre></td></tr></tbody></table></figure>
+<p>最后编写 Dockerfile </p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> demo1.py /root/demo1.py</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> demo1.sh /root/demo1.sh</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">"bash"</span>, <span class="string">"/root/demo1.sh"</span>]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>构建后开始执行，我们先来看一下进程结构</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109394863-29ce2b80-7964-11eb-88aa-4e1f6e2e3e00.png" alt="进程结构" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1806" height="150" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[125.9525,15.1108,13.3248,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109394863-29ce2b80-7964-11eb-88aa-4e1f6e2e3e00.png"></p>
+<p>没有问题，现在我们用 <strong>strace</strong> 来 trace 一下，2049962、2050009 这两个进程，然后对 2049962 这个 bash 进程发 <em>*SIGTERM</em>＊ 信号</p>
+<p>我们来看下结果</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109394942-a9f49100-7964-11eb-8fa5-5d676e512081.png" alt="2049962进程的 trace 结果" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1386" height="296" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[85.2253,9.9945,10.4005,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109394942-a9f49100-7964-11eb-8fa5-5d676e512081.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109394966-d8726c00-7964-11eb-9e18-f99a0a64b5cd.png" alt="2050009进程的 trace 结果" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1124" height="194" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[131.8967,6.5085,13.9207,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109394966-d8726c00-7964-11eb-9e18-f99a0a64b5cd.png"></p>
+<p>我们能清晰看到 2049962 进程在接到 <strong>SIGTERM</strong> 的时候，没有将其转发给 2050009 进程。在我们手动 SIGKILL 2049962 后， 2050009 也随即退出，这里可能有人会有点疑惑，为什么 2049962 退出后，2050009 也会退出呢？</p>
+<p>这里是由于 pid namespace 本身的特性，我们来看看，<a href="https://man7.org/linux/man-pages/man7/pid_namespaces.7.html" rel="external nofollow noreferrer" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>pid_namespaces</a> 中的相关介绍</p>
+<blockquote>
+<p>If the “init” process of a PID namespace terminates, the kernel terminates all of the processes in the namespace via a SIGKILL signal.  </p>
+</blockquote>
+<p>当当前 pid ns 内的一号进程退出的时候，内核直接 SIGKILL 伺候该 pid ns 内的剩余进程</p>
+<p>OK，在我们结合容器调度框架后，那么在生产上实际会出现很多的坑，来看一段我之前的吐槽</p>
+<blockquote>
+<p>我们一个测试服务，Spring Cloud 的，在下线后，节点无法从注册中心摘除，然后百思不得其解，最后查到问题，，<br>本质上是这样，POD 被摘除的时候，K8S Scheduler 会给 POD 的 ENTRYPOINT 发一个 SIGTERM 信号，然后等待三十秒（默认的 graceful shutdown 超时实践)，还没响应就会 SIGKILL 直接杀<br>问题在于，我们 Eureka 版的服务是通过 start.sh 来启动的，ENTRYPOINT [“/home/admin/start.sh”]，容器里默认是 /bin/sh 是 fork/exec 模式，导致我服务进程没法正确的收到 SIGTERM 信号，然后一直没结束就被 SIGKILL 了</p>
+</blockquote>
+<p>刺激不刺激。除了信号转发无法正常处理以外，我们应用程序常见的一个常见处理的问题就是 Z 进程的出现，即子进程结束之后，无法正确的回收。比如早期 puppeteer 臭名昭著的 Z 进程问题。 在这种情况下，除了应用程序本身的问题以外，另外可能的原因是在守护进程这样的场景下，孤儿进程 re-parent 之后的进程，不具备回收子进程的功能</p>
+<p>OK 在回顾完上面我们常见的问题后，我们来 review 一下我们对于容器内一号进程所需要承担的职责</p>
+<ol>
+<li><p>信号的转发</p>
+</li>
+<li><p>Z 进程的回收</p>
+</li>
+</ol>
+<p>而在目前，在容器场景下，大家主要使用两个方案来作为自己的容器内一号进程，<a href="https://github.com/Yelp/dumb-init" rel="external nofollow noreferrer" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>dumb-init</a> 和 <a href="https://github.com/krallin/tini" rel="external nofollow noreferrer" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>tini</a>。这两个方案对于容器内孤儿与 Z 进程的处理都算是 OK。但是信号转发的实现上一言难尽。那么接下来</p>
+<p>爆论时间！</p>
+<h3 id="拉跨的-dumb-init"><a href="#拉跨的-dumb-init" class="headerlink" title="拉跨的 dumb-init"></a>拉跨的 dumb-init</h3><p>某种程度上来说，<strong>dumb-init</strong> 这货完全是属于虚假宣传的典范。代码实现非常糙</p>
+<p>来看看官方的宣传</p>
+<blockquote>
+<p>dumb-init runs as PID 1, acting like a simple init system. It launches a single process and then proxies all received signals to a session rooted at that child process.</p>
+</blockquote>
+<p>这里，dumb-init 说自己使用了 Linux 中的进程 Session，我们都知道，一个进程 Session 在默认情况下，共享一个 Process Group Id 。那么我们这里可以理解为，dumb-init 能将信号完全转发到进程组中的每个进程上。听起来很美好是不是？</p>
+<p>我们先来测试一下吧</p>
+<p>测试代码如下，<strong>demo2.py</strong></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">pid = os.fork()</span><br><span class="line"><span class="keyword">if</span> pid == <span class="number">0</span>:</span><br><span class="line">    cpid = os.fork()</span><br><span class="line">time.sleep(<span class="number">1000</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>Dockerfile 如下</p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /usr/local/bin/dumb-init</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> demo2.py /root/demo2.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">"/usr/local/bin/dumb-init"</span>, <span class="string">"--"</span>]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">"python"</span>, <span class="string">"/root/demo2.py"</span>]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>构建，开跑，先来看下进程结构</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109396500-dca28780-796c-11eb-9ae1-37be10affbb0.png" alt="demo2 的进程结构" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1790" height="176" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[122.0119,14.7971,13.893,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109396500-dca28780-796c-11eb-9ae1-37be10affbb0.png"></p>
+<p>然后老规矩，strace 2103908、2103909、2103910 这三个进程，然后我们对 <strong>dumb-init</strong> 的进程做一下发送 SIGTERM 的操作吧</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109396545-1f645f80-796d-11eb-9205-7735e5fd3685.png" alt="strace 2103908" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1526" height="216" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[131.6823,7.441,13.6513,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109396545-1f645f80-796d-11eb-9205-7735e5fd3685.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109396563-3440f300-796d-11eb-82ed-94693d49cfc8.png" alt="strace 2103909" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1778" height="208" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[152.9133,7.338,10.3186,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109396563-3440f300-796d-11eb-82ed-94693d49cfc8.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109397059-c649fb00-796f-11eb-8206-02af6d9dc02b.png" alt="strace 2103910" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1634" height="210" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[111.675,9.5816,9.5925,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109397059-c649fb00-796f-11eb-8206-02af6d9dc02b.png"></p>
+<p>诶？dumb-init 老师，发生了甚么事？为什么 2103909 直接被 SIGKILL 了，而没有收到 SIGTERM</p>
+<p>这里我们要来看下 dumb-init 的关键实现</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">handle_signal</span><span class="params">(<span class="type">int</span> signum)</span> {</span><br><span class="line">    DEBUG(<span class="string">"Received signal %d.\n"</span>, signum);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (signal_temporary_ignores[signum] == <span class="number">1</span>) {</span><br><span class="line">        DEBUG(<span class="string">"Ignoring tty hand-off signal %d.\n"</span>, signum);</span><br><span class="line">        signal_temporary_ignores[signum] = <span class="number">0</span>;</span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (signum == SIGCHLD) {</span><br><span class="line">        <span class="type">int</span> status, exit_status;</span><br><span class="line">        <span class="type">pid_t</span> killed_pid;</span><br><span class="line">        <span class="keyword">while</span> ((killed_pid = waitpid(<span class="number">-1</span>, &amp;status, WNOHANG)) &gt; <span class="number">0</span>) {</span><br><span class="line">            <span class="keyword">if</span> (WIFEXITED(status)) {</span><br><span class="line">                exit_status = WEXITSTATUS(status);</span><br><span class="line">                DEBUG(<span class="string">"A child with PID %d exited with exit status %d.\n"</span>, killed_pid, exit_status);</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">                assert(WIFSIGNALED(status));</span><br><span class="line">                exit_status = <span class="number">128</span> + WTERMSIG(status);</span><br><span class="line">                DEBUG(<span class="string">"A child with PID %d was terminated by signal %d.\n"</span>, killed_pid, exit_status - <span class="number">128</span>);</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (killed_pid == child_pid) {</span><br><span class="line">                forward_signal(SIGTERM);  <span class="comment">// send SIGTERM to any remaining children</span></span><br><span class="line">                DEBUG(<span class="string">"Child exited with status %d. Goodbye.\n"</span>, exit_status);</span><br><span class="line">                <span class="built_in">exit</span>(exit_status);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        forward_signal(signum);</span><br><span class="line">        <span class="keyword">if</span> (signum == SIGTSTP || signum == SIGTTOU || signum == SIGTTIN) {</span><br><span class="line">            DEBUG(<span class="string">"Suspending self due to TTY signal.\n"</span>);</span><br><span class="line">            kill(getpid(), SIGSTOP);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>这是 dumb-init 老师处理信号的代码，在收到信号后，将除 SIGCHLD 的信号做转发（注意 SIGKILL 是不可 handle 信号），我们来看看信号转发的逻辑</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">forward_signal</span><span class="params">(<span class="type">int</span> signum)</span> {</span><br><span class="line">    signum = translate_signal(signum);</span><br><span class="line">    <span class="keyword">if</span> (signum != <span class="number">0</span>) {</span><br><span class="line">        kill(use_setsid ? -child_pid : child_pid, signum);</span><br><span class="line">        DEBUG(<span class="string">"Forwarded signal %d to children.\n"</span>, signum);</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        DEBUG(<span class="string">"Not forwarding signal %d to children (ignored).\n"</span>, signum);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>默认情况下直接 kill 发送信号，其中 -child_pid 是这样一个特性：</p>
+<blockquote>
+<p>If pid is less than -1, then sig is sent to every process in the process group whose ID is -pid.</p>
+</blockquote>
+<p>直接转发进程组，看起来没啥问题啊？那么上面是甚么原因呢？我们再来复习下上一段话，kill 给进程组发信号的逻辑是 <strong>sig is sent to every process</strong> ，懂了，一个 O(N) 的遍历嘛。没啥问题啊？好了，不卖关子，这里 dumb-init 的实现存在一个 race-condition</p>
+<p>我们刚刚说了，kill 进程组的行为是一个 O(N) 的遍历，那么必然会有进程先收到信号，而有进程后收到信号。以 SIGTERM 为例，假设我们 dumb-init 的子进程先收到 SIGTERM，优雅退出后，dumb-init 收到 SIGCHLD 的信号，然后 wait_pid 拿到子进程 ID，判断是自己直接托管的进程后，自杀退出。好了，由于 dumb-init 是我们当前 pid ns 内的 init 进程，再来复习下 pid ns 的特性。</p>
+<blockquote>
+<p>If the “init” process of a PID namespace terminates, the kernel terminates all of the processes in the namespace via a SIGKILL signal. </p>
+</blockquote>
+<p>在 dumb-init 自杀以后，剩余进程将直接被内核 SIGKILL 伺候。也就导致了我们上面看到的，子进程没有收到转发的信号！</p>
+<p>所以这里加粗处理一下，<strong>dumb-init 所承诺的，能将信号转发到所有进程上，完全是虚假宣传！</strong></p>
+<p>而且请注意，dumb-init 宣称自己能管理一个 Session 内的进程！但是实际上他们只做了一个进程组的信号转发！完全是虚假宣称！Fake News！</p>
+<p>而且如上面所提到的，在我们热更新二进制这样的场景下，dumb-init 在进程退出后直接自杀。和不使用一号进程完全没有差别！</p>
+<p>我们可以来测试一下，测试代码 demo3.py</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">pid = os.fork()</span><br><span class="line">time.sleep(<span class="number">1000</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>fork 一个进程，总共两个进程</p>
+<p>Dockerfile 如下</p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /usr/local/bin/dumb-init</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> demo3.py /root/demo3.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">"/usr/local/bin/dumb-init"</span>, <span class="string">"--"</span>]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">"python"</span>, <span class="string">"/root/demo3.py"</span>]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>构建，执行，先看看进程结构</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109397207-9818eb00-7970-11eb-8dbb-35ccbe5d26cf.png" alt="demo3 进程结构" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1790" height="156" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[132.4326,15.8069,11.7392,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109397207-9818eb00-7970-11eb-8dbb-35ccbe5d26cf.png"></p>
+<p>然后模拟老进程退出，我们直接 SIGKILL 掉 2134836，然后我们看看 2134837 的 strace 的结果</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109397254-d31b1e80-7970-11eb-9bf2-fcc3e12ca77c.png" alt="strace 2134837" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1544" height="198" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[94.2077,9.2192,10.0402,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109397254-d31b1e80-7970-11eb-9bf2-fcc3e12ca77c.png"></p>
+<p>如预期一样，在 dumb-init 自杀后，2134837 被内核 SIGKILL 了</p>
+<p>所以跟我复习一遍 <strong>dumb-init</strong> 拉跨！好了，我们接着聊 tini 的实现</p>
+<h3 id="态度友好的聊聊-tini"><a href="#态度友好的聊聊-tini" class="headerlink" title="态度友好的聊聊 tini"></a>态度友好的聊聊 tini</h3><p>平心而论，tini 的实现，虽然也还有坑，但是比 <strong>dumb-init</strong> 细腻到不知道哪里去了，我们直接来先看下代码</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) {</span><br><span class="line">	<span class="comment">/* Wait for one signal, and forward it */</span></span><br><span class="line">	<span class="keyword">if</span> (wait_and_forward_signal(&amp;parent_sigset, child_pid)) {</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Now, reap zombies */</span></span><br><span class="line">	<span class="keyword">if</span> (reap_zombies(child_pid, &amp;child_exitcode)) {</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (child_exitcode != <span class="number">-1</span>) {</span><br><span class="line">		PRINT_TRACE(<span class="string">"Exiting: child has exited"</span>);</span><br><span class="line">		<span class="keyword">return</span> child_exitcode;</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>首先 tini 没有设置 signal handler ，不断循环 <code>wait_and_forward_signal</code> 和 <code>reap_zombies</code> 这两个函数</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">wait_and_forward_signal</span><span class="params">(<span class="type">sigset_t</span> <span class="type">const</span>* <span class="type">const</span> parent_sigset_ptr, <span class="type">pid_t</span> <span class="type">const</span> child_pid)</span> {</span><br><span class="line">	<span class="type">siginfo_t</span> sig;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (sigtimedwait(parent_sigset_ptr, &amp;sig, &amp;ts) == <span class="number">-1</span>) {</span><br><span class="line">		<span class="keyword">switch</span> (errno) {</span><br><span class="line">			<span class="keyword">case</span> EAGAIN:</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> EINTR:</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				PRINT_FATAL(<span class="string">"Unexpected error in sigtimedwait: '%s'"</span>, strerror(errno));</span><br><span class="line">				<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		}</span><br><span class="line">	} <span class="keyword">else</span> {</span><br><span class="line">		<span class="comment">/* There is a signal to handle here */</span></span><br><span class="line">		<span class="keyword">switch</span> (sig.si_signo) {</span><br><span class="line">			<span class="keyword">case</span> SIGCHLD:</span><br><span class="line">				<span class="comment">/* Special-cased, as we don't forward SIGCHLD. Instead, we'll</span></span><br><span class="line"><span class="comment">				 * fallthrough to reaping processes.</span></span><br><span class="line"><span class="comment">				 */</span></span><br><span class="line">				PRINT_DEBUG(<span class="string">"Received SIGCHLD"</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				PRINT_DEBUG(<span class="string">"Passing signal: '%s'"</span>, strsignal(sig.si_signo));</span><br><span class="line">				<span class="comment">/* Forward anything else */</span></span><br><span class="line">				<span class="keyword">if</span> (kill(kill_process_group ? -child_pid : child_pid, sig.si_signo)) {</span><br><span class="line">					<span class="keyword">if</span> (errno == ESRCH) {</span><br><span class="line">						PRINT_WARNING(<span class="string">"Child was dead when forwarding signal"</span>);</span><br><span class="line">					} <span class="keyword">else</span> {</span><br><span class="line">						PRINT_FATAL(<span class="string">"Unexpected error when forwarding signal: '%s'"</span>, strerror(errno));</span><br><span class="line">						<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">					}</span><br><span class="line">				}</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>用 <code>sigtimedwait</code> 这个函数来接收信号，然后过滤掉 <code>SIGCHLD</code> 转发。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">reap_zombies</span><span class="params">(<span class="type">const</span> <span class="type">pid_t</span> child_pid, <span class="type">int</span>* <span class="type">const</span> child_exitcode_ptr)</span> {</span><br><span class="line">	<span class="type">pid_t</span> current_pid;</span><br><span class="line">	<span class="type">int</span> current_status;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) {</span><br><span class="line">		current_pid = waitpid(<span class="number">-1</span>, &amp;current_status, WNOHANG);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">switch</span> (current_pid) {</span><br><span class="line"></span><br><span class="line">			<span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">				<span class="keyword">if</span> (errno == ECHILD) {</span><br><span class="line">					PRINT_TRACE(<span class="string">"No child to wait"</span>);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				}</span><br><span class="line">				PRINT_FATAL(<span class="string">"Error while waiting for pids: '%s'"</span>, strerror(errno));</span><br><span class="line">				<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">				PRINT_TRACE(<span class="string">"No child to reap"</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="comment">/* A child was reaped. Check whether it's the main one. If it is, then</span></span><br><span class="line"><span class="comment">				 * set the exit_code, which will cause us to exit once we've reaped everyone else.</span></span><br><span class="line"><span class="comment">				 */</span></span><br><span class="line">				PRINT_DEBUG(<span class="string">"Reaped child with pid: '%i'"</span>, current_pid);</span><br><span class="line">				<span class="keyword">if</span> (current_pid == child_pid) {</span><br><span class="line">					<span class="keyword">if</span> (WIFEXITED(current_status)) {</span><br><span class="line">						<span class="comment">/* Our process exited normally. */</span></span><br><span class="line">						PRINT_INFO(<span class="string">"Main child exited normally (with status '%i')"</span>, WEXITSTATUS(current_status));</span><br><span class="line">						*child_exitcode_ptr = WEXITSTATUS(current_status);</span><br><span class="line">					} <span class="keyword">else</span> <span class="keyword">if</span> (WIFSIGNALED(current_status)) {</span><br><span class="line">						<span class="comment">/* Our process was terminated. Emulate what sh / bash</span></span><br><span class="line"><span class="comment">						 * would do, which is to return 128 + signal number.</span></span><br><span class="line"><span class="comment">						 */</span></span><br><span class="line">						PRINT_INFO(<span class="string">"Main child exited with signal (with signal '%s')"</span>, strsignal(WTERMSIG(current_status)));</span><br><span class="line">						*child_exitcode_ptr = <span class="number">128</span> + WTERMSIG(current_status);</span><br><span class="line">					} <span class="keyword">else</span> {</span><br><span class="line">						PRINT_FATAL(<span class="string">"Main child exited for unknown reason"</span>);</span><br><span class="line">						<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">					}</span><br><span class="line"></span><br><span class="line">					<span class="comment">// Be safe, ensure the status code is indeed between 0 and 255.</span></span><br><span class="line">					*child_exitcode_ptr = *child_exitcode_ptr % (STATUS_MAX - STATUS_MIN + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">					<span class="comment">// If this exitcode was remapped, then set it to 0.</span></span><br><span class="line">					INT32_BITFIELD_CHECK_BOUNDS(expect_status, *child_exitcode_ptr);</span><br><span class="line">					<span class="keyword">if</span> (INT32_BITFIELD_TEST(expect_status, *child_exitcode_ptr)) {</span><br><span class="line">						*child_exitcode_ptr = <span class="number">0</span>;</span><br><span class="line">					}</span><br><span class="line">				} <span class="keyword">else</span> <span class="keyword">if</span> (warn_on_reap &gt; <span class="number">0</span>) {</span><br><span class="line">					PRINT_WARNING(<span class="string">"Reaped zombie process with pid=%i"</span>, current_pid);</span><br><span class="line">				}</span><br><span class="line"></span><br><span class="line">				<span class="comment">// Check if other childs have been reaped.</span></span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* If we make it here, that's because we did not continue in the switch case. */</span></span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>然后在 <code>reap_zombies</code> 函数中，不断利用 <code>waitpid</code> 这个函数来处理进程，在没有子进程等待处理或者遇到其余系统错误时退出循环。</p>
+<p>注意这里 tini 和 dumb-init 的的实现差异，dumb-init 在回收自己的入口子进程后便会自杀。而 tini 将会在所有自己的子进程退出之后，结束循环，然后判断是否自杀。</p>
+<p>那么我们这里来测试一下</p>
+<p>还是 demo2 的例子，我们来测试一下孙进程的例子</p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> demo2.py /root/demo2.py</span></span><br><span class="line"><span class="keyword">ENV</span> TINI_VERSION v0.<span class="number">19.0</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> https://github.com/krallin/tini/releases/download/<span class="variable">${TINI_VERSION}</span>/tini /tini</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /tini</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">"/tini"</span>,<span class="string">"-s"</span>, <span class="string">"-g"</span>, <span class="string">"--"</span>]</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">"python"</span>, <span class="string">"/root/demo2.py"</span>]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>然后构建，执行，进程结构如下</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109397971-b54fb880-7974-11eb-9899-0d71af5ad835.png" alt="demo2-tini 进程结构图" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1774" height="168" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[128.7919,16.2015,12.4964,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109397971-b54fb880-7974-11eb-9899-0d71af5ad835.png"></p>
+<p>然后，老规矩，strace , kill 发 SIGTERM 看一下，</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398085-648c8f80-7975-11eb-8b08-21fb0c0399fa.png" alt="strace 2160093" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1590" height="264" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[139.2017,6.163,13.1328,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398085-648c8f80-7975-11eb-8b08-21fb0c0399fa.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398094-75d59c00-7975-11eb-8d42-ee062609e152.png" alt="strace 2160094" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1562" height="226" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[151.8755,13.9578,8.5434,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398094-75d59c00-7975-11eb-8d42-ee062609e152.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398106-871ea880-7975-11eb-94a8-0b25374fa79e.png" alt="strace 2160095" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1802" height="250" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[91.1006,8.6122,10.0201,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398106-871ea880-7975-11eb-94a8-0b25374fa79e.png"></p>
+<p>嗯，如预期一样，那么 tini 的实现是不是没有问题了呢，我们再来准备一个例子,demo4.py</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line">pid = os.fork()</span><br><span class="line"><span class="keyword">if</span> pid == <span class="number">0</span>:</span><br><span class="line">    signal.signal(<span class="number">15</span>, <span class="keyword">lambda</span> _, __: time.sleep(<span class="number">1</span>))</span><br><span class="line">    cpid = os.fork()</span><br><span class="line">time.sleep(<span class="number">1000</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>这里我们用 <code>time.sleep(1)</code> 来模拟，程序接到 SIGTERM 后需要优雅处理，然后我们还是准备下 dockefile</p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> demo4.py /root/demo4.py</span></span><br><span class="line"><span class="keyword">ENV</span> TINI_VERSION v0.<span class="number">19.0</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> https://github.com/krallin/tini/releases/download/<span class="variable">${TINI_VERSION}</span>/tini /tini</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /tini</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">"/tini"</span>,<span class="string">"-s"</span>, <span class="string">"-g"</span>, <span class="string">"--"</span>]</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">"python"</span>, <span class="string">"/root/demo4.py"</span>]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>然后构建，允许，看进程结构，啪的一下很快啊</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398222-83d7ec80-7976-11eb-88e9-4e7231b2c90d.png" alt="demo4 进程结构" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1800" height="200" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[132.1845,15.1848,11.8089,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398222-83d7ec80-7976-11eb-88e9-4e7231b2c90d.png"></p>
+<p>然后 strace ，发 SIGTERM 一条龙服务，</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398244-aa962300-7976-11eb-9c4f-7ca7dbe1b833.png" alt="strace 2173315" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1616" height="248" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[135.0788,5.7215,14.2757,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398244-aa962300-7976-11eb-9c4f-7ca7dbe1b833.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398251-bc77c600-7976-11eb-8b24-d5bb60c1ce96.png" alt="strace 2173316" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1778" height="294" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[146.5227,10.0182,9.7861,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398251-bc77c600-7976-11eb-8b24-d5bb60c1ce96.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398257-cac5e200-7976-11eb-9921-457195ee052c.png" alt="strace 2173317" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1762" height="306" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[119.2246,8.2829,9.6271,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398257-cac5e200-7976-11eb-9921-457195ee052c.png"></p>
+<p>然后我们发现，2173316 和 2173317 这两个进程，成功接收到 SIGTERM 的信号后，在处理中，被 SIGKILL 了。那么这是为甚么呢？实际上这里也存在一个潜在的 race condition</p>
+<p>当我们开启 tini 的使用。2173315 退出后，2173316 将被 re-parent ，</p>
+<p>按照内核的 re-parent 流程，2173317 re-parent 到 tini 进程。</p>
+<p>但是，tini 在使用 <code>waitpid</code> 的时候，使用了 <code>WNOHANG</code> 这个选项，那么这里如果在执行 waitpid 时，子进程还未结束，那么将立刻返回0。从而退出循环，开始自杀流程。</p>
+<p>刺激不刺激，关于这点，我师父和我提了一个 issue: <a href="https://github.com/krallin/tini/issues/180" rel="external nofollow noreferrer" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>tini Exits Too Early Leading to Graceful Termination Failure</a></p>
+<p>然后，我也做了一版修复，具体可以参考<a href="https://github.com/Zheaoli/tini/commit/f5286c205d948a6cbb07fa8dca9e763bdb3ebe61" rel="external nofollow noreferrer" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>use new threading to run waipid</a>（还在 PoC，没写单测，处理也有点糙）</p>
+<p>实际上思路很简单 ，我们不使用 <code>waitpid</code> 中的 <code>WNOHANG</code> 选项，将其变为阻塞的调用，然后用一个新的线程来做 <code>waitpid</code> 的处理</p>
+<p>构建一版测试效果如下</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398735-96075a00-7979-11eb-85e9-f8ab99c3d5f5.png" alt="demo5 进程结构" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="938" height="128" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[130.03,13.8566,14.7549,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398735-96075a00-7979-11eb-85e9-f8ab99c3d5f5.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398751-b1726500-7979-11eb-8398-0069c4f3a2aa.png" alt="strace 1808102" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1598" height="294" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[133.884,3.4104,14.5907,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398751-b1726500-7979-11eb-8398-0069c4f3a2aa.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398764-c4853500-7979-11eb-981f-a5ea65ae7572.png" alt="strace 1808104" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1742" height="264" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[170.4968,5.4285,9.6566,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398764-c4853500-7979-11eb-981f-a5ea65ae7572.png"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://user-images.githubusercontent.com/7054676/109398777-d666d800-7979-11eb-972a-37cf82e371d4.png" alt="strace 1808105" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1774" height="414" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[76.2093,5.2974,8.9914,1]}" data-stellar-image-source="https://user-images.githubusercontent.com/7054676/109398777-d666d800-7979-11eb-972a-37cf82e371d4.png"></p>
+<p>嗯，如预期一样，测试没有问题。</p>
+<p>当然这里实际上可能细心的朋友发现，原本的 tini 也没法处理二进制更新的情况，原因和 demo5 里的原因一致。这里大家可以去测试一下</p>
+<p>实际上这里我的处理很过于粗糙和暴力，我们实际上只要保证让 tini 的退出条件变成<strong>一定要等到 waitpid()=-1 &amp;&amp; errno==EHILD再退出</strong>。具体的实现手段大家可以一起来思考（实际上还不少</p>
+<p>最后来总结一下问题的核心：</p>
+<p>无论是 dumb-init 还是 tini 在现行的实现里，都犯了同一个错误，即在容器这个特殊的场景下，都没有等待所有子孙进程的退出再退出。其实解决方案很简单，退出条件一定要是 <strong>waitpid()=-1 &amp;&amp; errno==EHILD</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文吐槽了 dumb-init 和 tini。dumb—init 实现属实拉跨，tini 的实现细腻了很多。但是 tini 依旧存在不可靠的行为，以及我们所期待的 fork 二进制更新这种使用一号进程的场景在 dumb-init 和 tini 上都没法实现。而且 dumb-init 和 tini 目前也还有一个共通的局限性。即无法处理子进程进程组逃逸的情况。（比如十个子进程各自逃逸到一个进程组中）。</p>
+<p>而且在文中的测试中，我们用 <code>time.sleep(1)</code> 来模拟 Graceful Shutdown 的行为，tini 也已经无法满足需求了。。So。。。。</p>
+<p>所以归根到底一句话，应用的信号，进程回收这些基础行为应该应用自决。任何管杀不管埋而寄托于一号进程的行为，都是对于生产的不负责任。（如果你们实在想要一个一号进程，还是用 tini 吧，千万别用 dumb-init)</p>
+<p>所以 exec 裸起大法好，不用一号进程平安保！</p>
+<p>差不多水文就这样吧，这篇水文从提出问题到验证结论，到 patch PoC 报销了我快一个星期的业余时间（本文初稿在凌晨4点过写完）。最后感谢某川同学和我一起搞了几个凌晨三点过。最后，祝大家看的愉快。</p>
+</article>
+<div class="article-tags slide-up"><a class="tag" href="/tags/%E7%BC%96%E7%A8%8B/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>编程</a><a class="tag" href="/tags/Linux/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>Linux</a><a class="tag" href="/tags/%E7%AC%94%E8%AE%B0/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>笔记</a><a class="tag" href="/tags/%E6%B0%B4%E6%96%87/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>水文</a></div>
+
+
+  <div class="article-share slide-up" id="share">
+    <div class="body">
+      <div class="social-wrap dis-select"><a class="social share-item qrcode ui-interactive is-icon-only" onclick="util.toggle(&quot;share-qrcode&quot;)" aria-label="Share: QR Code" title="Share: QR Code"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="M10.553 13.447c-.424-.424-.95-.596-1.535-.675c-.553-.074-1.25-.074-2.086-.074H5.827c-.58 0-1.065 0-1.459.037c-.411.04-.795.124-1.146.34c-.345.21-.634.5-.845.844c-.216.352-.3.735-.34 1.147C2 15.459 2 15.944 2 16.525v.068c0 .884 0 1.597.055 2.17c.056.592.175 1.108.459 1.571c.288.47.682.864 1.152 1.152c.463.284.979.403 1.57.46C5.81 22 6.524 22 7.407 22h.07c.58 0 1.064 0 1.458-.037c.412-.04.795-.124 1.147-.34c.344-.21.633-.5.844-.844c.216-.352.3-.736.34-1.147c.037-.394.037-.879.037-1.46v-1.104c0-.836 0-1.533-.074-2.086c-.079-.584-.251-1.111-.675-1.535m-1.62-11.41c.412.04.795.124 1.147.34c.344.21.633.5.844.845c.216.351.3.735.34 1.146c.037.394.037.879.037 1.46v1.104c0 .836 0 1.533-.074 2.086c-.079.584-.251 1.111-.675 1.535s-.95.596-1.535.675c-.553.074-1.25.074-2.086.074H5.827c-.58 0-1.065 0-1.459-.037c-.411-.04-.795-.124-1.146-.34a2.56 2.56 0 0 1-.845-.844c-.216-.352-.3-.735-.34-1.147C2 8.54 2 8.056 2 7.475v-.068c0-.884 0-1.597.055-2.17c.056-.592.175-1.108.459-1.571c.288-.47.682-.864 1.152-1.152c.463-.284.979-.403 1.57-.46C5.81 2 6.524 2 7.407 2h.07c.58 0 1.064 0 1.458.037M16.593 2h-.068c-.58 0-1.065 0-1.46.037c-.41.04-.794.124-1.146.34c-.344.21-.633.5-.844.845c-.216.351-.3.735-.34 1.146c-.037.394-.037.879-.037 1.46v1.104c0 .836 0 1.533.074 2.086c.079.584.251 1.111.675 1.535s.95.596 1.535.675c.553.074 1.25.074 2.086.074h1.105c.58 0 1.065 0 1.459-.037c.411-.04.795-.124 1.146-.34c.345-.21.634-.5.845-.844c.216-.352.3-.735.34-1.147C22 8.54 22 8.056 22 7.475v-.068c0-.884 0-1.597-.055-2.17c-.056-.592-.175-1.108-.459-1.571a3.5 3.5 0 0 0-1.152-1.152c-.463-.284-.979-.403-1.57-.46C18.19 2 17.477 2 16.594 2" opacity=".5"></path><path fill="currentColor" d="M14.093 21.302a.698.698 0 1 1-1.396 0v-2.79h1.396z" opacity=".4"></path><path fill="currentColor" d="M21.302 12.698a.7.7 0 0 0-.697.697v3.256H22v-3.256a.7.7 0 0 0-.698-.697" opacity=".5"></path><path fill="currentColor" d="M16.076 16.617c-.076.184-.076.417-.076.883s0 .699.076.883a1 1 0 0 0 .541.54c.184.077.417.077.883.077s.699 0 .883-.076a1 1 0 0 0 .54-.541c.077-.184.077-.417.077-.883s0-.699-.076-.883a1 1 0 0 0-.541-.54C18.199 16 17.966 16 17.5 16s-.699 0-.883.076a1 1 0 0 0-.54.541"></path><path fill="currentColor" d="M22 18.535v-.023h-1.396c0 .443 0 .74-.016.97c-.015.224-.043.333-.073.405a1.16 1.16 0 0 1-.629.63c-.072.029-.18.056-.405.072c-.23.015-.527.016-.97.016h-1.86V22h1.883c.414 0 .759 0 1.042-.02a2.6 2.6 0 0 0 .844-.175a2.56 2.56 0 0 0 1.384-1.384c.112-.27.156-.549.176-.844c.02-.283.02-.628.02-1.042" opacity=".7"></path><path fill="currentColor" d="M12.697 16.616v.035h1.396c0-.668 0-1.116.035-1.458c.034-.33.093-.482.16-.583a1.2 1.2 0 0 1 .321-.32c.101-.068.254-.128.584-.161c.342-.035.79-.036 1.458-.036h1.86v-1.395h-1.896c-.623 0-1.142 0-1.563.043c-.44.044-.85.142-1.218.388c-.28.187-.519.426-.706.706c-.246.368-.343.777-.388 1.217c-.043.421-.043.94-.043 1.564" opacity=".6"></path><path fill="currentColor" d="M5.508 18.69c.219.155.528.155 1.146.155c.619 0 .928 0 1.146-.155a.8.8 0 0 0 .2-.199c.154-.218.154-.527.154-1.146s0-.927-.155-1.146A.8.8 0 0 0 7.8 16c-.218-.155-.527-.155-1.146-.155s-.927 0-1.146.155a.8.8 0 0 0-.199.2c-.155.218-.155.527-.155 1.145c0 .619 0 .928.155 1.146a.8.8 0 0 0 .2.2M6.654 8.155c-.618 0-.927 0-1.146-.155a.8.8 0 0 1-.199-.2c-.155-.217-.155-.527-.155-1.145c0-.619 0-.928.155-1.146a.8.8 0 0 1 .2-.2c.218-.154.527-.154 1.145-.154c.619 0 .928 0 1.146.155a.8.8 0 0 1 .2.199c.154.218.154.527.154 1.146s0 .928-.155 1.146A.8.8 0 0 1 7.8 8c-.218.155-.527.155-1.146.155M16.2 8c.218.155.527.155 1.146.155s.927 0 1.146-.155a.8.8 0 0 0 .199-.199c.155-.218.155-.528.155-1.146c0-.619 0-.928-.155-1.146a.8.8 0 0 0-.2-.2c-.218-.154-.527-.154-1.145-.154c-.619 0-.928 0-1.146.155a.8.8 0 0 0-.2.199c-.154.218-.154.527-.154 1.146s0 .928.155 1.146A.8.8 0 0 0 16.2 8"></path></svg></span></a><a class="social share-item weibo ui-interactive is-icon-only" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2021%2F02%2F27%2Fdamn-the-init-process%2F&amp;title=%E7%BB%A7%E7%BB%AD%E7%88%86%E8%AE%BA%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%20-%20Manjusaka&amp;pics=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2023%2F02%2F06%2F01%2F14%2Fsuperb-fairywren-7770904_1280.jpg&amp;summary=%E4%B8%8A%E5%91%A8%E7%9A%84%E6%96%87%E7%AB%A0%E8%81%8A%E4%BA%86%E5%85%B3%E4%BA%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%86%B5%E5%90%8E%EF%BC%8C%E5%9C%A8%E6%88%91%E5%B8%88%E7%88%B6%E6%9F%90%E5%B7%9D(%E5%8F%AF%E4%BB%A5%E5%8E%BB%20GitHub%20%E6%89%BE%E4%BB%96%E7%8E%A9%EF%BC%8Cjschwinger23)%20%E7%9A%84%E6%8C%87%E5%AF%BC%E4%B8%8E%E9%85%8D%E5%90%88%E4%B8%8B%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B8%80%E8%B5%B7%E5%AF%B9%E7%9B%AE%E5%89%8D%E4%B8%BB%E6%B5%81%E7%9A%84%E8%A2%AB%E5%B9%BF%E6%B3%9B%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%B9%E5%99%A8%E4%B8%AD%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0%20dumb-init%20%E5%92%8C%20tini%20%E5%81%9A%E4%BA%86%E4%B8%80..." target="_blank" rel="external nofollow noopener noreferrer" aria-label="Share: Weibo" title="Share: Weibo"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"></path></svg></span></a><a class="social share-item x ui-interactive is-icon-only" href="https://x.com/intent/tweet?text=%E7%BB%A7%E7%BB%AD%E7%88%86%E8%AE%BA%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%20-%20Manjusaka&amp;url=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2021%2F02%2F27%2Fdamn-the-init-process%2F" target="_blank" rel="external nofollow noopener noreferrer" aria-label="Share: X" title="Share: X"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M14.234 10.162L22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299l-.929-1.329L3.076 1.56h3.182l5.965 8.532l.929 1.329l7.754 11.09h-3.182z"></path></svg></span></a><a class="social share-item telegram ui-interactive is-icon-only" href="https://t.me/share/url?url=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2021%2F02%2F27%2Fdamn-the-init-process%2F&amp;text=%E7%BB%A7%E7%BB%AD%E7%88%86%E8%AE%BA%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%20-%20Manjusaka" target="_blank" rel="external nofollow noopener noreferrer" aria-label="Share: Telegram" title="Share: Telegram"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.5.5 0 0 1 .171.325c.016.093.036.306.02.472c-.18 1.898-.962 6.502-1.36 8.627c-.168.9-.499 1.201-.82 1.23c-.696.065-1.225-.46-1.9-.902c-1.056-.693-1.653-1.124-2.678-1.8c-1.185-.78-.417-1.21.258-1.91c.177-.184 3.247-2.977 3.307-3.23c.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.159.037-5.061 3.345q-.72.495-1.302.48c-.428-.008-1.252-.241-1.865-.44c-.752-.245-1.349-.374-1.297-.789q.04-.324.893-.663q5.247-2.286 6.998-3.014c3.332-1.386 4.025-1.627 4.476-1.635"></path></svg></span></a><a class="social share-item email ui-interactive is-icon-only" href="mailto:?subject=%E7%BB%A7%E7%BB%AD%E7%88%86%E8%AE%BA%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%20-%20Manjusaka&amp;body=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2021%2F02%2F27%2Fdamn-the-init-process%2F" rel="external nofollow noreferrer" aria-label="Share: Email" title="Share: Email"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M3.172 5.172C2 6.343 2 8.229 2 12s0 5.657 1.172 6.828C4.343 20 6.229 20 10 20h4c3.771 0 5.657 0 6.828-1.172C22 17.657 22 15.771 22 12s0-5.657-1.172-6.828C19.657 4 17.771 4 14 4h-4C6.229 4 4.343 4 3.172 5.172m15.404 2.348a.75.75 0 0 1-.096 1.056l-2.196 1.83c-.887.739-1.605 1.338-2.24 1.746-.66.424-1.303.693-2.044.693s-1.384-.269-2.045-.693c-.634-.408-1.352-1.007-2.239-1.745L5.52 8.576a.75.75 0 1 1 .96-1.152l2.159 1.799c.933.777 1.58 1.315 2.128 1.667.529.34.888.455 1.233.455s.704-.115 1.233-.455c.547-.352 1.195-.89 2.128-1.667l2.159-1.8a.75.75 0 0 1 1.056.097" clip-rule="evenodd"></path></svg></span></a></div>
+      <div class="share-qrcode" id="share-qrcode" style="opacity:0;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&amp;data=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2021%2F02%2F27%2Fdamn-the-init-process%2F" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></div>
+    </div>
+  </div>
+
+<div class="article-footer slide-up">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section></div>
+
+<div class="related-wrap slide-up" id="read-next"><section class="body"><div class="item" id="prev"><div class="note"><svg class="icon" viewBox="0 0 1 1" data-icon="default:arrow-left" aria-hidden="true"></svg> Newer</div><a href="/posts/2021/04/11/a-simple-introduce-about-ci-cd/">当我们在聊 CI/CD 时，我们在聊什么？</a></div><div class="item" id="next"><div class="note">Older <svg class="icon" viewBox="0 0 1 1" data-icon="default:arrow-right" aria-hidden="true"></svg></div><a href="/posts/2021/02/13/a-simple-introduction-about-the-init-process-in-container/">简单聊聊容器中的一号进程</a></div></section></div>
+
+
+
+
+  <div class="related-wrap md-text slide-up" id="comments">
+    
+    
+    <section class="header cmt-title cap theme">
+      <p>参与讨论</p>
+
+    </section>
+    
+    <section class="body cmt-body giscus">
+      
+
+<div class="lazy-icon"></div>
+
+<div id="giscus" data-repo="Zheaoli/zheaoli.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnk2Mzk3MjI3MQ==" data-category="Announcements" data-category-id="DIC_kwDOA9Ajr84DL0rp" data-mapping="pathname" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+<footer class="page-footer slide-up footnote"><hr><div class="text"><p>© 2020 - 2026 <a href="/">Manjusaka</a> · 由 <a href="https://github.com/xaoxuu/hexo-theme-stellar/tree/2.0.0" rel="external nofollow noreferrer">Stellar 2.0.0</a> 驱动。<br>除特别声明外，本站文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+</main>
+<aside data-stellar-runtime-region="" id="rightbar-region" class="site-region site-region--rightbar" data-region="rightbar" aria-label="Rightbar"><div class="site-region__surface ui-drawer-surface"><div class="site-region__viewport"><div class="widgets widget-stack widget-stack--rightbar widget-stack--rightbar"><div class="widget-instance widget-instance--toc" data-widget-id="rightbar:0:toc" data-presentation="rightbar">
+
+
+<widget class="widget-wrapper slide-up toc" id="data-toc" collapse="false">
+  
+    <div class="widget-header dis-select">
+      <span class="name">On This Page</span>
+      <button type="button" class="cap-action ui-interactive card-hover card-hover--spotlight" data-shell-action="toggle-toc" aria-label="Toggle table of contents" aria-pressed="false"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg></span></button>
+    </div>
+  
+  <div class="widget-body"><ol class="toc ui-collection-adapter"><li class="toc-item toc-level-2"><a class="toc-link ui-interactive" href="#%E6%AD%A3%E6%96%87"><span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link ui-interactive" href="#%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%EF%BC%8C%E6%88%91%E4%BB%AC%E5%B8%8C%E6%9C%9B%E7%9A%84%E4%B8%80%E5%8F%B7%E8%BF%9B%E7%A8%8B%E9%9C%80%E8%A6%81%E6%89%BF%E6%8B%85%E6%80%8E%E6%A0%B7%E7%9A%84%E8%81%8C%E8%B4%A3%EF%BC%9F"><span class="toc-text">我们为什么需要一个一号进程，我们希望的一号进程需要承担怎样的职责？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link ui-interactive" href="#%E6%8B%89%E8%B7%A8%E7%9A%84-dumb-init"><span class="toc-text">拉跨的 dumb-init</span></a></li><li class="toc-item toc-level-3"><a class="toc-link ui-interactive" href="#%E6%80%81%E5%BA%A6%E5%8F%8B%E5%A5%BD%E7%9A%84%E8%81%8A%E8%81%8A-tini"><span class="toc-text">态度友好的聊聊 tini</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div>
+  <div class="widget-footer"><a class="top ui-interactive" onclick="util.scrollTop()"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="M20.536 3.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464" opacity=".5"></path><path fill="currentColor" d="M9.53 12.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 1 1-1.06 1.06L12 9.56z"></path><path fill="currentColor" d="M9.53 16.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 1 1-1.06 1.06L12 13.56z"></path></svg></span><span>Scroll to Top</span></a><a class="buttom ui-interactive" onclick="util.scrollComment()"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"></path><path fill="currentColor" d="M7.25 9A.75.75 0 0 1 8 8.25h8a.75.75 0 0 1 0 1.5H8A.75.75 0 0 1 7.25 9m0 3.5a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1-.75-.75"></path></svg></span><span>Join Discussion</span></a></div>
+</widget>
+
+
+</div></div></div></div></aside>
+</div><button type="button" class="site-scrim" data-shell-action="dismiss-drawer" aria-label="Close navigation" tabindex="-1"></button><div data-stellar-runtime-region="" class="site-dock" role="group" aria-label="Layout panels">
+  <button type="button" class="site-dock__button site-dock__button--rightbar ui-interactive" aria-label="Open rightbar" aria-controls="rightbar-region" aria-expanded="false" data-shell-action="toggle-rightbar-drawer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+  </button>
+  <button type="button" class="site-dock__button site-dock__button--leftbar ui-interactive" aria-label="Open leftbar" aria-controls="leftbar-region" aria-expanded="false" data-shell-action="toggle-leftbar-drawer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"></path><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"></path></g></svg>
+  </button>
+</div>
+
+<dialog data-stellar-runtime-region="" class="search-dialog" id="site-search-dialog" aria-labelledby="site-search-title">
+  <div class="search-dialog__panel search-wrapper" id="site-search-wrapper" searching="false">
+    <div class="search-dialog__header">
+      <div class="search-form" role="search">
+        <span class="search-button" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Adapted from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3M3 13h3M3 18h8M16.83 13.83l3.76 3.76"></path><circle cx="14" cy="11" r="4"></circle></g></svg></span>
+        <input type="search" class="search-input" id="site-search-input" aria-labelledby="site-search-title" placeholder="Search">
+      </div>
+      <button type="button" class="search-dialog__close" data-shell-action="close-search" aria-label="Close search">×</button>
+    </div>
+    
+      <div class="search-dialog__scope" role="radiogroup" aria-labelledby="site-search-title" hidden="">
+        <label class="search-dialog__scope-option" data-search-scope-option="all">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="all">
+          <span>All</span>
+        </label>
+        <label class="search-dialog__scope-option" data-search-scope-option="blog" hidden="">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="blog">
+          <span>Blog</span>
+        </label>
+        <label class="search-dialog__scope-option" data-search-scope-option="current" hidden="">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="current">
+          <span data-search-scope-current-label=""></span>
+        </label>
+      </div>
+    
+    <h2 class="search-dialog__title" id="site-search-title">Search</h2>
+    <div class="search-result" id="site-search-result"></div>
+    <div class="search-no-result">No Results!</div>
+  </div>
+</dialog>
+</div><div class="site-scripts">
+<script data-stellar-script="core" src="/js/stellar-icons.js?v=dd617eebf14c02bb"></script>
+
+<script data-stellar-script="defines">
+  window.canonical = window.stellarClientData.canonical;
+  const ctx = window.stellarClientData.ctx;
+  window.canonical.param = {permalink: "https://www.manjusaka.blog/posts/2021/02/27/damn-the-init-process/", checklink: ctx.services.video.js};
+  ctx.date_suffix = {"just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago"};
+  if (ctx.search) Object.assign(ctx.search, {"more":"More","no_more":"No more results"});
+  const def = window.stellarClientData.def;
+  window.ctx = ctx;
+  window.def = def;
+</script>
+
+
+<!-- core: 迁移期 DOM/资源兼容工具；Extension 注册与生命周期由 ESM runtime 所有 -->
+<script data-stellar-script="core" src="/js/utils.js?v=2.0.0"></script>
+<script data-stellar-script="core" src="/js/main.js?v=2.0.0" defer=""></script>
+<script data-stellar-script="core" defer="" src="/js/profile.js?v=2.0.0"></script>
+
+
+
+
+
+<script data-stellar-script="core" type="application/json" id="stellar-runtime-config">{"version":1,"root":"/","policy":{"cache":{"enabled":true,"defaultTtl":3600,"ttl":{"giscus":600,"waline":600,"artalk":600,"memos":600,"memos-user":86400,"sites":86400,"friends":86400,"friends_and_posts":86400,"siteinfo":86400},"maxEntries":200},"request":{"retries":2,"timeoutMs":5000,"idleTimeoutMs":3000,"maxCacheEntryBytes":204800},"features":{"codeCopyToastMs":2500},"providers":{"linkPrefetch":"flying_pages","lightbox":"fancybox","diagrams":"mermaid"}},"extensions":[{"id":"pin-slider","module":"/js/runtime/extensions/pin-slider.js","scope":"region","when":{"selector":".pin-slider"},"config":{}},{"id":"page-controls","module":"/js/runtime/extensions/page-controls.js","scope":"region","when":{"always":true},"config":{"highlight":"/js/search/highlight.js","tagtree":"/js/tagtree.js"}},{"id":"partial-navigation","module":"/js/runtime/extensions/partial-navigation.js","scope":"document","when":{"always":true},"config":{}},{"id":"color-scheme-switch","module":"/js/runtime/extensions/color-scheme-switch.js","scope":"document","when":{"always":true},"config":{"messages":{"light":"Switched to Light Mode","dark":"Switched to Dark Mode","auto":"Switched to Auto Mode"}}},{"id":"search","module":"/js/runtime/extensions/search.js","scope":"document","when":{"selector":".search-input"},"config":{"provider":"local","options":{"scope":"all","includeContent":true,"cacheTtlSeconds":86400},"assets":{"client":null,"provider":"/js/search/local-search.js","shortcut":"/js/search/shortcut.js"}}},{"id":"hero-parallax","module":"/js/runtime/extensions/hero-parallax.js","scope":"region","when":{"selector":".wiki-hero"},"config":{}},{"id":"hero-effect","module":"/js/runtime/extensions/hero-effect.js","scope":"region","when":{"selector":"canvas[data-hero-effect]"},"config":{}},{"id":"lazy-loading","module":"/js/runtime/extensions/lazy-loading.js","scope":"document","when":{"always":true},"config":{"asset":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"}},{"id":"deferred-icons","module":"/js/runtime/extensions/deferred-icons.js","scope":"region","when":{"selector":"svg.icon[data-icon]"},"config":{}},{"id":"dropdown","module":"/js/runtime/extensions/dropdown.js","scope":"region","when":{"selector":"details.dropdown"},"config":{}},{"id":"services","module":"/js/runtime/extensions/services.js","scope":"region","when":{"selector":"#artalk_container, #twikoo_container, #waline_container, .data-service, [class*='ds-'], a[cardlink], a[data-md-link][data-siteinfo-api], .site-card [data-siteinfo-api], .voice\u003eaudio, .video\u003evideo, .chat-file"},"config":{"marked":"https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js"}},{"id":"comments","module":"/js/runtime/extensions/comments.js","scope":"region","when":{"selector":"#comments"},"config":{"provider":"giscus","options":{"data-repo":"Zheaoli/zheaoli.github.io","data-repo-id":"MDEwOlJlcG9zaXRvcnk2Mzk3MjI3MQ==","data-category":"Announcements","data-category-id":"DIC_kwDOA9Ajr84DL0rp","data-mapping":"pathname","data-strict":1,"data-reactions-enabled":1,"data-emit-metadata":0,"data-input-position":"top","data-theme":"preferred_color_scheme","data-lang":"zh-CN","data-loading":"lazy","crossorigin":"anonymous"},"pageTitle":"继续爆论容器中的一号进程","assets":{"js":"https://giscus.app/client.js"}}},{"id":"settings","module":"/js/runtime/extensions/settings.js","scope":"region","when":{"selector":".settings-page"},"config":{}},{"id":"link-prefetch","module":"/js/runtime/extensions/link-prefetch.js","scope":"document","when":{"always":true},"config":{"asset":"https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"}},{"id":"lightbox","module":"/js/runtime/extensions/lightbox.js","scope":"region","when":{"selector":"[data-fancybox]:not(.error), .with-fancybox, .ds-memos, .md-text img:not([class]), .timenode p\u003eimg"},"config":{"enabled":true,"selector":".md-text img:not([class]), .timenode p\u003eimg","assets":{"localCss":"/css/plugins/fancybox.css","js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"}}},{"id":"reveal","module":"/js/runtime/extensions/reveal.js","scope":"region","when":{"selector":".slide-up"},"config":{"enabled":true,"duration":800,"interval":200,"distance":8,"blur":4}},{"id":"diagrams","module":"/js/runtime/extensions/diagrams.js","scope":"region","when":{"selector":".mermaid"},"config":{"theme":"neutral","provider":"mermaid","assets":{"js":"https://gcore.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"},"colorScheme":"auto"}},{"id":"code-copy","module":"/js/runtime/extensions/code-copy.js","scope":"region","when":{"selector":".code"},"config":{"assets":{"js":"/js/plugins/copycode.js"},"messages":{"label":"Copy","copied":"Copied!","denied":"Clipboard permission was denied","unsupported":"Clipboard requires a supported browser and HTTPS"}}},{"id":"adaptive-text","module":"/js/runtime/extensions/adaptive-text.js","scope":"region","when":{"selector":"[data-text-adaptive]"},"config":{"assets":{"colorJs":"/js/color.js","js":"/js/plugins/adaptive-text.js"}}},{"id":"swiper","module":"/js/runtime/extensions/swiper.js","scope":"region","when":{"selector":"#swiper-api"},"config":{"assets":{"localCss":"/css/plugins/swiper.css","js":"https://unpkg.com/swiper@10.3/swiper-bundle.min.js","css":"https://unpkg.com/swiper@10.3/swiper-bundle.min.css"}}}]}</script>
+<script data-stellar-script="core" type="module" src="/js/runtime/index.js?v=2.0.0&amp;runtime=1"></script>
+
+
+<!-- inject -->
+
+
+<script data-stellar-script="core" defer="" src="/js/navigation-init.js?v=2.0.0"></script>
+</div>
+
+</body></html>
