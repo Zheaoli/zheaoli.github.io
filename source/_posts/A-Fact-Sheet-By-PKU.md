@@ -1,10 +1,9 @@
 ---
 title: 外国语学院-情况说明
-type: tags
 date: 2018-04-24 12:55:03
 tags: [社会,PKU]
 categories: [杂记,社会,PKU]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 # 情况说明

@@ -1,10 +1,9 @@
 ---
 title: SRE 日志：我的包去哪了？
-type: tags
 date: 2024-05-12 01:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 
 这算是新开的一个系列，主要是记录一些 SRE 日常帮自己/帮人调试问题的经历。会完整的记录排查的过程。希望能帮上大家的忙

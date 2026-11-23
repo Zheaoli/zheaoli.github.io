@@ -1,11 +1,9 @@
 ---
 title: "Python 3.14: Python 世界的一大步"
-type: tags
 date: 2025-04-26 22:49:00
 tags: [编程,Linux,Python,笔记,水文]
 categories: [编程,Python]
-toc: true
-swiper_index: 0
+cover: https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
 ---
 
 Python 3.14 目前主要的一些主要的特性其实已经固定了，在我看来，Python 3.14 是一个未来很多年的一个核心版本。因为其确定了是时代的 Python

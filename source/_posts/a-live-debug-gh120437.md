@@ -1,10 +1,9 @@
 ---
 title: Debug 日志：CPython GH-120437
-type: tags
 date: 2024-06-20 03:40:00
 tags: [编程,CPython,笔记,水文]
 categories: [编程,CPython]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 
 和 SRE 日志 系列一样，Debug 日志用来复盘我一些可以公开的调试经历，希望能帮助到大家。

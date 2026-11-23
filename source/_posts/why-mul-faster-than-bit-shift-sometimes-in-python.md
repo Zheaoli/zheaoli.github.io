@@ -1,10 +1,9 @@
 ---
 title: 为什么有些时候 Python 中乘法比位运算更快
-type: tags
 date: 2020-11-06 22:09:00
 tags: [编程,Python,随笔]
 categories: [编程,Python]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 我本来以为我不再会写水文了，但是突然发现自己现在也只能勉强写写水文才能维持生活这样子。那就继续写水文吧

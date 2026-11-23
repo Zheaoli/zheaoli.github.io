@@ -1,10 +1,9 @@
 ---
 title: Swift 3 中的函数参数命名规范指北
-type: tags
 date: 2016-10-09 22:13:04
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 > * 原文地址：[Function Naming In Swift 3](http://inaka.net/blog/2016/09/16/function-naming-in-swift-3/)
 * 原文作者：[Pablo Villar](https://twitter.com/volbap)

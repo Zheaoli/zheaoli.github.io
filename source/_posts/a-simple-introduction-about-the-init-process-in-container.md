@@ -1,10 +1,9 @@
 ---
 title: 简单聊聊容器中的一号进程
-type: tags
 date: 2021-02-13 17:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 新年了，决定趁着有时间的时候多写几篇技术水文。今天的话，准备来简单聊聊容器中我们每天都会接触，但是时常又会被我们忽略的一号进程

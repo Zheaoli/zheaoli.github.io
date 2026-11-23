@@ -1,10 +1,9 @@
 ---
 title: How to Run CPython for WASI Using WASMTIME and Extend It with Python-Implemented Host Functions?
-type: tags
 date: 2024-10-02 21:00:00
 tags: [编程, CPython, WASI, WASM, Notes, Blog]
 categories: [编程, CPython]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
 ---
 
 During the National Day holiday, I worked on a project to use wasmtime to execute CPython virtual machine compiled into WASM/WASI bytecode, and extend it with Host Functions implemented in Python on the host side.

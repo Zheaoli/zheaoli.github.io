@@ -1,10 +1,10 @@
 ---
 title: 好与坏，Swift面面观 Part2
-type: tags
 date: 2016-07-23 03:05:54
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
 photos: images/swift.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 >* 原文链接 : [Good Swift, Bad Swift — Part 2](https://medium.com/@ksmandersen/good-swift-bad-swift-part-2-d6daebf53a5)
 * 原文作者 : [Kristian Andersen](https://medium.com/@ksmandersen)

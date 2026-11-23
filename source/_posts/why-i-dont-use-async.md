@@ -1,10 +1,9 @@
 ---
 title: 去 async/await 之路
-type: tags
 date: 2018-10-05 03:08:37
 tags: [Python,编程,随笔]
 categories: [编程,Python]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 # 去 async/await 之路

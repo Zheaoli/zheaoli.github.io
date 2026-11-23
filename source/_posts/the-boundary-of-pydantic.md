@@ -1,11 +1,9 @@
 ---
 title: "Pydantic 不是免费的——聊聊数据校验的边界"
-type: tags
 date: 2026-03-23 22:30:00
 tags: [编程,Python,FastAPI,Pydantic,Perf,笔记]
 categories: [编程,Python]
-toc: true
-swiper_index: 0
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 最近给一个后端服务做 perf，跑了一发 py-spy 出来火焰图，盯着看了一会儿，发现 `pydantic.main.__init__` 这一条在主热路径上占了一个让人挺难绷的比例。做了几轮调整之后顺手把这件事记一下——核心想说的是：**对一个 web 服务来说，数据校验从来不是免费的，pydantic 也一样。它有它的边界，越界使用就要付出对应的代价。**

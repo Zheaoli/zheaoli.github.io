@@ -36,9 +36,11 @@ category_map: null
 tag_map: null
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
+# 没写 updated 的文章用发布日期，而不是文件修改时间（CI 每次检出都会刷新修改时间）
+updated_option: date
 per_page: 10
 pagination_dir: page
-theme: butterfly
+theme: stellar
 feed:
   type: atom
   path: atom.xml
@@ -47,83 +49,6 @@ deploy:
   type: git
   repo: git@github.com:Zheaoli/zheaoli.github.io.git
   branch: master
-charts:
-  enable: true # 是否启用功能
-  postsChart:
-    title: 文章发布统计 # 设置文章发布统计的标题，默认为空
-    interval: 1 # 横坐标间隔
-  tagsChart:
-    title: Top 10 标签统计 # 设置标签统计的标题，默认为空
-    interval: 1 # 横坐标间隔
-  postsCalendar_Title: #文章发布日历 # 设置发布日历的标题，默认为空
-  categoriesChart_Title: # 设置分类统计的标题，默认为空
-  categoriesRadar_Title: # 设置分类雷达的标题，默认为空
-minify:
-  preview: false ## 本地预览时是否压缩
-  exclude: ['*.min.*']
-  js:
-    enable: true
-    sourceMap:
-      enable: false ## 生成 sourceMap
-      ## 将 sourceMappingURL 插入压缩后的 js 文件，如果为 false 则需要在浏览器开发者工具中手动添加 sourceMap
-      sourceMappingURL: false ## //# sourceMappingURL=xxx.js.map
-    ## 详细配置: https://github.com/terser/terser#minify-options
-    options: {}
-  css:
-    enable: true
-    ## 详细配置: https://github.com/clean-css/clean-css#compatibility-modes
-    options: {}
-  html:
-    enable: true
-    ## 详细配置: https://github.com/kangax/html-minifier#options-quick-reference
-    options:
-      minifyJS: true # Compressed JavaScript
-      minifyCSS: true # CSS Compressed
-      removeComments: true # Remove the comments
-      collapseWhitespace: true # Delete any extra space
-      removeAttributeQuotes: true # Delete attribute quotes
-  image:
-    enable: true
-    svg:
-      enable: true
-      ## 详细配置: https://github.com/imagemin/imagemin-svgo#imageminsvgooptionsbuffer
-      options: {}
-    jpg:
-      enable: true
-      ## 详细配置: https://github.com/imagemin/imagemin-jpegtran#options
-      options: {}
-    png:
-      enable: true
-      ## 详细配置: https://github.com/imagemin/imagemin-pngquant#options
-      options: {}
-    gif:
-      enable: true
-      ## 详细配置: https://www.npmjs.com/package/imagemin-gifsicle#options
-      options: {}
-    webp:
-      enable: true
-      ## 详细配置: https://github.com/imagemin/imagemin-webp#options
-      options: {}
-  font:
-    enable: true
-    ## 详细配置: https://github.com/Lete114/fontmin-spider#api
-    options: {}
-# hexo-butterfly-swiper
-# see https://akilar.top/posts/8e1264d1/
-swiper:
-  enable: true # 开关
-  priority: 1 #过滤器优先权
-  enable_page: all # 应用页面
-  timemode: date #date/updated
-  layout: # 挂载容器类型
-    type: id
-    name: recent-posts
-    index: 0
-  default_descr: 再怎么看我也不知道怎么描述它的啦！
-  swiper_css: https://cdn.jsdelivr.net/npm/hexo-butterfly-swiper@1.0.12/lib/swiper.min.css #swiper css依赖
-  swiper_js: https://cdn.jsdelivr.net/npm/hexo-butterfly-swiper@1.0.12/lib/swiper.min.js #swiper js依赖
-  custom_css: https://cdn.jsdelivr.net/npm/hexo-butterfly-swiper@1.0.12/lib/swiperstyle.css # 适配主题样式补丁
-  custom_js: https://cdn.jsdelivr.net/npm/hexo-butterfly-swiper@1.0.12/lib/swiper_init.js # swiper初始化方法
 algolia:
   appId: "DL1RURGHTB"
   chunkSize: 5000
@@ -145,3 +70,16 @@ algolia:
       - title
       - permalink
       - path
+# 没有 cover 的文章从这里挑一张做题图（沿用 Butterfly 时期的 default_cover）。
+# `hexo new` 新建文章时自动写入；存量文章用 `hexo cover-fill` 补齐。
+default_covers:
+  - https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg

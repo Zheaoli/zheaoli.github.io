@@ -27,6 +27,9 @@ jobs:
       - name: Install Package
         run: npm install -g hexo-cli && npm install
 
+      - name: Check Theme Config And Content
+        run: npx hexo stellar doctor
+
       - name: Generate Html File
         run: hexo g
 

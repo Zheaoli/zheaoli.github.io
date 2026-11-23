@@ -1,12 +1,10 @@
 ---
 title: "家庭 Homelab 升级计划: v2"
-type: tags
 date: 2023-12-28 20:00:00
 tags: [Homelab,Linux,笔记,水文]
 categories: [生活,电子产品,Homelab]
-toc: true
 description: 人生嘛，Homelab 图个乐子
-swiper_index: 3
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 这是一个为了一盘醋包了一盘饺子的故事

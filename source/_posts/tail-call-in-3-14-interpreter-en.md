@@ -1,10 +1,9 @@
 ---
 title: "Further Performance Evolution in Python 3.14: Tail Call Interpreter"
-type: tags
 date: 2025-07-02 23:49:00
 tags: [Programming, Linux, Python, Notes, Random]
 categories: [Programming, Python]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 
 I've been overwhelmed by security work lately, so let me switch to something lighter to relax my mind.

@@ -1,10 +1,9 @@
 ---
 title: 简单聊聊 Python 3.13 的 JIT 方案
-type: tags
 date: 2024-01-04 02:30:00
 tags: [编程,Python,Linux,笔记,水文]
 categories: [编程,Python]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 Python 3.13 的 JIT 方案最终确定了，我觉得可以说又新又好。所以深夜水一篇水文，来聊聊这个 JIT 方案

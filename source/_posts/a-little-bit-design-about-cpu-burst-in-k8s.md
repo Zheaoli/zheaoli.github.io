@@ -1,10 +1,9 @@
 ---
 title: 关于 CPU Burst 在 K8s 中的一些设计想法
-type: tags
 date: 2023-08-27 03:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 深夜看群友聊的我实在焦虑，起来随便写个水文压压惊

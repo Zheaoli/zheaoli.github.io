@@ -1,13 +1,10 @@
 ---
 title: 聊聊公益和助学
-type: tags
 date: 2023-06-26 02:00:00
 tags: [杂记,人生]
 categories: [杂记,人生]
-toc: true
 description: 很多时候，帮助人不需要那么多理由
 cover: https://github.com/Zheaoli/yuque-py/assets/7054676/ea9460a2-e351-4b73-9f82-7aef6cd20c33
-swiper_index: 3
 ---
 
 没什么特别的原因，就突然想来聊聊公益和助学。对了，感谢橘子酱同学深夜帮我做的本篇博客的 cover，我自己对设计实际上一窍不通。

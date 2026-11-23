@@ -1,13 +1,10 @@
 ---
 title: 为什么奥特曼是我的信仰
-type: tags
 date: 2023-06-20 04:00:00
 tags: [杂记,人生]
 categories: [杂记,人生]
-toc: true
 description: 優しさを失わないでくれ。弱い者を労り互いに助け合い。
 cover: https://user-images.githubusercontent.com/7054676/228287041-c86e7928-0da8-4097-b7ff-e575faa8cf8c.png
-swiper_index: 2
 ---
 
 突然着想写一篇文章，聊聊我所信仰的奥特曼。ウルトラマン大好きだ

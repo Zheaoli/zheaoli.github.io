@@ -1,12 +1,10 @@
 ---
 title: 家庭 Homelab 升级计划
-type: tags
 date: 2023-06-17 00:00:00
 tags: [Homelab,Linux,笔记,水文]
 categories: [生活,电子产品,Homelab]
-toc: true
 description: 人生嘛，Homelab 图个乐子
-swiper_index: 1
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 
 最近家庭升级 Homelab 差不多告一段落，来写篇文章记录下我的折腾过程

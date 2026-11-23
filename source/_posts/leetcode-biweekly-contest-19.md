@@ -1,10 +1,9 @@
 ---
 title: Leetcode BiWeekly Contest 19 题解
-type: tags
 date: 2020-02-11 01:00:00
 tags: [Python,编程,leetcode,刷题]
 categories: [编程,leetcode,刷题]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 例行 Leetcode 周赛，这周双周赛，两场赛打下来，有点酸爽，先写个 BiWeekly 19 Contest 的题解吧

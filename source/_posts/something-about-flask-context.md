@@ -1,10 +1,9 @@
 ---
 title: Flask 中的 Context 初探
-type: tags
 date: 2018-02-23 02:54:20
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
 ---
 
 # Flask 中的 Context 初探

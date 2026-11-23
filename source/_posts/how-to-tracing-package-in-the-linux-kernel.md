@@ -1,10 +1,9 @@
 ---
 title: 利用动态 tracing 技术来 trace 内核中的网络请求
-type: tags
 date: 2021-04-17 17:09:00
 tags: [编程,Linux,笔记,水文,eBPF,SystemTap]
 categories: [编程,Linux,Kernel]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 这周帮朋友用 eBPF/SystemTap 这样的动态 tracing 工具做了一些很有趣的功能。这篇文章算是一个总结

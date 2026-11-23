@@ -1,0 +1,12 @@
+name: 刷题
+tagline: LeetCode Daily，记录每天的刷题题解
+route:
+  path: /leetcode/
+active_menu: leetcode
+listing:
+  order: 2
+  sort:
+    field: date
+    direction: desc
+comments:
+  enabled: true

@@ -1,0 +1,140 @@
+# Stellar v2 配置。完整字段与默认值见 node_modules/hexo-theme-stellar/_config.yml
+# 这里只写与默认值不同的部分；数组会整体替换默认值。
+
+leftbar:
+  brand:
+    image:
+      src: https://avatars.githubusercontent.com/u/7054676?v=4
+      variant: avatar
+    name: Manjusaka
+    tagline: 写代码的香港记者
+  menu:
+    - id: post
+      title: 博客
+      icon: default:documents
+      url: /
+    - id: weekly
+      title: 周报
+      icon: default:notebook
+      url: /weekly/
+    - id: leetcode
+      title: 刷题
+      icon: default:fire
+      url: /leetcode/
+    - id: categories
+      title: 分类
+      icon: default:category
+      url: /categories/
+    - id: tags
+      title: 标签
+      icon: default:hashtag
+      url: /tags/
+    - id: archives
+      title: 归档
+      icon: default:calendar
+      url: /archives/
+    - id: about
+      title: 关于
+      icon: default:profile
+      url: /about/
+  footer:
+    actions:
+      - type: link
+        icon: default:github
+        title: GitHub
+        url: https://github.com/Zheaoli
+      - type: link
+        icon: share:x
+        title: X
+        url: https://twitter.com/Manjusaka_Lee
+      - type: link
+        icon: share:email
+        title: Email
+        url: mailto:me@manjusaka.me
+      - type: link
+        icon: default:rss
+        title: RSS
+        url: /atom.xml
+
+footer:
+  content: |
+    © 2020 - 2026 [{author.name}](/) · 由 [{theme.name} {theme.version}]({theme.tree}) 驱动。
+    除特别声明外，本站文章均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。
+
+profiles:
+  # 周报、刷题两个笔记本已经在左侧菜单里，不需要“全部笔记本”索引页
+  notebooks:
+    path: null
+  post:
+    rightbar:
+      widgets:
+        - toc
+
+article:
+  style: tech
+  listing:
+    show_tags: true
+  show_reading_time: true
+  related_posts_limit: 0 # 开启需要另装 hexo-related-popular-posts
+  footer:
+    license: 本文采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。
+    share:
+      - qrcode
+      - weibo
+      - x
+      - telegram
+      - email
+
+search:
+  # Butterfly 时期用的是 Algolia，但站点配置里缺 apiKey；验证阶段先用本地搜索
+  provider: local
+
+comments:
+  provider: giscus
+  title: 参与讨论
+  # 参数取自 https://giscus.app/zh-CN 生成的结果
+  giscus:
+    data-repo: Zheaoli/zheaoli.github.io
+    data-repo-id: MDEwOlJlcG9zaXRvcnk2Mzk3MjI3MQ==
+    data-category: General
+    data-category-id: DIC_kwDOA9Ajr84DL0rq
+    data-mapping: pathname
+    data-strict: 0
+    data-reactions-enabled: 1
+    data-emit-metadata: 0
+    data-input-position: top
+    data-theme: preferred_color_scheme
+    data-lang: zh-CN
+    data-loading: lazy
+
+features:
+  color_scheme_switch:
+    enabled: true
+  lightbox:
+    enabled: true
+    selector: '.md-text img:not([class]), .timenode p>img'
+  diagrams:
+    provider: mermaid
+
+open_graph:
+  enabled: true
+  twitter_id: Manjusaka_Lee
+
+structured_data:
+  same_as:
+    - https://github.com/Zheaoli
+    - https://twitter.com/Manjusaka_Lee
+
+# 预连接页面必然会用到的第三方源
+preconnect:
+  - https://gcore.jsdelivr.net
+  - https://cdn.pixabay.com
+  - https://avatars.githubusercontent.com
+  - https://giscus.app
+
+# 输出 <link rel="canonical">；在其他域名（如预览环境）访问时主题会提示非官方地址
+canonical:
+  host: www.manjusaka.blog
+  allowed_hosts:
+    - localhost
+    - manjusaka.itscoder.com

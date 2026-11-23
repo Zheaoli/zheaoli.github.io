@@ -1,11 +1,9 @@
 ---
 title: "Python 3.14 的进一步性能进化: Tail Call Interpreter"
-type: tags
 date: 2025-07-02 23:49:00
 tags: [编程,Linux,Python,笔记,水文]
 categories: [编程,Python]
-toc: true
-swiper_index: 0
+cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
 ---
 
 最近做安全做的我头晕脑胀，来点轻松的换换脑子，让自己放松下

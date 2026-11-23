@@ -1,10 +1,8 @@
 ---
 title: 简单聊聊常见的负载均衡算法
-type: tags
 date: 2025-03-23 20:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,网络]
-toc: true
 cover: /images/pixai-1860500966642493859-3.png
 ---
 

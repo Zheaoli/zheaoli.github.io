@@ -1,10 +1,9 @@
 ---
 title: 如何检测iPhone处于低电量模式
-type: tags
 date: 2016-07-23 03:09:38
 tags: [iOS,编程,Objective-C]
 categories: [编程,翻译]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 >* 原文链接 : [Detecting low power mode](http://useyourloaf.com/blog/detecting-low-power-mode/)
 * 原文作者 : [useyourloaf](http://useyourloaf.com/)

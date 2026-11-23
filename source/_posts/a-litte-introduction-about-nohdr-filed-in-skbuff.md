@@ -1,10 +1,9 @@
 ---
 title: "聊聊 sk_buff 中一个冷门字段: nohdr"
-type: tags
 date: 2021-11-22 21:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
 ---
 
 今天遇到一个很有意思的问题，“nohdr 字段到底有什么用”，在这里写个水文简单记录一下

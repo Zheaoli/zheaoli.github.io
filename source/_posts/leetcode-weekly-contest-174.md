@@ -1,10 +1,9 @@
 ---
 title: Leetcode Weekly Contest 174 题解
-type: tags
 date: 2020-02-02 15:00:00
 tags: [Python,编程,leetcode,刷题]
 categories: [编程,leetcode,刷题]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 
 最近因为生病好久没刷题，今早开始打了一场 Leetcode 的周赛，来写个题解，今早状态还行，，BTW 以后每周都会打周赛，争取写题解

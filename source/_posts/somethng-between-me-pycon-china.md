@@ -1,10 +1,9 @@
 ---
 title: 我与 PyCon China 这两年
-type: tags
 date: 2019-11-03 22:27:15
 tags: [杂记,人生]
 categories: [杂记,人生]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 其实这篇文章最开始动笔是写于9月份，PyCon China 2019 上海场的工作结束后。后续因为还有北京，成都场的工作，所以拖到了现在。正好我自己的三年计划刚刚落下帷幕。下一个三年计划正在开展。我也来聊聊在这三年里面，

@@ -1,10 +1,9 @@
 ---
 title: 详解模板引擎工作机制
-type: tags
 date: 2016-08-13 22:48:55
 tags: [Python,编程,Flask,掘金翻译计划]
 categories: [编程,Python]
-toc: true
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 > * 原文地址：[How a template engine works](https://fengsp.github.io/blog/2016/8/how-a-template-engine-works/)
 * 原文作者：[Shipeng Feng](https://twitter.com/_fengsp)
