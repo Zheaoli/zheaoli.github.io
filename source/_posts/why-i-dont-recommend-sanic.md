@@ -3,6 +3,7 @@ title: Sanic 的若干吐槽
 date: 2018-02-23 02:54:24
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 # Sanic 的若干吐槽

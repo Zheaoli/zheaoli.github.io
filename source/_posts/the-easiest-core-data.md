@@ -3,6 +3,7 @@ title: 「最简单」的 Core Data 上手指南
 date: 2016-09-01 22:36:07
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 > * 原文地址：[The Easiest Core Data](http://albertodebortoli.com/blog/2016/08/05/the-easiest-core-data/)
 * 原文作者：[Alberto De Bortoli](http://albertodebortoli.com/)

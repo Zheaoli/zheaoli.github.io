@@ -3,6 +3,7 @@ title: 继续爆论容器中的一号进程
 date: 2021-02-28 03:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 
 上周的文章聊了关于容器中的一号进程的一些概况后，在我师父某川(可以去 GitHub 找他玩，[jschwinger23](https://github.com/jschwinger23)) 的指导与配合下，我们一起对目前主流的被广泛使用的两个容器中一号进程的实现 dumb-init 和 tini 做了一番探究，继续写个水文来爆论一番。

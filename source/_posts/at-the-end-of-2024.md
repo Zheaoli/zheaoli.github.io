@@ -3,6 +3,7 @@ title: 本当の僕らをありがとう
 date: 2024-12-31 23:00:00
 tags: [杂记,总结]
 categories: [杂记,总结,秀恩爱]
+cover: https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
 ---
 
 每年都会选择一句话来总结自己这一年，前年是“但行好事，莫问前程”，去年是 “Per aspera, Ad astra”。那么今年我选择是 “本当の僕らをありがとう”。

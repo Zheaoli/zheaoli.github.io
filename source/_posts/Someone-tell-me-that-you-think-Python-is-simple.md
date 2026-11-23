@@ -3,6 +3,7 @@ title: 听说你会 Python ？
 date: 2016-11-18 22:37:43
 tags: [Python,编程,黑魔法,编程技巧]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 ## 前言

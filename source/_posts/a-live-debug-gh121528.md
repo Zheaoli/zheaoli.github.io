@@ -3,6 +3,7 @@ title: Debug 日志：CPython GH-121528
 date: 2024-07-17 02:20:00
 tags: [编程,CPython,笔记,水文]
 categories: [编程,CPython]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 Debug 日志系列第二篇，CPython 的 GH-121528，也是很有趣的调试和讨论过程，写出来希望帮助大家

@@ -3,6 +3,7 @@ title: 在Swift中实现撤销功能
 date: 2016-07-23 03:09:00
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 >* 原文链接 : [Undo History in Swift](http://chris.eidhof.nl/post/undo-history-in-swift/)
 * 原文作者 : [chriseidhof](https://twitter.com/chriseidhof/)

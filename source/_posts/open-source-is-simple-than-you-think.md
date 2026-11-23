@@ -3,6 +3,7 @@ title: 开源可能没你想的那么难
 date: 2023-10-24 20:00:00
 tags: [编程,杂记]
 categories: [编程,杂记]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 去参与社区？难吗？其实不难，只是你想的很难，或者说难是你给自己找的借口

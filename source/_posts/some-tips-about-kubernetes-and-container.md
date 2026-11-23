@@ -3,6 +3,7 @@ title: 关于 Kubernetes 和容器化的一些随想
 date: 2020-06-29 18:09:00
 tags: [编程,水文,杂记]
 categories: [编程,水文]
+cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
 ---
 
 这段时间在不少群里争论过关于 Kubernetes 和容器化的一些事，干脆总结下一些碎碎念作为一个概括吧。本文仅代表个人立场，不代表商业观点

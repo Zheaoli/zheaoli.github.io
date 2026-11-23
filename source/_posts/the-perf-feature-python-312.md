@@ -3,6 +3,7 @@ title: 聊聊 Python 3.12 中 perf 的原生支持
 date: 2023-10-05 23:50:00
 tags: [编程,Linux,笔记,水文,Python]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
 ---
 
 好久没写 Python 相关的文章了，但是 Python 3.12 perf 原生支持的这个特性非常的棒，思路又新又好了属于是，所以写篇水文来聊聊这个特性

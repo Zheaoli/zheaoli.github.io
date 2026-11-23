@@ -3,6 +3,7 @@ title: 简单安利 Rime 输入法
 date: 2020-01-28 12:00:00
 tags: [工具,输入法]
 categories: [工具,输入法,Rime]
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 唉，最近因为气胸大过年的住院，春节颓废了好久，今天开始回北京，干脆来安利一个输入法-- Rime

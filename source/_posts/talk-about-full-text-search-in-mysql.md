@@ -3,6 +3,7 @@ title: 简单聊聊 MySQL 全文索引
 date: 2020-03-01 19:30:00
 tags: [Python,编程,MySQL]
 categories: [编程,Python,MySQL]
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 
 

@@ -3,6 +3,7 @@ title: 岳昕：致北大师生与北大外国语学院的一封公开信
 date: 2018-04-24 12:54:03
 tags: [社会,PKU]
 categories: [社会,PKU]
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 # 岳昕：致北大师生与北大外国语学院的一封公开信

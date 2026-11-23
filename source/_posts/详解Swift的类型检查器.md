@@ -4,6 +4,7 @@ date: 2016-08-02 16:22:50
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
 photos: images/swift.jpg
+cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
 ---
 > * 原文链接: [Exponential time complexity in the Swift type checker](http://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html)
 * 原文作者: [Matt Gallagher](http://www.cocoawithlove.com/about/)

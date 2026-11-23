@@ -3,6 +3,7 @@ title: 2018，我，2019，未来
 date: 2019-01-01 00:00:00
 tags: [杂记,总结]
 categories: [杂记,总结,秀恩爱]
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 
 # 2018，我，2019，未来

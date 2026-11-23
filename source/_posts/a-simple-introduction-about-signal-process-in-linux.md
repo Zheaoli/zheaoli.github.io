@@ -3,6 +3,7 @@ title: 简单聊聊进程中的信号处理
 date: 2020-10-24 21:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
 ---
 
 最近在某个技术群里帮人分析了 Linux 编程下信号处理的一段代码。我自己觉得这段代码是挺不错的一个例子，所以写个简单的水文，用这段代码聊聊 Linux 中的信号处理

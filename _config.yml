@@ -68,3 +68,16 @@ algolia:
       - title
       - permalink
       - path
+# 没有 cover 的文章从这里挑一张做题图（沿用 Butterfly 时期的 default_cover）。
+# `hexo new` 新建文章时自动写入；存量文章用 `hexo cover-fill` 补齐。
+default_covers:
+  - https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
+  - https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg

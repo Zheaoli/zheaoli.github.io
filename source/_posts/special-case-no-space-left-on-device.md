@@ -3,6 +3,7 @@ title: 排查一个特殊的 No space left on device
 date: 2023-01-07 23:30:00
 tags: [编程,Linux,容器]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
 ---
 
 好久没写水文了，新年第一篇水文总得写一下，完成下 OKR，正好最近帮群友查了一个特殊的 No space left on device 问题，记录一下。

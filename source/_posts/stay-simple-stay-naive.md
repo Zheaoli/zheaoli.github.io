@@ -3,6 +3,7 @@ title: Stay Simple, Stay Naive
 date: 2023-01-02 03:00:00
 tags: [杂记,总结]
 categories: [杂记,总结,秀恩爱]
+cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
 ---
 
 本来想在农历年前交年终总结的，不过想了想，去年的年终总结就因为太懒导致我鸽了。所以这个“双年”怎么也得总结下2022了。不过说起来怎么还没去字节，就开始 ego 了起来。

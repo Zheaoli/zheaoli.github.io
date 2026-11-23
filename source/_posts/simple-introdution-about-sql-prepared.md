@@ -3,6 +3,7 @@ title: 简单聊聊 SQL 中的 Prepared Statements
 date: 2020-01-05 20:00:00
 tags: [Python,编程,MySQL]
 categories: [编程,Python,MySQL]
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 
 好久没写文章了，新年还是得写点技术水文来保证下状态，正好最近遇到一个比较有意思的问题，就来简单聊聊一下关于 MySQL 中 Prepared Statements 吧

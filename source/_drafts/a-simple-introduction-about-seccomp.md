@@ -3,6 +3,7 @@ title: 简单聊聊 Linux 中的 seccomp
 date: 2023-10-29 21:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
 ---
 
 最近在 runc 上做一些 seccomp 的东西，所以来水一篇文章，聊聊 Linux 

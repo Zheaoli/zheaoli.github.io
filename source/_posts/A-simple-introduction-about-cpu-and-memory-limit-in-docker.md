@@ -3,6 +3,7 @@ title: 容器 CPU 和 Memory 限制行为简述
 date: 2022-08-08 00:00:00
 tags: [编程,Linux,容器]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 这篇是给之前没啥容器经验的选手准备的一篇文章，主要是讲一下容器的 CPU 和 Memory 限制行为。

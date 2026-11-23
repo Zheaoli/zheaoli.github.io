@@ -3,6 +3,7 @@ title: Debug 日志：eCapture GH-604
 date: 2024-09-18 22:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 
 Debug 日志系列第二篇，eCapture 的 GH-604， 一个和 Go， Glibc，静态编译相关的问题

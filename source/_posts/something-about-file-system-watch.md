@@ -3,6 +3,7 @@ title: Linux 上关于 inotify 的小笔记
 date: 2019-07-02 21:35:00
 tags: [Linux,编程,杂记,总结]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 
 最近还是无心写啥文章，说好的写几篇关于 Raft 的论文也因为一些事 delay 了。但是想了想还是准备写点什么，于是写个小的水文来记录下关于今天碰到的一个 Linux 内核参数的问题， 顺便做个笔记

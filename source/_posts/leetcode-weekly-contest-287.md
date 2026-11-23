@@ -3,6 +3,7 @@ title: Leetcode Weekly Contest 287 题解
 date: 2022-04-05 21:00:00
 tags: [Python,编程,leetcode,刷题]
 categories: [编程,刷题]
+cover: https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
 ---
 
 好久没打周赛了，打了一次周赛，简单的写个题解

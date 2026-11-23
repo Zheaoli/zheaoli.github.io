@@ -86,6 +86,21 @@ search:
   # Butterfly 时期用的是 Algolia，但站点配置里缺 apiKey；验证阶段先用本地搜索
   provider: local
 
+comments:
+  provider: giscus
+  title: 参与讨论
+  giscus:
+    data-repo: Zheaoli/zheaoli.github.io
+    data-repo-id: MDEwOlJlcG9zaXRvcnk2Mzk3MjI3MQ==
+    # Announcements 分类只有维护者和 giscus 能发起讨论，访客只能回复
+    data-category: Announcements
+    data-category-id: DIC_kwDOA9Ajr84DL0rp
+    data-mapping: pathname
+    # 严格匹配：避免 xxx 和 xxx-en 这类相近路径串到同一个讨论里
+    data-strict: 1
+    data-lang: zh-CN
+    data-loading: lazy
+
 features:
   color_scheme_switch:
     enabled: true
@@ -103,3 +118,17 @@ structured_data:
   same_as:
     - https://github.com/Zheaoli
     - https://twitter.com/Manjusaka_Lee
+
+# 预连接页面必然会用到的第三方源
+preconnect:
+  - https://gcore.jsdelivr.net
+  - https://cdn.pixabay.com
+  - https://avatars.githubusercontent.com
+  - https://giscus.app
+
+# 输出 <link rel="canonical">；在其他域名（如预览环境）访问时主题会提示非官方地址
+canonical:
+  host: www.manjusaka.blog
+  allowed_hosts:
+    - localhost
+    - manjusaka.itscoder.com

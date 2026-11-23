@@ -3,6 +3,7 @@ title: 优化日志：给自建图床 PicImpact 做一次大范围性能优化
 date: 2026-06-01 00:30:00
 tags: [编程,前端,性能优化,笔记,水文]
 categories: [编程,前端]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 
 和 Debug 日志、SRE 日志一个系列，优化日志用来复盘一些可以公开的折腾经历。

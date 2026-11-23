@@ -3,6 +3,7 @@ title: 关于 pyright
 date: 2019-03-24 22:48:30
 tags: [Python,吐槽,PEP484]
 categories: [编程,Python,PEP484]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 # 关于 pyright

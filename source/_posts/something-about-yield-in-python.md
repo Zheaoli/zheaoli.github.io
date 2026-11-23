@@ -3,6 +3,7 @@ title: 聊聊 Python 中生成器和协程那点事儿
 date: 2016-09-11 10:27:15
 tags: [Python,编程,协程,编程技巧]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 >- 文章来源：itsCoder 的 [WeeklyBolg](https://github.com/itsCoder/weeklyblog) 项目
 >- itsCoder主页：[http://itscoder.com/](http://itscoder.com/)

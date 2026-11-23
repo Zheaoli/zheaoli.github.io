@@ -3,6 +3,7 @@ title: 怎么样去理解 Python 中的装饰器
 date: 2018-02-23 02:54:25
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 

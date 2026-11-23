@@ -3,6 +3,7 @@ title: 简单聊聊 DNS
 date: 2023-12-07 21:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,网络]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 这是一篇想写了很久的文章，我一度怀疑这篇文章能否写完，所幸还是写完了。这篇文章会很长，建议加入收藏单慢慢读

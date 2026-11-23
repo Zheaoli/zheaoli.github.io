@@ -3,6 +3,7 @@ title: 简单聊聊在 Linux 内核中的网络质量监控
 date: 2022-01-31 21:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 这可能是2021年最后一篇文章（农历年），也可能是2022年第一篇文章，不过这完全取决于我什么时候写完。这次来简单聊聊 Linux 中的网络监控

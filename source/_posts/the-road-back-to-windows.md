@@ -3,6 +3,7 @@ title: 重回 Windows 之路
 date: 2022-11-12 12:27:15
 tags: [杂记,技术]
 categories: [杂记,技术]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 最近会回到 Windows 下办公了两周多，简单记录下自己的使用体验

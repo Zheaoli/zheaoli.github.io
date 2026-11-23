@@ -3,6 +3,7 @@ title: 日常辣鸡水文:关于 logging 的进程安全问题
 date: 2018-02-23 02:54:21
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 ## 日常辣鸡水文:关于 logging 的进程安全问题

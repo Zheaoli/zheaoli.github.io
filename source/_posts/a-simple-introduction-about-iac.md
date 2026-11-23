@@ -3,6 +3,7 @@ title: 简单聊聊 IaC：Infrastructure as Code
 date: 2023-03-12 21:00:00
 tags: [编程,SRE,Tools,水文]
 categories: [编程,杂记]
+cover: https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
 ---
 
 实际上 IaC 这个概念的出现已经很久了，所以写篇水文来简单聊聊 IaC 的过去，现在，和将来

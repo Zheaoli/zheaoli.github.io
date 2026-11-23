@@ -3,6 +3,7 @@ title: Saka 馬鹿
 date: 2025-01-05 02:30:00
 tags: [编程,杂记,人生]
 categories: [编程,随笔]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 这篇博客是我在刷题群内的 2025 年的第一次分享整理的演讲稿。主要是完整复盘了过去几年里我犯下的两个比较典型的低级错误。

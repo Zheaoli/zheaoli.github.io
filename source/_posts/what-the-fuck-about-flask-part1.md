@@ -3,6 +3,7 @@ title: 你所不知道的 Flask Part1:Route 初探
 date: 2017-08-13 19:01:29
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
 ---
 
 ## 前言

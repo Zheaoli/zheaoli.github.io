@@ -3,6 +3,7 @@ title: 菜鸟阅读 Flask 源码系列（1）：Flask的router初探
 date: 2016-08-09 15:54:20
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 >- 文章来源：itsCoder 的 [WeeklyBolg](https://github.com/itsCoder/weeklyblog) 项目
 >- itsCoder主页：[http://itscoder.com/](http://itscoder.com/)

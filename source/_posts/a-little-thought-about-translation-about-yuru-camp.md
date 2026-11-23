@@ -3,6 +3,7 @@ title: 简单吐槽一下摇曳露营的台配
 date: 2025-02-04 02:00:00
 tags: [摇曳露营,动画,随笔]
 categories: [杂记,ACG,摇曳露营]
+cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
 ---
 
 看了一下台配摇曳露营的 PV 放松，有些地方很想吐槽，写个短文聊一下

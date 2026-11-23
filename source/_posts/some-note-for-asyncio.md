@@ -3,6 +3,7 @@ title: asyncio 笔记
 date: 2017-06-07 15:51:14
 tags: [Python,编程,async,源码阅读]
 categories: [编程,Python]
+cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
 ---
 
 来源 [annotated-py-asyncio](https://github.com/hhstore/annotated-py-asyncio)

@@ -3,6 +3,7 @@ title: 申请公开信息事件经过（量产基地）
 date: 2018-04-24 12:53:03
 tags: [社会,PKU]
 categories: [杂记,社会,PKU]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 # 转自公众号：量产基地

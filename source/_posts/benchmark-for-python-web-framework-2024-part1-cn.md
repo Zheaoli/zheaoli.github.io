@@ -3,6 +3,7 @@ title: 2024 年了，是 Gevent 还是选择 asyncio Part 1？
 date: 2024-08-20 01:00:00
 tags: [编程,CPython,笔记,水文]
 categories: [编程,CPython]
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 Gevent 还是 asyncio 这一直是个经典的问题，在这里我们直接用数据来帮助大家做一下决策
