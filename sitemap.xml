@@ -3568,6 +3568,13 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/tags/Node-js/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/tags/%E6%91%87%E6%9B%B3%E9%9C%B2%E8%90%A5/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -3583,13 +3590,6 @@
   
   <url>
     <loc>https://www.manjusaka.blog/tags/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/tags/Node-js/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3715,14 +3715,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/tags/%E7%A7%80%E6%81%A9%E7%88%B1/</loc>
+    <loc>https://www.manjusaka.blog/tags/Infra/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/tags/Infra/</loc>
+    <loc>https://www.manjusaka.blog/tags/%E7%A7%80%E6%81%A9%E7%88%B1/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3941,14 +3941,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E7%A4%BE%E4%BC%9A/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E7%A4%BE%E4%BC%9A/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3976,14 +3976,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/%E5%AE%B9%E5%99%A8/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/ACG/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/ACG/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/%E5%AE%B9%E5%99%A8/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3997,14 +3997,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E4%BA%BA%E7%94%9F/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Python/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Python/%E9%9A%8F%E7%AC%94/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E4%BA%BA%E7%94%9F/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4095,21 +4095,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E6%B0%B4%E6%96%87/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4123,7 +4109,21 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E6%80%BB%E7%BB%93/%E7%A7%80%E6%81%A9%E7%88%B1/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4151,6 +4151,13 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/categories/%E7%94%9F%E6%B4%BB/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -4165,21 +4172,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%94%9F%E6%B4%BB/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/AI/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4193,6 +4186,13 @@
   </url>
   
   <url>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/AI/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.manjusaka.blog/categories/%E5%B7%A5%E5%85%B7/%E8%BE%93%E5%85%A5%E6%B3%95/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -4200,14 +4200,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/Programming/Python/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%94%9F%E6%B4%BB/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/Homelab/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%94%9F%E6%B4%BB/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/Homelab/</loc>
+    <loc>https://www.manjusaka.blog/categories/Programming/Python/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
