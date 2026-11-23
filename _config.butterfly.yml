@@ -22,12 +22,15 @@ nav:
 # Code Blocks (代碼相關)
 # --------------------------------------
 
-highlight_theme: mac light #  darker / pale night / light / ocean / mac / mac light / false
-highlight_copy: true # copy button
-highlight_lang: true # show the code language
-highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
-highlight_height_limit: 400 # unit: px
-code_word_wrap: true
+code_blocks:
+  theme: light # darker / pale night / light / ocean / false
+  macStyle: true
+  height_limit: 400 # unit: px
+  word_wrap: true
+  copy: true
+  language: true
+  shrink: false # true: shrink / false: expand | none: expand and hide the button
+  fullpage: false
 
 # copy settings
 # copyright: Add the copyright information after copied content (複製的內容後面加上版權信息)
@@ -51,20 +54,13 @@ social:
 # --------------------------------------
 
 search:
+  # Choose: algolia_search / local_search / docsearch
   use: algolia_search
   placeholder: Search
 
-# Algolia search
-algolia_search:
-  enable: true
-  hits:
-    per_page: 6
-
-# Local search
-local_search:
-  enable: false
-  preload: false
-  CDN:
+  # Algolia Search (appId / apiKey / indexName 在站点 _config.yml 的 algolia 段)
+  algolia_search:
+    hitsPerPage: 6
 
 # Math (數學)
 # --------------------------------------
@@ -72,17 +68,6 @@ local_search:
 # if you set it to true, it will load mathjax/katex script in each page (true 表示每一頁都加載js)
 # if you set it to false, it will load mathjax/katex script according to your setting (add the 'mathjax: true' in page's front-matter)
 # (false 需要時加載，須在使用的 Markdown Front-matter 加上 mathjax: true)
-
-# MathJax
-mathjax:
-  enable: false
-  per_page: false
-
-# KaTeX
-katex:
-  enable: false
-  per_page: false
-  hide_scrollbar: true
 
 # Image (圖片設置)
 # --------------------------------------
@@ -130,9 +115,6 @@ cover:
   index_enable: true
   aside_enable: true
   archives_enable: true
-  # the position of cover in home page (封面顯示的位置)
-  # left/right/both
-  position: both
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
   default_cover:
     - https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
@@ -190,11 +172,10 @@ index_post_content:
 
 # anchor
 anchor:
-  button:
-    enable: true
-    always_show: false
-    icon: # the unicode value of Font Awesome icon, such as '\3423'
-  auto_update: true # when you scroll in post, the URL will update according to header id.
+  # When you scroll, the URL will update according to header id.
+  auto_update: true
+  # Click the headline to scroll and update the anchor
+  click_to_scroll: false
 
 # Post
 # --------------------------------------
@@ -255,21 +236,11 @@ noticeOutdate:
 
 # AddThis
 # https://www.addthis.com/
-addThis:
-  enable: false
-  pubid:
-
-# Share.js
-# https://github.com/overtrue/share.js
-sharejs:
-  enable: true
-  sites: facebook,twitter,wechat,weibo,qq
-
-# AddToAny
-# https://www.addtoany.com/
-addtoany:
-  enable: false
-  item: facebook,twitter,wechat,sina_weibo,facebook_messenger,email,copy_link
+share:
+  # Choose: sharejs / addtoany
+  use: sharejs
+  sharejs:
+    sites: facebook,x,wechat,weibo,qq
 
 # Comments System
 # --------------------------------------
@@ -363,53 +334,18 @@ artalk:
 # Chat Services
 # --------------------------------------
 
-# Chat Button [recommend]
-# It will create a button in the bottom right corner of website, and hide the origin button
-chat_btn: false
-
-# The origin chat button is displayed when scrolling up, and the button is hidden when scrolling down
-chat_hide_show: true
-
-# chatra
-# https://chatra.io/
-chatra:
-  enable: false
-  id:
-
-
-# daovoice
-# http://dashboard.daovoice.io/app
-daovoice:
-  enable: false
-  app_id:
-
-# gitter
-# https://gitter.im/
-gitter:
-  enable: false
-  room:
-
-# crisp
-# https://crisp.chat/en/
-crisp:
-  enable: false
-  website_id:
-
-# messenger
-# https://developers.facebook.com/docs/messenger-platform/discovery/facebook-chat-plugin/
-messenger:
-  enable: false
-  pageID:
-  lang: zh_TW # Language en_US/zh_CN/zh_TW and so on
-
 # Footer Settings
 # --------------------------------------
 footer:
+  nav:
   owner:
     enable: true
     since: 2020
+  # Copyright of theme and framework
+  copyright:
+    enable: true
+    version: true
   custom_text:
-  copyright: true # Copyright of theme and framework
 
 # Analysis
 # --------------------------------------
@@ -420,7 +356,7 @@ footer:
 
 # Google Analytics
 # https://analytics.google.com/analytics/web/
-google_analytics: UA-154407994-1
+google_analytics:
 
 # Cloudflare Analytics
 # https://www.cloudflare.com/zh-tw/web-analytics/
@@ -439,7 +375,6 @@ ad:
   index: <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-pub-7962287588031867" data-ad-slot="7586987656"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
   aside: <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7962287588031867" data-ad-slot="1257383027" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
   post: <ins class="adsbygoogle" style="display:block; text-align:center;"  data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-7962287588031867" data-ad-slot="2542544532"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({});</script>
-  page: <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-7962287588031867" data-ad-slot="2412882052"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 # Verification (站長驗證)
 # --------------------------------------
 
@@ -491,10 +426,10 @@ tag_ui: # 留空或 index
 background: url(https://cdn.jsdelivr.net/gh/youngjuning/images@main/1680450445599.png)
 
 # Footer Background
-footer_bg: transparent
+footer_img: false
 
 # the position of bottom right button/default unit: px (右下角按鈕距離底部的距離/默認單位為px)
-rightside-bottom:
+rightside_bottom:
 
 # Enter transitions (開啓網頁進入效果)
 enter_transitions: true
@@ -547,7 +482,7 @@ click_heart:
   mobile: false
 
 # Mouse click effects: words (鼠標點擊效果: 文字)
-ClickShowText:
+clickShowText:
   enable: false
   text:
     # - I
@@ -565,28 +500,28 @@ display_mode: auto
 beautify:
   enable: true
   field: post # site/post
-  title-prefix-icon: # '\f0c1'
-  title-prefix-icon-color: # '#ee9ca7'
+  title_prefix_icon: # '\f0c1'
+  title_prefix_icon_color: # '#ee9ca7'
 
 # Global font settings
 # Don't modify the following settings unless you know how they work (非必要不要修改)
 font:
-  global-font-size:
-  code-font-size:
-  font-family:
-  code-font-family:
+  global_font_size:
+  code_font_size:
+  font_family:
+  code_font_family:
 
 # Font settings for the site title and site subtitle
 # 左上角網站名字 主頁居中網站名字
 blog_title_font:
   font_link:
-  font-family:
+  font_family:
 
 # The setting of divider icon (水平分隔線圖標設置)
 hr_icon:
   enable: true
   icon: # the unicode value of Font Awesome icon, such as '\3423'
-  icon-top:
+  icon_top:
 
 # the subtitle on homepage (主頁subtitle)
 subtitle:
@@ -643,6 +578,12 @@ aside:
     limit: 5 # if set 0 will show all
     sort: date # date or updated
     sort_order: # Don't modify the setting unless you know how it works
+  card_newest_comments:
+    enable: true
+    sort_order: # Don't modify the setting unless you know how it works
+    limit: 6
+    storage: 10 # unit: mins, save data to localStorage
+    avatar: true
   card_categories:
     enable: true
     limit: 10 # if set 0 will show all
@@ -665,6 +606,8 @@ aside:
     post_count: true
     last_push_date: true
     sort_order: # Don't modify the setting unless you know how it works
+    # Time difference between publish date and now
+    runtime_date: 2020/01/29 00:00:00
 
 # busuanzi count for PV / UV in site
 # 訪問人數
@@ -672,20 +615,6 @@ busuanzi:
   site_uv: true
   site_pv: true
   page_pv: true
-
-# Time difference between publish date and now (網頁運行時間)
-# Formal: Month/Day/Year Time or Year/Month/Day Time
-runtimeshow:
-  enable: true
-  publish_date: 2020/01/29 00:00:00
-
-# Aside widget - Newest Comments
-newest_comments:
-  enable: true
-  sort_order: # Don't modify the setting unless you know how it works
-  limit: 6
-  storage: 10 # unit: mins, save data to localStorage
-  avatar: true
 
 # Bottom right button (右下角按鈕)
 # --------------------------------------
@@ -735,11 +664,7 @@ rightside_item_order:
 
 # medium-zoom
 # https://github.com/francoischalifour/medium-zoom
-medium_zoom: false
-
-# fancybox
-# http://fancyapps.com/fancybox/3/
-fancybox: true
+lightbox: fancybox
 
 # Tag Plugins settings (標籤外掛)
 # --------------------------------------
@@ -779,11 +704,6 @@ pjax:
   exclude:
     # - xxxx
 
-# Inject the css and script (aplayer/meting)
-aplayerInject:
-  enable: false
-  per_page: true
-
 # Snackbar (Toast Notification 彈窗)
 # https://github.com/polonel/SnackBar
 # position 彈窗位置
@@ -797,12 +717,6 @@ snackbar:
 # https://instant.page/
 # prefetch (預加載)
 instantpage: false
-
-# https://github.com/vinta/pangu.js
-# Insert a space between Chinese character and English character (中英文之間添加空格)
-pangu:
-  enable: true
-  field: site # site/post
 
 # Lazyload (圖片懶加載)
 # https://github.com/verlok/vanilla-lazyload
@@ -855,7 +769,7 @@ CDN:
   # The CDN provider of internal scripts (主題內部 js 的 cdn 配置)
   # option: local/jsdelivr/unpkg/cdnjs/custom
   # Dev version can only choose. ( dev版的主題只能設置為 local )
-  internal_provider: jsdelivr
+  internal_provider: local
 
   # The CDN provider of third party scripts (第三方 js 的 cdn 配置)
   # option: local/jsdelivr/unpkg/cdnjs/custom
@@ -870,12 +784,7 @@ CDN:
   custom_format:
 
   option:
-    main: https://www.manjusaka.blog/js/main.js
-    utils: https://www.manjusaka.blog/js/utils.js
-    translate: https://www.manjusaka.blog/js/tw_cn.js
-    local_search: https://www.manjusaka.blog/js/search/local-search.js
     # main_css: https://cdn.jsdelivr.net/gh/youngjuning/youngjuning.github.io@gh-pages/css/index.css
-    algolia_js: https://www.manjusaka.blog/js/search/algolia.js
     # algolia_search_v4:
     # instantsearch_v4:
     # pjax:
