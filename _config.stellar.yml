@@ -132,9 +132,9 @@ preconnect:
   - https://avatars.githubusercontent.com
   - https://giscus.app
 
-# 输出 <link rel="canonical">；在其他域名（如预览环境）访问时主题会提示非官方地址
+# 不使用主题的 canonical：它的克隆站检测会先去掉当前域名的 www 再和 host 比较，
+# 所以 host 只能填裸域名 manjusaka.blog；而裸域名会 308 跳到 www，
+# 填了之后规范链接指向的是跳转地址，不填 www 又会把正式站点判成克隆站。
+# 规范链接改由 scripts/canonical.js 按站点 url 输出。
 canonical:
-  host: www.manjusaka.blog
-  allowed_hosts:
-    - localhost
-    - manjusaka.itscoder.com
+  host: null
