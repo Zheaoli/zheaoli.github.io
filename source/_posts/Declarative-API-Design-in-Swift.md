@@ -1,10 +1,8 @@
 ---
 title: Swift 声明式程序设计
-type: tags
 date: 2016-10-26 00:04:08
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
-toc: true
 ---
 > * 原文地址：[Declarative API Design in Swift](http://blog.benjamin-encz.de/post/declarative-api-design-in-swift/)
 * 原文作者：[Benjamin Encz](http://blog.benjamin-encz.de/about)

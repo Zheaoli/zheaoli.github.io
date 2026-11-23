@@ -1,10 +1,8 @@
 ---
 title: 我所热爱的开源社区 
-type: tags
 date: 2022-11-23 04:00:00
 tags: [杂记,技术]
 categories: [杂记,技术]
-toc: true
 ---
 
 今天是个不错的日子，最开始由我带进 [nerdctl](https://github.com/containerd/nerdctl) 社区的 [@yuchanns](https://twitter.com/realyuchanns) 因为其很活跃的表现被项目的主要维护者 [@AkihiroSuda](https://twitter.com/AkihiroSuda) 推荐成为了项目的 maintainer，参见 [nerdctl#PR1540](https://github.com/containerd/nerdctl/pull/1540)。而我也在这个项目中被提名成为 committer，参见 [nerdctl#1539](https://github.com/containerd/nerdctl/pull/1539)。加上今天的公益群有太多关于开源的讨论，所以我想写篇文章记录下我自己的经历，希望能帮助更多的人热爱开源，拥抱开源。

@@ -1,10 +1,8 @@
 ---
 title: 如何使用 WASMTIME 来运行 CPython for WASI，然后利用 Python 实现的 HostFunction 来扩展它？
-type: tags
 date: 2024-10-02 21:00:00
 tags: [编程,CPython,WASI,WASM,笔记,水文]
 categories: [编程,CPython]
-toc: true
 ---
 
 国庆节搞了一个活，利用 wasmtime 来执行编译成 WASM/WASI 字节码的 CPython 虚拟机，并在宿主机一侧利用 Python 实现的 Host Function 来扩展它。

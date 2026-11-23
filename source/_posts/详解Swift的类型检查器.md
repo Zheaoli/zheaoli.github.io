@@ -1,6 +1,5 @@
 ---
 title: 详解Swift的类型检查器
-type: tags
 date: 2016-08-02 16:22:50
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]

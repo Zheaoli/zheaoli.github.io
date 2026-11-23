@@ -1,6 +1,5 @@
 ---
 title: 好与坏，Swift面面观 Part2
-type: tags
 date: 2016-07-23 03:05:54
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]

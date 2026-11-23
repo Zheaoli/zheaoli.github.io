@@ -1,10 +1,8 @@
 ---
 title: 子进程退出后，父进程有可能会收不到信号吗？
-type: tags
 date: 2023-08-10 22:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-toc: true
 ---
 
 最近工作强度有点大，写篇 Linux 相关的水文放松下

@@ -1,11 +1,10 @@
 ---
 title: 笑ってほしくて
-type: tags
 date: 2026-01-01 23:00:00
 tags: [杂记,总结]
 categories: [杂记,总结,秀恩爱]
-toc: true
-swiper_index: 6
+listing:
+  priority: 7
 ---
 
 每年都会选一句话作为年终总结的标题，去年是“本当の僕らをありがとう”，今年我选择“笑ってほしくて”。

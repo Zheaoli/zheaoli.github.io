@@ -1,10 +1,8 @@
 ---
 title: 关于 Node.js 中 execSync 的一点问题
-type: tags
 date: 2021-08-24 21:00:00
 tags: [编程,Linux,Node.js,笔记,水文]
 categories: [编程,Linux]
-toc: true
 ---
 
 很久没写水文了，昨天帮人查了一个 Node.js 中 `execSync` 这个函数特殊行为的问题，很有趣，所以大概记录下来水一篇文章

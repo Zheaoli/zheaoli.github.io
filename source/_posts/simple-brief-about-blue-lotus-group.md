@@ -1,10 +1,8 @@
 ---
 title: 蓝莲花公益小组简报
-type: tags
 date: 2023-01-19 19:00:00
 tags: [杂记,总结]
 categories: [杂记,总结]
-toc: true
 ---
 
 愿每个人心里，都盛开着永不凋零的蓝莲花

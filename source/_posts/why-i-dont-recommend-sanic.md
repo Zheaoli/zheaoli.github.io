@@ -1,10 +1,8 @@
 ---
 title: Sanic 的若干吐槽
-type: tags
 date: 2018-02-23 02:54:24
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
-toc: true
 ---
 
 # Sanic 的若干吐槽

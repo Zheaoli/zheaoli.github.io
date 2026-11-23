@@ -1,10 +1,8 @@
 ---
 title: 你所不知道的 Flask Part1:Route 初探
-type: tags
 date: 2017-08-13 19:01:29
 tags: [Python,编程,Flask,源码阅读]
 categories: [编程,Python]
-toc: true
 ---
 
 ## 前言

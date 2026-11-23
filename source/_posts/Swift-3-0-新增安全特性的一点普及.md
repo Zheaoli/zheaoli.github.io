@@ -1,10 +1,8 @@
 ---
 title: Swift 3.0 新增安全特性的一点普及
-type: tags
 date: 2016-07-23 03:07:50
 tags: [iOS,编程,Swift]
 categories: [编程,翻译]
-toc: true
 ---
 >* 原文链接 : [WWDC 2016: Increased Safety in Swift 3.0](https://www.bignerdranch.com/blog/wwdc-2016-increased-safety-in-swift-3/)
 * 原文作者 : [

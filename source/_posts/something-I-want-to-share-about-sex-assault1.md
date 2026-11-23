@@ -1,6 +1,5 @@
 ---
 title: 关于我自己被性侵经历的访谈记录
-type: tags
 date: 2021-05-07 21:00:00
 tags: [杂记,人生]
 categories: [杂记,人生]

@@ -1,7 +1,6 @@
 ---
 title: About
 date: 2019-11-28 16:37:49
-layout: "about"
 ---
 ### 关于我自己
 

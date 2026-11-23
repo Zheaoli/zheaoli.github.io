@@ -1,10 +1,8 @@
 ---
 title: 关于用户态栈回溯（Unwind）的一些杂记和想法
-type: tags
 date: 2023-08-23 00:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-toc: true
 ---
 
 随手记录一些关于用户态栈回溯（Unwind）的一些杂记和想法。

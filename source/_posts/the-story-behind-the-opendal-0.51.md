@@ -1,10 +1,8 @@
 ---
 title: OpenDAL 0.51 版本代号 “本当の僕らをありがとう。” 背后的故事
-type: tags
 date: 2024-12-15 02:30:00
 tags: [编程,杂记,人生]
 categories: [编程,随笔]
-toc: true
 ---
 
 Apache OpenDAL v0.51.0 第一个 RC 版本发布了，这个大版本有些特殊，是我第三个负责 Release 的版本，也是第一个带有 Subtitle 的版本

@@ -1,10 +1,8 @@
 ---
 title: Python 3.12：一个被人忽略的史诗级版本
-type: tags
 date: 2023-10-30 03:49:00
 tags: [编程,Linux,Python,笔记,水文]
 categories: [编程,Python]
-toc: true
 ---
 
 Python 3.12 已经发布了一段时间，所以写篇水文来聊一聊这个常常被人忽略的史诗级版本。
