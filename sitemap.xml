@@ -3568,13 +3568,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/tags/Node-js/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/tags/%E6%91%87%E6%9B%B3%E9%9C%B2%E8%90%A5/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -3590,6 +3583,13 @@
   
   <url>
     <loc>https://www.manjusaka.blog/tags/%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/tags/Node-js/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3715,14 +3715,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/tags/Infra/</loc>
+    <loc>https://www.manjusaka.blog/tags/%E7%A7%80%E6%81%A9%E7%88%B1/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/tags/%E7%A7%80%E6%81%A9%E7%88%B1/</loc>
+    <loc>https://www.manjusaka.blog/tags/Infra/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3941,14 +3941,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E7%A4%BE%E4%BC%9A/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/%E7%A4%BE%E4%BC%9A/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3976,14 +3976,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/ACG/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/%E5%AE%B9%E5%99%A8/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/Linux/%E5%AE%B9%E5%99%A8/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E6%9D%82%E8%AE%B0/ACG/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4095,13 +4095,6 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E6%B0%B4%E6%96%87/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -4109,7 +4102,7 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/%E6%B1%87%E7%BC%96/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E6%B0%B4%E6%96%87/%E8%AE%BA%E6%96%87/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4117,6 +4110,13 @@
   
   <url>
     <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E5%89%8D%E7%AB%AF/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/%E6%B1%87%E7%BC%96/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4179,14 +4179,14 @@
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/leetcode/%E5%88%B7%E9%A2%98/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/AI/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/AI/</loc>
+    <loc>https://www.manjusaka.blog/categories/%E7%BC%96%E7%A8%8B/leetcode/%E5%88%B7%E9%A2%98/</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
