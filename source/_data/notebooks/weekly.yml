@@ -1,0 +1,10 @@
+name: 周报
+tagline: Manjusaka 的每周周报
+route:
+  path: /weekly/
+active_menu: weekly
+listing:
+  order: 1
+  sort:
+    field: date
+    direction: desc

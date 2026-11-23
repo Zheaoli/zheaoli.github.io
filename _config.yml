@@ -36,6 +36,8 @@ category_map: null
 tag_map: null
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
+# 没写 updated 的文章用发布日期，而不是文件修改时间（CI 每次检出都会刷新修改时间）
+updated_option: date
 per_page: 10
 pagination_dir: page
 theme: stellar
