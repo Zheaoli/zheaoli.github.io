@@ -1,1 +1,316 @@
-(()=>{const e={debounce:(e,t=0,o=!1)=>{let n;return(...i)=>{const a=o&&!n;clearTimeout(n),n=setTimeout((()=>{n=null,o||e(...i)}),t),a&&e(...i)}},throttle:(e,t,o={})=>{let n,i,a=0;const d=()=>{a=!1===o.leading?0:(new Date).getTime(),n=null,e(...i),n||(i=null)};return(...l)=>{const s=(new Date).getTime();a||!1!==o.leading||(a=s);const r=t-(s-a);i=l,r<=0||r>t?(n&&(clearTimeout(n),n=null),a=s,e(...i),n||(i=null)):n||!1===o.trailing||(n=setTimeout(d,r))}},rafThrottle:e=>{let t=null;return(...o)=>{t||(t=requestAnimationFrame((()=>{e(...o),t=null})))}},overflowPaddingR:{add:()=>{const e=window.innerWidth-document.body.clientWidth;if(e>0){document.body.style.paddingRight=`${e}px`,document.body.style.overflow="hidden";const t=document.getElementById("page-header"),o=document.getElementById("menus");t&&o&&t.classList.contains("nav-fixed")&&(o.style.paddingRight=`${e}px`)}},remove:()=>{document.body.style.paddingRight="",document.body.style.overflow="";const e=document.getElementById("page-header"),t=document.getElementById("menus");e&&t&&e.classList.contains("nav-fixed")&&(t.style.paddingRight="")}},snackbarShow:(e,t=!1,o=2e3)=>{const{position:n,bgLight:i,bgDark:a}=GLOBAL_CONFIG.Snackbar,d="light"===document.documentElement.getAttribute("data-theme")?i:a;Snackbar.show({text:e,backgroundColor:d,showAction:t,duration:o,pos:n,customClass:"snackbar-css"})},diffDate:(e,t=!1)=>{const o=new Date,n=new Date(e),i=(o-n)/1e3/60,a=i/60,d=a/24,l=d/30,{dateSuffix:s}=GLOBAL_CONFIG;return t?l>12?n.toISOString().slice(0,10):l>=1?`${Math.floor(l)} ${s.month}`:d>=1?`${Math.floor(d)} ${s.day}`:a>=1?`${Math.floor(a)} ${s.hour}`:i>=1?`${Math.floor(i)} ${s.min}`:s.just:Math.floor(d)},loadComment:(e,t)=>{if("IntersectionObserver"in window){const o=new IntersectionObserver((e=>{e[0].isIntersecting&&(t(),o.disconnect())}),{threshold:[0]});o.observe(e)}else t()},scrollToDest:(e,t=500)=>{const o=window.scrollY,n=document.getElementById("page-header").classList.contains("fixed");if((o>e||n)&&(e-=70),"scrollBehavior"in document.documentElement.style)return void window.scrollTo({top:e,behavior:"smooth"});const i=performance.now(),a=n=>{const d=n-i,l=Math.min(d/t,1),s=1-Math.pow(1-l,4);window.scrollTo(0,o+(e-o)*s),l<1&&requestAnimationFrame(a)};requestAnimationFrame(a)},animateIn:(e,t)=>{e.style.display="block",e.style.animation=t},animateOut:(e,t)=>{const o=()=>{e.style.display="",e.style.animation="",e.removeEventListener("animationend",o)};e.addEventListener("animationend",o),e.style.animation=t},wrap:(e,t,o)=>{const n=document.createElement(t);for(const[e,t]of Object.entries(o))n.setAttribute(e,t);e.parentNode.insertBefore(n,e),n.appendChild(e)},isHidden:e=>0===e.offsetHeight&&0===e.offsetWidth,getEleTop:e=>e.getBoundingClientRect().top+window.scrollY,loadLightbox:e=>{const t=GLOBAL_CONFIG.lightbox;if("medium_zoom"===t){return(window.mediumZoomInstance||(window.mediumZoomInstance=mediumZoom({background:"var(--zoom-bg)"}))).attach(e),void btf.addGlobalFn("pjaxSendOnce",(()=>{window.mediumZoomInstance&&window.mediumZoomInstance.detach()}),"mediumZoom")}if("fancybox"===t&&(e.forEach((e=>{if("A"!==e.parentNode.tagName){const t=e.dataset.lazySrc||e.src,o=e.title||e.alt||"";btf.wrap(e,"a",{href:t,"data-fancybox":"gallery","data-caption":o,"data-thumb":t})}})),!window.fancyboxRun)){let e="";e=Fancybox.version<"6"?{Hash:!1,Thumbs:{showOnStart:!1},Images:{Panzoom:{maxScale:4}},Carousel:{transition:"slide"},Toolbar:{display:{left:["infobar"],middle:["zoomIn","zoomOut","toggle1to1","rotateCCW","rotateCW","flipX","flipY"],right:["slideshow","thumbs","close"]}},hideScrollbar:!1}:{Hash:!1,Carousel:{transition:"slide",Thumbs:{showOnStart:!1},Toolbar:{display:{left:["counter"],middle:["zoomIn","zoomOut","toggle1to1","rotateCCW","rotateCW","flipX","flipY","reset"],right:["autoplay","thumbs","close"]}},Zoomable:{Panzoom:{maxScale:4}}},hideScrollbar:!1},Fancybox.bind("[data-fancybox]",e),window.fancyboxRun=!0}},setLoading:{add:e=>{e.insertAdjacentHTML("afterend",'\n        <div class="loading-container">\n          <div class="loading-item">\n            <div></div><div></div><div></div><div></div><div></div>\n          </div>\n        </div>\n      ')},remove:e=>{e.nextElementSibling.remove()}},updateAnchor:e=>{if(e!==window.location.hash){e||(e=location.pathname);const t=GLOBAL_CONFIG_SITE.title;window.history.replaceState({url:location.href,title:t},t,e)}},getScrollPercent:(()=>{let e=new WeakMap;return window.addEventListener("resize",(()=>{e=new WeakMap})),(t,o,n=o===document.body)=>{const i=o.clientHeight,a=window.innerHeight,d=e.get(o);let l=d;if(!d||d.docHeight!==i||d.winHeight!==a||d.useDocHeight!==n){l={docHeight:i,winHeight:a,useDocHeight:n,headerHeight:o.offsetTop,contentMath:n?Math.max(i-a,document.documentElement.scrollHeight-a):Math.max(i-a,1)},e.set(o,l)}const s=(t-l.headerHeight)/l.contentMath;return Math.max(0,Math.min(100,Math.round(100*s)))}})(),addEventListenerPjax:(e,t,o,n=!1)=>{e.addEventListener(t,o,n),btf.addGlobalFn("pjaxSendOnce",(()=>{e.removeEventListener(t,o,n)}))},removeGlobalFnEvent:(e,t=window)=>{const o=t.globalFn||{},n=o[e];n&&(Object.keys(n).forEach((e=>n[e]())),delete o[e])},switchComments:(e=document,t)=>{const o=e.querySelector("#switch-btn");if(!o)return;let n=!1;const i=e.querySelector("#post-comment");btf.addEventListenerPjax(o,"click",(()=>{i.classList.toggle("move"),n||"function"!=typeof loadOtherComment||(n=!0,loadOtherComment(e,t))}))}};window.btf={...window.btf,...e}})();
+(function () {
+  // 防重复执行：utils.js 可能被重复加载，二次执行直接跳过，避免重复声明报错。
+  if (window.__stellarUtilsLoaded) return;
+  window.__stellarUtilsLoaded = true;
+
+  const utils = {
+    // 已加载样式缓存
+    _loadedStyles: new Set(),
+
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      // 如果样式已加载，直接返回 null
+      if (utils._loadedStyles.has(href)) {
+        return null;
+      }
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (Object.prototype.hasOwnProperty.call(attributes, attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      // 标记样式为已加载 (在创建元素后立即标记，防止重复创建)
+      utils._loadedStyles.add(href);
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 已加载脚本缓存
+    _loadedScripts: new Set(),
+
+    // 已加载元素缓存 (使用 WeakSet 追踪元素实例,避免重复加载)
+    _loadedElements: new WeakSet(),
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      // 如果脚本已加载，直接返回
+      if (utils._loadedScripts.has(src)) {
+        resolve();
+        return;
+      }
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        utils._loadedScripts.add(src);
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // 原生 DOM 工具：querySelector / querySelectorAll 简写
+    qs: (sel, ctx) => (ctx || document).querySelector(sel),
+    qsa: (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel)),
+
+    // 原生 DOM 封装：常用 DOM 操作方法子集（find/append/class/attr/事件等）
+    dom: (selector, ctx) => {
+      var els = [];
+      if (typeof selector === 'string') {
+        els = utils.qsa(selector, ctx);
+      } else if (selector && selector.nodeType === 1) {
+        els = [selector];
+      } else if (selector && typeof selector.length === 'number') {
+        els = Array.prototype.slice.call(selector);
+      }
+      var api = {
+        length: els.length,
+        each: function (fn) {
+          els.forEach(function (el, i) {
+            fn.call(el, i, el);
+          });
+          return api;
+        },
+        find: function (sel) {
+          var result = [];
+          els.forEach(function (el) {
+            Array.prototype.push.apply(result, el.querySelectorAll(sel));
+          });
+          return utils.dom(result);
+        },
+        append: function (content) {
+          els.forEach(function (el) {
+            if (typeof content === 'string') {
+              el.insertAdjacentHTML('beforeend', content);
+            } else if (content && content.nodeType === 1) {
+              el.appendChild(content);
+            } else if (content && typeof content.length === 'number') {
+              Array.prototype.forEach.call(content, function (child) {
+                if (child && child.nodeType === 1) el.appendChild(child);
+              });
+            }
+          });
+          return api;
+        },
+        remove: function () {
+          els.forEach(function (el) {
+            el.remove();
+          });
+        },
+        addClass: function (cls) {
+          els.forEach(function (el) {
+            cls.trim().split(/\s+/).forEach(function (c) {
+              if (c) el.classList.add(c);
+            });
+          });
+          return api;
+        },
+        removeClass: function (cls) {
+          els.forEach(function (el) {
+            cls.trim().split(/\s+/).forEach(function (c) {
+              if (c) el.classList.remove(c);
+            });
+          });
+          return api;
+        },
+        toggleClass: function (cls, force) {
+          els.forEach(function (el) {
+            cls.trim().split(/\s+/).forEach(function (c) {
+              if (c) el.classList.toggle(c, force);
+            });
+          });
+          return api;
+        },
+        attr: function (name, value) {
+          if (value === undefined) {
+            return els[0] ? els[0].getAttribute(name) : undefined;
+          }
+          els.forEach(function (el) {
+            el.setAttribute(name, value);
+          });
+          return api;
+        },
+        data: function (name) {
+          return els[0] ? els[0].getAttribute('data-' + name) : undefined;
+        },
+        text: function (value) {
+          if (value === undefined) {
+            return els[0] ? els[0].textContent : undefined;
+          }
+          els.forEach(function (el) {
+            el.textContent = value;
+          });
+          return api;
+        },
+        html: function (content) {
+          if (content === undefined) {
+            return els[0] ? els[0].innerHTML : undefined;
+          }
+          els.forEach(function (el) {
+            if (typeof content !== 'string' && content && typeof content.length === 'number' && content[0] && content[0].nodeType === 1) {
+              var frag = document.createDocumentFragment();
+              Array.prototype.forEach.call(content, function (child) {
+                frag.appendChild(child);
+              });
+              el.replaceChildren(frag);
+            } else {
+              el.innerHTML = content;
+            }
+          });
+          return api;
+        },
+        val: function (value) {
+          if (value === undefined) {
+            return els[0] ? els[0].value : undefined;
+          }
+          els.forEach(function (el) {
+            el.value = value;
+          });
+          return api;
+        },
+        offset: function () {
+          var el = els[0];
+          if (!el) return { top: 0, left: 0 };
+          var rect = el.getBoundingClientRect();
+          return { top: rect.top + window.scrollY, left: rect.left + window.scrollX };
+        },
+        on: function (event, cb) {
+          els.forEach(function (el) {
+            el.addEventListener(event, cb);
+          });
+          return api;
+        },
+        click: function (cb) { return api.on('click', cb); },
+        focus: function (cb) { return api.on('focus', cb); },
+        keydown: function (cb) { return api.on('keydown', cb); },
+        empty: function () {
+          els.forEach(function (el) {
+            el.replaceChildren();
+          });
+          return api;
+        }
+      };
+      els.forEach(function (el, i) {
+        api[i] = el;
+      });
+      return api;
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        if (el.querySelector('.loading-wrap') === null) {
+          el.insertAdjacentHTML('beforeend', `<div class="loading-wrap"><div class="lazy-icon"></div></div>`);
+        }
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        var wrap = el.querySelector('.loading-wrap');
+        if (wrap) wrap.remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        var wrap = el.querySelector('.loading-wrap');
+        if (wrap) {
+          var svg = wrap.querySelector('svg');
+          if (svg) svg.remove();
+          wrap.insertAdjacentHTML('beforeend', ctx.icons['default:warning']);
+          wrap.classList.add('error');
+        }
+      }
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+  };
+
+  // 自定义注入脚本可能在 type=module runtime 执行前调用 request；以 Promise 接缝排队，
+  // runtime 安装真实 adapter 后统一放行，不在经典脚本中复制任何网络或缓存算法。
+  var requestBridge = {};
+  requestBridge.ready = new Promise(function (resolve) {
+    requestBridge.resolve = resolve;
+  });
+  utils.request = function () {
+    var args = arguments;
+    return requestBridge.ready.then(function (adapter) {
+      return adapter.request.apply(null, args);
+    });
+  };
+  utils.requestWithoutLoading = function () {
+    var args = arguments;
+    return requestBridge.ready.then(function (adapter) {
+      return adapter.requestWithoutLoading.apply(null, args);
+    });
+  };
+
+  // 暴露到 window：迁移期经典核心脚本与 ESM runtime 的兼容接缝。
+  window.__stellarRequestBridge = requestBridge;
+  window.utils = utils;
+
+})();
