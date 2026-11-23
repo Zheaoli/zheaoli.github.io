@@ -8,3 +8,5 @@ listing:
   sort:
     field: date
     direction: desc
+comments:
+  enabled: true
