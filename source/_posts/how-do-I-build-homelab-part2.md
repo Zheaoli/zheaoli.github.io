@@ -4,8 +4,6 @@ date: 2023-12-28 20:00:00
 tags: [Homelab,Linux,笔记,水文]
 categories: [生活,电子产品,Homelab]
 description: 人生嘛，Homelab 图个乐子
-listing:
-  priority: 4
 ---
 
 这是一个为了一盘醋包了一盘饺子的故事

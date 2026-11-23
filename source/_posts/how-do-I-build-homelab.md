@@ -4,8 +4,6 @@ date: 2023-06-17 00:00:00
 tags: [Homelab,Linux,笔记,水文]
 categories: [生活,电子产品,Homelab]
 description: 人生嘛，Homelab 图个乐子
-listing:
-  priority: 2
 ---
 
 最近家庭升级 Homelab 差不多告一段落，来写篇文章记录下我的折腾过程

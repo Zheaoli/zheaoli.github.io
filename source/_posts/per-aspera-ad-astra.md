@@ -3,8 +3,6 @@ title: Per aspera, Ad astra
 date: 2023-12-29 23:00:00
 tags: [杂记,总结]
 categories: [杂记,总结,秀恩爱]
-listing:
-  priority: 6
 ---
 
 外星人一定很奇怪，本星际云本地泡银河系猎户悬臂边缘的太阳系第三行星的人类，怎么又在开始为他们庆祝行星绕行一圈开始忙碌了呢？

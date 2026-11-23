@@ -70,7 +70,6 @@ profiles:
 article:
   style: tech
   listing:
-    pinned_layout: carousel
     show_tags: true
   show_reading_time: true
   related_posts_limit: 0 # 开启需要另装 hexo-related-popular-posts

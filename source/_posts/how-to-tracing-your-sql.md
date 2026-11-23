@@ -3,8 +3,6 @@ title: "怎么样 tracing 你的 SQL？"
 date: 2026-02-22 18:49:00
 tags: [编程,Linux,Infra,Python,Node.js,笔记,水文]
 categories: [编程,Infra]
-listing:
-  priority: 1
 ---
 
 过年是个好时候，可以猛猛干活或者看论文。不过上了几天磨，看了几天论文后觉得还是需要整点活

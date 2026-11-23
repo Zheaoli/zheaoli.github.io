@@ -5,8 +5,6 @@ tags: [杂记,人生]
 categories: [杂记,人生]
 description: 優しさを失わないでくれ。弱い者を労り互いに助け合い。
 cover: https://user-images.githubusercontent.com/7054676/228287041-c86e7928-0da8-4097-b7ff-e575faa8cf8c.png
-listing:
-  priority: 3
 ---
 
 突然着想写一篇文章，聊聊我所信仰的奥特曼。ウルトラマン大好きだ
