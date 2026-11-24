@@ -3,7 +3,7 @@ title: 简单聊聊常见的负载均衡算法
 date: 2025-03-23 20:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,网络]
-cover: /images/pixai-1860500966642493859-3.png
+cover: /images/pixai-1860500966642493859-3.webp
 ---
 
 这篇文章鸽了很久，最终决定还是老老实实写完，来介绍一下常见的一些负载均衡算法实现。本文的代码最终都会放在 **load-balancer-algorithm**[<sup>1</sup>](#refer-anchor-1) 这个 repo 中

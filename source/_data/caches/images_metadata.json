@@ -8997,6 +8997,25 @@
         ]
       }
     },
+    "https://www.manjusaka.blog/images/pixai-1860500966642493859-3.webp": {
+      "updatedAt": "2026-11-24T05:41:23.565Z",
+      "dimensions": {
+        "status": "ready",
+        "width": 1472,
+        "height": 832
+      },
+      "color": {
+        "status": "ready",
+        "algorithm": "hsla-mean-v1",
+        "size": 64,
+        "hsla": [
+          245.7637,
+          7.8724,
+          72.226,
+          1
+        ]
+      }
+    },
     "https://www.manjusaka.blog/images/Screenshot_20260222_165110.png": {
       "updatedAt": "2026-11-23T21:07:44.688Z",
       "dimensions": {

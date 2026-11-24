@@ -57,6 +57,26 @@ leftbar:
         url: /atom.xml
 
 footer:
+  sitemap:
+    - title: 博客
+      items:
+        - '[近期发布](/)'
+        - '[分类](/categories/)'
+        - '[标签](/tags/)'
+        - '[归档](/archives/)'
+    - title: 笔记
+      items:
+        - '[周报](/weekly/)'
+        - '[刷题](/leetcode/)'
+    - title: 社交
+      items:
+        - '[GitHub](https://github.com/Zheaoli)'
+        - '[X](https://twitter.com/Manjusaka_Lee)'
+        - '[Email](mailto:me@manjusaka.me)'
+    - title: 订阅
+      items:
+        - '[RSS](/atom.xml)'
+        - '[关于我](/about/)'
   content: |
     © 2020 - 2026 [{author.name}](/) · 由 [{theme.name} {theme.version}]({theme.tree}) 驱动。
     除特别声明外，本站文章均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。
