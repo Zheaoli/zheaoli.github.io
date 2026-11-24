@@ -1,0 +1,715 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/2.0.0" theme-name="Stellar" theme-version="2.0.0">
+  
+  
+  <meta name="generator" content="Hexo 8.1.2">
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin=""><link rel="preconnect" href="https://cdn.pixabay.com" crossorigin=""><link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin=""><link rel="preconnect" href="https://giscus.app" crossorigin="">
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title data-stellar-page-meta="">简单聊聊 Python 3.13 的 JIT 方案 - Manjusaka</title>
+  <script data-stellar-script="core">
+    (function () {
+      var key = 'stellar:v2:leftbar-state';
+      var fallback = "expanded";
+      try {
+        var value = localStorage.getItem(key);
+        document.documentElement.dataset.leftbarState = value === 'collapsed' || value === 'expanded' ? value : fallback;
+      } catch (error) {
+        document.documentElement.dataset.leftbarState = fallback;
+      }
+    })();
+  </script>
+
+  <meta name="description" content="Python 3.13 的 JIT 方案最终确定了，我觉得可以说又新又好。所以深夜水一篇水文，来聊聊这个 JIT 方案 这篇文章可能会有些枯燥，所以如果对此不感兴趣的同学可以直接 x 掉" data-stellar-page-meta="">
+<meta property="og:type" content="article" data-stellar-page-meta="">
+<meta property="og:title" content="简单聊聊 Python 3.13 的 JIT 方案" data-stellar-page-meta="">
+<meta property="og:url" content="https://www.manjusaka.blog/posts/2024/01/03/a-simple-introduction-about-python-jit/" data-stellar-page-meta="">
+<meta property="og:site_name" content="Manjusaka" data-stellar-page-meta="">
+<meta property="og:description" content="Python 3.13 的 JIT 方案最终确定了，我觉得可以说又新又好。所以深夜水一篇水文，来聊聊这个 JIT 方案 这篇文章可能会有些枯燥，所以如果对此不感兴趣的同学可以直接 x 掉" data-stellar-page-meta="">
+<meta property="og:locale" content="zh_CN" data-stellar-page-meta="">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg" data-stellar-page-meta="">
+<meta property="article:author" content="Manjusaka" data-stellar-page-meta="">
+<meta property="article:published_time" content="2024-01-03T18:30:00.000Z" data-stellar-page-meta="">
+<meta property="article:modified_time" content="2024-01-03T18:30:00.000Z" data-stellar-page-meta="">
+<meta property="article:tag" content="Linux" data-stellar-page-meta="">
+<meta property="article:tag" content="Python" data-stellar-page-meta="">
+<meta property="article:tag" content="水文" data-stellar-page-meta="">
+<meta property="article:tag" content="笔记" data-stellar-page-meta="">
+<meta property="article:tag" content="编程" data-stellar-page-meta="">
+<meta name="twitter:card" content="summary_large_image" data-stellar-page-meta="">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg" data-stellar-page-meta="">
+<meta name="twitter:creator" content="@Manjusaka_Lee" data-stellar-page-meta=""><meta name="twitter:title" content="简单聊聊 Python 3.13 的 JIT 方案" data-stellar-page-meta="">
+  
+  
+  <meta name="keywords" content="编程,Python,Linux,笔记,水文" data-stellar-page-meta="">
+
+  <!-- feed -->
+  
+    
+
+    
+      
+        <link rel="alternate" href="/atom.xml" title="Manjusaka" type="application/atom+xml">
+      
+    
+  
+
+  <link rel="preload" href="/css/main.css?v=2.0.0" as="style">
+  <link rel="stylesheet" href="/css/main.css?v=2.0.0">
+  <style>:root{--text-loading:"正在加载";--text-loading-error:"加载失败，请稍后重试。"}</style>
+
+
+  
+    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/7054676?v=4">
+  
+
+  
+
+  <script type="application/ld+json" data-stellar-page-meta="">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"dateCreated":"2024-01-03T18:30:00+00:00","dateModified":"2024-01-03T18:30:00+00:00","datePublished":"2024-01-03T18:30:00+00:00","description":"Python 3.13 的 JIT 方案最终确定了，我觉得可以说又新又好。所以深夜水一篇水文，来聊聊这个 JIT 方案\n这篇文章可能会有些枯燥，所以如果对此不感兴趣的同学可以直接 x 掉","headline":"简单聊聊 Python 3.13 的 JIT 方案","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.manjusaka.blog/posts/2024/01/03/a-simple-introduction-about-python-jit/"},"publisher":{"@type":"Organization","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"url":"https://www.manjusaka.blog/posts/2024/01/03/a-simple-introduction-about-python-jit/","image":["https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg"],"keywords":"编程, Python, Linux, 笔记, 水文","thumbnailUrl":"https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg"}</script>
+  
+
+  <link rel="stylesheet" href="/css/stellar-icons.css?v=7c185ad1a9a79674">
+  <link rel="preload" as="script" href="/js/stellar-icons.js?v=39c6ac17e854ffe2">
+  
+  
+<link rel="canonical" href="https://www.manjusaka.blog/posts/2024/01/03/a-simple-introduction-about-python-jit/"></head>
+<body data-page-type="content" data-page-layout="post" data-article-style="tech"><div data-stellar-runtime-region="" id="site-cover" class="site-cover"></div><div class="site-shell" id="start" data-regions="leftbar rightbar"><div class="site-workspace">
+<aside data-stellar-runtime-region="" id="leftbar-region" class="site-region site-region--leftbar" data-region="leftbar" aria-label="Leftbar"><div class="site-region__surface ui-surface"><div class="site-region__decoration" aria-hidden="true"></div><div class="site-region__viewport"><header class="site-region__header site-region__zone site-region__zone--top">
+    <div class="widget-instance widget-instance--brand" data-widget-id="leftbar:fixed:brand" data-presentation="leftbar" data-leftbar-rail="">
+<header class="brand-header brand-header--regular brand-header--site"><div class="brand-wrap"><a class="brand-image brand-image--avatar" href="/"><img no-lazy="" src="https://avatars.githubusercontent.com/u/7054676?v=4" alt="" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></a><a class="brand-title" href="/"><div class="brand-name">Manjusaka</div><div class="brand-tagline cap">写代码的香港记者</div></a></div><div class="brand-search">
+
+<div class="ui-collection" data-layout="list" data-variant="nav" data-density="auto">
+  
+    
+<button class="ui-collection__item ui-interactive card-hover card-hover--spotlight search-trigger has-hover-surface" type="button" title="搜索" aria-label="搜索" data-shell-action="open-search" data-search-instance="leftbar-brand-search" data-search-domain="blog" data-search-domain-label="博客" data-search-domain-blog="true">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Adapted from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3M3 13h3M3 18h8M16.83 13.83l3.76 3.76"></path><circle cx="14" cy="11" r="4"></circle></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">搜索</span>
+      
+      
+    </span>
+  
+  <kbd class="search-shortcut" aria-hidden="true">⌘K</kbd>
+
+  
+</button>
+
+  
+</div>
+
+
+</div></header>
+</div>
+  </header>
+  <div class="site-region__body site-region__zone site-region__zone--body">
+    <div class="widget-instance widget-instance--menu" data-widget-id="leftbar:fixed:menu" data-presentation="leftbar" data-leftbar-rail="">
+
+
+<nav class="menu dis-select">
+<div class="ui-collection" data-layout="list" data-variant="nav" data-density="auto">
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight is-active" href="/" title="博客" aria-current="page">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"></path><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">博客</span>
+      
+      
+    </span>
+  
+  
+  <span class="ui-collection__indicator"></span>
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/weekly/" title="周报">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.94.94 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.96.96 0 0 0 .783-.073a.94.94 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031q.17-.008.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371q.277-.162.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"></path><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8 8 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.1 1.1 0 0 1 .492-.13q.071 0 .138.01c.175.029.315.1.354.12l.009.005l.749.356z"></path><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"></path><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">周报</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/leetcode/" title="刷题">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M12.8324 21.8013C15.9583 21.1747 20 18.926 20 13.1112C20 7.8196 16.1267 4.29593 13.3415 2.67685C12.7235 2.31757 12 2.79006 12 3.50492V5.3334C12 6.77526 11.3938 9.40711 9.70932 10.5018C8.84932 11.0607 7.92052 10.2242 7.816 9.20388L7.73017 8.36604C7.6304 7.39203 6.63841 6.80075 5.85996 7.3946C4.46147 8.46144 3 10.3296 3 13.1112C3 20.2223 8.28889 22.0001 10.9333 22.0001C11.0871 22.0001 11.2488 21.9955 11.4171 21.9858C11.863 21.9296 11.4171 22.085 12.8324 21.8013Z" opacity=".5"></path><path d="M8 18.4442C8 21.064 10.1113 21.8742 11.4171 21.9858C11.863 21.9296 11.4171 22.085 12.8324 21.8013C13.871 21.4343 15 20.4922 15 18.4442C15 17.1465 14.1814 16.3459 13.5401 15.9711C13.3439 15.8564 13.1161 16.0008 13.0985 16.2273C13.0429 16.9454 12.3534 17.5174 11.8836 16.9714C11.4685 16.4889 11.2941 15.784 11.2941 15.3331V14.7439C11.2941 14.3887 10.9365 14.1533 10.631 14.3346C9.49507 15.0085 8 16.3949 8 18.4442Z"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">刷题</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/categories/" title="分类">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C18.8345 6 20.1506 6 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z" opacity=".5"></path><path d="M20 6.23751C19.9992 5.94016 19.9949 5.76263 19.9746 5.60842C19.7974 4.26222 18.7381 3.2029 17.3919 3.02567C17.1969 3 16.9647 3 16.5003 3H9.98828C10.1042 3.10392 10.2347 3.23445 10.45 3.44975L11.0003 4C11.8161 4.81578 12.2239 5.22367 12.7124 5.49543C12.9807 5.64471 13.2653 5.7626 13.5606 5.84678C14.0982 6 14.675 6 15.8287 6H16.2024C17.9814 6 19.1593 6 20 6.23751Z"></path><path fill-rule="evenodd" d="M12.25 10C12.25 9.58579 12.5858 9.25 13 9.25H18C18.4142 9.25 18.75 9.58579 18.75 10C18.75 10.4142 18.4142 10.75 18 10.75H13C12.5858 10.75 12.25 10.4142 12.25 10Z" clip-rule="evenodd"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">分类</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/tags/" title="标签">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M10.7226 3.20068C10.8335 2.80158 10.5998 2.38817 10.2007 2.27731C9.80163 2.16645 9.38822 2.40011 9.27736 2.79921L7.76327 8.24995H4C3.58579 8.24995 3.25 8.58573 3.25 8.99995C3.25 9.41416 3.58579 9.74995 4 9.74995H7.3466L5.81882 15.2499H2C1.58579 15.2499 1.25 15.5857 1.25 15.9999C1.25 16.4142 1.58579 16.7499 2 16.7499H5.40216L4.27736 20.7992C4.1665 21.1983 4.40016 21.6117 4.79927 21.7226C5.19837 21.8334 5.61178 21.5998 5.72264 21.2007L6.95895 16.7499H14.4022L13.2774 20.7992C13.1665 21.1983 13.4002 21.6117 13.7993 21.7226C14.1984 21.8334 14.6118 21.5998 14.7226 21.2007L15.959 16.7499H20C20.4142 16.7499 20.75 16.4142 20.75 15.9999C20.75 15.5857 20.4142 15.2499 20 15.2499H16.3756L17.9034 9.74995H22C22.4142 9.74995 22.75 9.41416 22.75 8.99995C22.75 8.58573 22.4142 8.24995 22 8.24995H18.3201L19.7226 3.20068C19.8335 2.80158 19.5998 2.38817 19.2007 2.27731C18.8016 2.16645 18.3882 2.40011 18.2774 2.79921L16.7633 8.24995H9.32006L10.7226 3.20068ZM14.8188 15.2499L16.3466 9.74995H8.9034L7.37562 15.2499H14.8188Z" clip-rule="evenodd"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">标签</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/archives/" title="归档">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M6.94028 2C7.35614 2 7.69326 2.32421 7.69326 2.72414V4.18487C8.36117 4.17241 9.10983 4.17241 9.95219 4.17241H13.9681C14.8104 4.17241 15.5591 4.17241 16.227 4.18487V2.72414C16.227 2.32421 16.5641 2 16.98 2C17.3958 2 17.733 2.32421 17.733 2.72414V4.24894C19.178 4.36022 20.1267 4.63333 20.8236 5.30359C21.5206 5.97385 21.8046 6.88616 21.9203 8.27586L22 9H2.92456H2V8.27586C2.11571 6.88616 2.3997 5.97385 3.09665 5.30359C3.79361 4.63333 4.74226 4.36022 6.1873 4.24894V2.72414C6.1873 2.32421 6.52442 2 6.94028 2Z"></path><path d="M21.9995 14.0001V12.0001C21.9995 11.161 21.9963 9.66527 21.9834 9H2.00917C1.99626 9.66527 1.99953 11.161 1.99953 12.0001V14.0001C1.99953 17.7713 1.99953 19.6569 3.1711 20.8285C4.34267 22.0001 6.22829 22.0001 9.99953 22.0001H13.9995C17.7708 22.0001 19.6564 22.0001 20.828 20.8285C21.9995 19.6569 21.9995 17.7713 21.9995 14.0001Z" opacity=".5"></path><path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z"></path><path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z"></path><path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z"></path><path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z"></path><path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z"></path><path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">归档</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/about/" title="关于">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20" opacity=".5"></path><path d="M12 6a3 3 0 1 0 0 6a3 3 0 0 0 0-6m0 7.5c-3.04 0-5.5 1.57-5.5 3.5c0 .65.28 1.26.77 1.77A7.96 7.96 0 0 0 12 20.5a7.96 7.96 0 0 0 4.73-1.73c.49-.51.77-1.12.77-1.77c0-1.93-2.46-3.5-5.5-3.5"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">关于</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+</div>
+
+</nav>
+
+</div>
+    <div class="widgets widget-stack widget-stack--leftbar widget-stack--body"><div class="widget-instance widget-instance--recent" data-widget-id="leftbar:1:recent" data-presentation="leftbar">
+
+<widget class="widget-wrapper slide-up recent-widget">
+  
+    <div class="widget-header dis-select">
+      <span class="name">最近更新</span>
+      
+    </div>
+  
+  <div class="widget-body"><div class="ui-collection" data-layout="list" data-variant="nav" data-density="compact">
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2026/05/31/optimize-picimpact-self-hosted-gallery/" title="优化日志：给自建图床 PicImpact 做一次大范围性能优化">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">优</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">优化日志：给自建图床 PicImpact 做一次大范围性能优化</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2026/03/23/the-boundary-of-pydantic/" title="Pydantic 不是免费的——聊聊数据校验的边界">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">P</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Pydantic 不是免费的——聊聊数据校验的边界</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2026/03/15/what-we-maintain-when-maintaining-model-api/" title="当我们在维护模型 API 服务时我们在维护什么">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">当</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">当我们在维护模型 API 服务时我们在维护什么</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2026/02/22/how-to-tracing-your-sql/" title="怎么样 tracing 你的 SQL？">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">怎</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">怎么样 tracing 你的 SQL？</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2026/01/01/at-the-end-of-2025/" title="笑ってほしくて">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">笑</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">笑ってほしくて</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2025/10/02/be-a-good-example-not-be-an-idol/" title="成为榜样，但不要成为偶像">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">成</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">成为榜样，但不要成为偶像</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2025/07/02/tail-call-in-3-14-interpreter-en/" title="Further Performance Evolution in Python 3.14: Tail Call Interpreter">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">F</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Further Performance Evolution in Python 3.14: Tail Call Interpreter</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2025/07/02/tail-call-in-3-14-interpreter/" title="Python 3.14 的进一步性能进化: Tail Call Interpreter">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">P</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Python 3.14 的进一步性能进化: Tail Call Interpreter</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2025/04/26/3-14-is-one-of-the-best-python-version/" title="Python 3.14: Python 世界的一大步">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">P</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Python 3.14: Python 世界的一大步</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/posts/2025/03/23/a-simple-introduction-about-load-balance-algorithm/" title="简单聊聊常见的负载均衡算法">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">简</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">简单聊聊常见的负载均衡算法</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+</div></div>
+  
+</widget>
+
+
+</div></div>
+  </div>
+  <footer class="site-region__footer">
+    <div class="site-region__footer-actions"><div class="widget-instance widget-instance--actions" data-widget-id="leftbar:fixed:actions" data-presentation="leftbar">
+<div class="region-actions social-wrap ui-collection" data-layout="inline" data-variant="nav" data-density="compact"><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="GitHub" href="https://github.com/Zheaoli" target="_blank" rel="external nofollow noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="default:github" aria-hidden="true"></svg></span></a><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="X" href="https://twitter.com/Manjusaka_Lee" target="_blank" rel="external nofollow noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="share:x" aria-hidden="true"></svg></span></a><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="Email" href="mailto:me@manjusaka.me" rel="noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="share:email" aria-hidden="true"></svg></span></a><a class="social ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" title="RSS" href="/atom.xml" rel="noopener noreferrer"><span class="ui-icon"><svg class="icon" viewBox="0 0 1 1" data-icon="default:rss" aria-hidden="true"></svg></span></a></div>
+</div></div>
+    <div class="site-region__system ui-collection" data-layout="inline" data-variant="nav" data-density="compact">
+      <div class="site-region__settings"><div class="widget-instance widget-instance--settings" data-widget-id="leftbar:fixed:settings" data-presentation="leftbar" data-leftbar-rail="">
+<a class="settings-widget ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/settings/" data-profile-provider="giscus" data-profile-identity-enabled="false" data-profile-fallback-avatar="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg" data-settings-placement="leftbar" data-settings-label="设置" aria-label="设置" title="设置">
+  <span class="settings-widget__avatar" aria-hidden="true">
+    <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M12.4277 2C11.3139 2 10.2995 2.6007 8.27081 3.80211L7.58466 4.20846C5.55594 5.40987 4.54158 6.01057 3.98466 7C3.42773 7.98943 3.42773 9.19084 3.42773 11.5937V12.4063C3.42773 14.8092 3.42773 16.0106 3.98466 17C4.54158 17.9894 5.55594 18.5901 7.58466 19.7915L8.27081 20.1979C10.2995 21.3993 11.3139 22 12.4277 22C13.5416 22 14.5559 21.3993 16.5847 20.1979L17.2708 19.7915C19.2995 18.5901 20.3139 17.9894 20.8708 17C21.4277 16.0106 21.4277 14.8092 21.4277 12.4063V11.5937C21.4277 9.19084 21.4277 7.98943 20.8708 7C20.3139 6.01057 19.2995 5.40987 17.2708 4.20846L16.5847 3.80211C14.5559 2.6007 13.5416 2 12.4277 2Z" clip-rule="evenodd" opacity=".5"></path><path d="M12.4277 8.25C10.3567 8.25 8.67773 9.92893 8.67773 12C8.67773 14.0711 10.3567 15.75 12.4277 15.75C14.4988 15.75 16.1777 14.0711 16.1777 12C16.1777 9.92893 14.4988 8.25 12.4277 8.25Z"></path></g></svg></span>
+  </span>
+  <span class="settings-widget__name ui-collection__title">设置</span>
+</a>
+</div></div>
+      <button type="button" class="leftbar-state-toggle ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" aria-label="Collapse leftbar" aria-expanded="true" data-shell-action="toggle-leftbar"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M3.172 4.172C2 5.343 2 7.229 2 11v2c0 3.771 0 5.657 1.172 6.828S6.229 21 10 21h5V3h-5C6.229 3 4.343 3 3.172 4.172" clip-rule="evenodd" opacity=".5"></path><path fill="currentColor" d="M5.5 9.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm1 4a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zM22 13v-2c0-3.771 0-5.657-1.172-6.828c-.974-.975-3.192-1.139-5.828-1.166v17.988c2.636-.027 4.854-.191 5.828-1.166C22 18.657 22 16.771 22 13"></path></svg></span></button>
+    </div>
+  </footer></div></div></aside>
+<main data-stellar-runtime-region="" class="site-main" id="main">
+
+
+<div class="article-banner-wrap slide-up"><div class="article banner top" style="--bg-url:url('https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg')"><img class="lazy bg" data-src="https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;" width="1280" height="853" data-stellar-image-dimensions="true" data-stellar-image-color="{&quot;size&quot;:64,&quot;hsla&quot;:[346.3059,3.6504,64.1468,1]}" data-stellar-image-source="https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg">
+  <div class="content" data-text-adaptive="split">
+    <div class="banner-mask banner-mask-top" aria-hidden="true"></div><div class="banner-mask banner-mask-bottom" aria-hidden="true"></div>
+    <div class="top bread-nav footnote"><div class="top-row"><div class="left" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BC%96%E7%A8%8B/Python/">Python</a>
+</div><div class="right"><span class="cap reading">6020 字 · 预计阅读 21 分钟</span></div></div><div class="meta-row">
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-01-03T18:30:00.000Z">2024-01-04</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-01-03T18:30:00.000Z">2024-01-04</time></span></div>
+</div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>简单聊聊 Python 3.13 的 JIT 方案</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div></div>
+<article class="md-text content slide-up"><script src="/assets/js/DPlayer.min.js"> </script><p>Python 3.13 的 JIT 方案最终确定了，我觉得可以说又新又好。所以深夜水一篇水文，来聊聊这个 JIT 方案</p>
+<p>这篇文章可能会有些枯燥，所以如果对此不感兴趣的同学可以直接 x 掉</p>
+<span id="more"></span>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>在聊 Python 3.13 具体的实现之前，我们需要来了解下它所采用的 JIT 方案的基础知识</p>
+<p>JIT 本身的定义我相信阅读这篇文章的同学已经非常了解了，所以此处不再赘述。JIT 核心分为两大块</p>
+<ol>
+<li>代码的 profile，以确定热点路径，尽可能的减少 JIT 的 fallback</li>
+<li>汇编代码的生成</li>
+</ol>
+<p>本文主要会聊代码的生成部分</p>
+<p>在此之前，Python 生态里一个 JIT 的实现，Pyston/Pypy，他们所采取的方案其实是和 LuaJIT 的方式类似，开发者手写汇编来完成代码的特化，然后依赖 DynASM 执行相关的代码</p>
+<p>这种方式主要的缺陷在于</p>
+<ol>
+<li>手写汇编带来的心智负担</li>
+<li>对于平台的兼容性</li>
+</ol>
+<p>为了给大家一个直观的感受，我给出一个我之前写过的汇编的例子来作为演示</p>
+<p>首先，我需要实现的功能很简单，用 C 来描述应该是这样的</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[], <span class="type">char</span> * envp[])</span> {</span><br><span class="line">    <span class="keyword">if</span> (argv &gt; <span class="number">0</span>) {</span><br><span class="line">        <span class="keyword">return</span> execve(args[<span class="number">0</span>], args, envp);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>因为一些尺寸极端敏感的场景，这份 C 代码没有办法直接 link libc，为了尽可能的压缩 binary size，我选择用汇编实现，以下是 X86_64 的 ASM </p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">.global _start</span><br><span class="line"></span><br><span class="line">.section .text</span><br><span class="line">_start:</span><br><span class="line">    # Setup stack frame</span><br><span class="line">    movq %rsp, %rbp</span><br><span class="line"></span><br><span class="line">    # Load argc</span><br><span class="line">    movq (%rbp), %r8       # %r8 now holds argc</span><br><span class="line"></span><br><span class="line">    # Load argv</span><br><span class="line">    leaq 8(%rbp), %r9      # %r9 now points to argv[0]</span><br><span class="line"></span><br><span class="line">    # Find envp by iterating through argv until NULL is found</span><br><span class="line">    movq %r9, %r10         # %r10 will be used to find envp</span><br><span class="line">find_envp:</span><br><span class="line">    movq (%r10), %rdi      # Load the current pointer in argv</span><br><span class="line">    cmpq $0, %rdi          # Compare it to NULL</span><br><span class="line">    je envp_found          # If NULL, we've found the end of argv</span><br><span class="line">    addq $8, %r10          # Otherwise, move to the next pointer in argv</span><br><span class="line">    jmp find_envp</span><br><span class="line"></span><br><span class="line">envp_found:</span><br><span class="line">    addq $8, %r10          # Move one more step to point to the start of envp</span><br><span class="line"></span><br><span class="line">    # Allocate space on the stack for the new argv array</span><br><span class="line">    subq $8, %rsp          # Space for NULL termination</span><br><span class="line">    subq %r8, %rsp</span><br><span class="line">    subq %r8, %rsp         # Space for argc pointers (including argv[0])</span><br><span class="line">    movq %rsp, %r11        # %r11 now points to the start of the new argv array</span><br><span class="line"></span><br><span class="line">    # Copy argv pointers to the new array</span><br><span class="line">    movq $0, %rcx          # Counter</span><br><span class="line">copy_loop:</span><br><span class="line">    cmpq %rcx, %r8</span><br><span class="line">    je copy_done</span><br><span class="line">    movq (%r9, %rcx, 8), %rdi</span><br><span class="line">    movq %rdi, (%r11, %rcx, 8)</span><br><span class="line">    incq %rcx</span><br><span class="line">    jmp copy_loop</span><br><span class="line"></span><br><span class="line">copy_done:</span><br><span class="line">    movq $0, (%r11, %rcx, 8)   # NULL-terminate the new argv array</span><br><span class="line"></span><br><span class="line">    # Check if argc &gt; 0</span><br><span class="line">    cmpq $0, %r8</span><br><span class="line">    jle .Lexit</span><br><span class="line"></span><br><span class="line">    # Execute execve syscall</span><br><span class="line">    movq $59, %rax          # syscall number for execve</span><br><span class="line">    movq (%r11), %rdi        # filename is argv[0]</span><br><span class="line">    movq %r11, %rsi         # New argv array</span><br><span class="line">    movq %r10, %rdx         # envp</span><br><span class="line">    syscall</span><br><span class="line"></span><br><span class="line">.Lexit:</span><br><span class="line">    # Exit the program using the exit syscall</span><br><span class="line">    movq $60, %rax</span><br><span class="line">    xorq %rdi, %rdi</span><br><span class="line">    syscall</span><br></pre></td></tr></tbody></table></figure>
+<p>同时，因为这个功能需要跨平台实现，所以我们需要同时实现 ARM64 的版本，以下是 ARM64 的 ASM</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">.global _start</span><br><span class="line"></span><br><span class="line">.section .text</span><br><span class="line">_start:</span><br><span class="line">    # Setup stack frame</span><br><span class="line">    mov x29, sp</span><br><span class="line"></span><br><span class="line">    # Load argc</span><br><span class="line">    ldr x8, [x29]        # x8 now holds argc</span><br><span class="line"></span><br><span class="line">    # Load argv</span><br><span class="line">    add x9, x29, #8      # x9 now points to argv[0]</span><br><span class="line"></span><br><span class="line">    # Find envp by iterating through argv until NULL is found</span><br><span class="line">    mov x10, x9          # x10 will be used to find envp</span><br><span class="line">find_envp:</span><br><span class="line">    ldr x19, [x10]       # Load the current pointer in argv</span><br><span class="line">    cbz x19, envp_found  # If NULL, we've found the end of argv</span><br><span class="line">    add x10, x10, #8     # Otherwise, move to the next pointer in argv</span><br><span class="line">    b find_envp</span><br><span class="line"></span><br><span class="line">envp_found:</span><br><span class="line">    add x10, x10, #8     # Move one more step to point to the start of envp</span><br><span class="line"></span><br><span class="line">    # Allocate space on the stack for the new argv array</span><br><span class="line">    sub sp, sp, #8       # Space for NULL termination</span><br><span class="line">    sub sp, sp, x8, lsl #3</span><br><span class="line">    sub sp, sp, x8, lsl #3      # Space for argc pointers (including argv[0])</span><br><span class="line">    mov x11, sp          # x11 now points to the start of the new argv array</span><br><span class="line"></span><br><span class="line">    # Copy argv pointers to the new array</span><br><span class="line">    mov x12, #0          # Counter</span><br><span class="line">copy_loop:</span><br><span class="line">    cmp x12, x8</span><br><span class="line">    b.eq copy_done</span><br><span class="line">    ldr x19, [x9, x12, lsl #3]</span><br><span class="line">    str x19, [x11, x12, lsl #3]</span><br><span class="line">    add x12, x12, #1</span><br><span class="line">    b copy_loop</span><br><span class="line"></span><br><span class="line">copy_done:</span><br><span class="line">    mov x19, #0</span><br><span class="line">    str x19, [x11, x12, lsl #3]   # NULL-terminate the new argv array</span><br><span class="line"></span><br><span class="line">    # Check if argc &gt; 0</span><br><span class="line">    cmp x8, #0</span><br><span class="line">    b.le .Lexit</span><br><span class="line"></span><br><span class="line">    # Execute execve syscall</span><br><span class="line">    mov x8, #221         # syscall number for execve</span><br><span class="line">    ldr x0, [x11]        # filename is argv[0]</span><br><span class="line">    mov x1, x11          # New argv array</span><br><span class="line">    mov x2, x10          # envp</span><br><span class="line">    svc #0</span><br><span class="line"></span><br><span class="line">.Lexit:</span><br><span class="line">    # Exit the program using the exit syscall</span><br><span class="line">    mov x8, #93</span><br><span class="line">    mov x0, #0</span><br><span class="line">    svc #0</span><br></pre></td></tr></tbody></table></figure>
+<p>你能发现，X86_64 的寄存器和 ARM 生态完全不一样，这就导致了我们需要为不同的平台写不同的汇编代码，你再考虑下我们需要</p>
+<ol>
+<li>MIPS</li>
+<li>RISC-V</li>
+<li>PowerPC</li>
+<li>…</li>
+</ol>
+<p>即便 DynASM 已经对跨平台做了一些抽象，但是直接手写汇编所带来的心智负担还是非常大的</p>
+<p>所以，我们需要更现代化的方案，这就是今天要聊到 Copy And Patch。其核心在于利用已有编译器生成的汇编代码，然后对其进行 patch，来完成代码的特化</p>
+<p>我们一点点来了解这个方案，首先我们从最基础的一个代码入手</p>
+<p>假设我们现在有一个最基础的 C 代码</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> {</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>这个代码没有任何问题，我们可以直接用 gcc 来编译它，然后反汇编，看看它的汇编代码是什么样的</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000 &lt;add&gt;:</span><br><span class="line">       0: 55                            pushq   %rbp</span><br><span class="line">       1: 48 89 e5                      movq    %rsp, %rbp</span><br><span class="line">       4: 89 7d fc                      movl    %edi, -0x4(%rbp)</span><br><span class="line">       7: 89 75 f8                      movl    %esi, -0x8(%rbp)</span><br><span class="line">       a: 8b 55 fc                      movl    -0x4(%rbp), %edx</span><br><span class="line">       d: 8b 45 f8                      movl    -0x8(%rbp), %eax</span><br><span class="line">      10: 01 d0                         addl    %edx, %eax</span><br><span class="line">      12: 5d                            popq    %rbp</span><br><span class="line">      13: c3                            retq</span><br></pre></td></tr></tbody></table></figure>
+<p>最基础的汇编代码，没有问题。</p>
+<p>那么我们现在有这样一个场景，我们提供两个函数</p>
+<ol>
+<li>load_left</li>
+<li>load_right</li>
+</ol>
+<p>这个两个函数将用于加载我们左右两个操作数，然后我们的代码变成下面这样</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">load_left</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">load_right</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">return</span> load_left() + load_right();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>我们开垦一下汇编</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000 &lt;add&gt;:</span><br><span class="line">       0: 55                            pushq   %rbp</span><br><span class="line">       1: 48 89 e5                      movq    %rsp, %rbp</span><br><span class="line">       4: 53                            pushq   %rbx</span><br><span class="line">       5: 48 83 ec 08                   subq    $0x8, %rsp</span><br><span class="line">       9: b8 00 00 00 00                movl    $0x0, %eax</span><br><span class="line">       e: e8 00 00 00 00                callq   0x13 &lt;add+0x13&gt;</span><br><span class="line">                000000000000000f:  R_X86_64_PLT32       load_left-0x4</span><br><span class="line">      13: 89 c3                         movl    %eax, %ebx</span><br><span class="line">      15: b8 00 00 00 00                movl    $0x0, %eax</span><br><span class="line">      1a: e8 00 00 00 00                callq   0x1f &lt;add+0x1f&gt;</span><br><span class="line">                000000000000001b:  R_X86_64_PLT32       load_right-0x4</span><br><span class="line">      1f: 01 d8                         addl    %ebx, %eax</span><br><span class="line">      21: 48 8b 5d f8                   movq    -0x8(%rbp), %rbx</span><br><span class="line">      25: c9                            leave</span><br><span class="line">      26: c3                            retq</span><br></pre></td></tr></tbody></table></figure>
+<p>我们关注到，汇编中有这样两行奇怪的东西</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> e: e8 00 00 00 00                callq   0x13 &lt;add+0x13&gt;</span><br><span class="line">          000000000000000f:  R_X86_64_PLT32       load_left-0x4</span><br><span class="line">1a: e8 00 00 00 00                callq   0x1f &lt;add+0x1f&gt;</span><br><span class="line">          000000000000001b:  R_X86_64_PLT32       load_right-0x4</span><br></pre></td></tr></tbody></table></figure>
+<p>Bingo，熟悉一些基础的程序知识同学应该反应过来了，<code>e8</code> 指令（即 x86 下的 callq 指令）后面的 <code>00 00 00 00</code> 地址，将会在执行时，被 reloc 成为 <code>load_left</code> 和 <code>load_right</code> 的地址。</p>
+<p>那么可能有些同学已经反应过来了，如果我们有办法将这段汇编代码中的 <code>e8 00 00 00 00</code> 替换成 <code>e8 xx xx xx xx</code>，那么我们就可以在这里 patch 上我们的代码了。这里是不是可以作为我们 JIT 的入口了呢？</p>
+<p>当然，这里有一个问题，<code>e8</code> 后面的指令地址应该怎么样确定呢？</p>
+<p>这里我们可以注意到，程序中有这样的部分 <code>000000000000000f:  R_X86_64_PLT32       load_left-0x4</code>， 这个是一个 ELF 的 Relocation Entry，它的作用是告诉我们，<code>e8</code> 后面的地址，应该是 <code>load_left</code> 的地址，同时，我们也能知道重定向部分的起始 <code>0x0f</code>.</p>
+<p>同样的类型还有很多，比如 <code>R_X86_64_PC32</code>，<code>R_X86_64_GOTPCREL</code> 等等，这些类型的 Relocation Entry 都可以帮助我们定位到我们需要 patch 的地址，以及帮助我们计算偏移</p>
+<p>再举个例子</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 17f: 48 bf 00 00 00 00 00 00 00 00 movabsq $0x0, %rdi</span><br><span class="line">// 0000000000000181:  R_X86_64_64  .rodata.str1.1</span><br><span class="line">// 189: 48 be 00 00 00 00 00 00 00 00 movabsq $0x0, %rsi</span><br><span class="line">// 000000000000018b:  R_X86_64_64  .rodata.str1.1+0x16</span><br></pre></td></tr></tbody></table></figure>
+<p>这里我们可以看到，<code>48 bf 00 00 00 00 00 00 00 00</code> 和 <code>48 be 00 00 00 00 00 00 00 00</code> 后面都有一个 <code>R_X86_64_64</code> 的 Relocation Entry，这个 Relocation Entry 告诉我们，这两个指令后面的地址，应该是 <code>.rodata.str1.1</code> 的地址，同时，我们也能知道重定向部分的起始 <code>0x181</code> 和 <code>0x18b</code>，这样我们就可以计算出偏移，然后 patch 上我们的代码了</p>
+<p>那么这就是整个 copy and patch 的大概过程，我们可以利用编译器生成的汇编代码，然后通过 Relocation Entry 来定位我们需要 patch 的地址，然后 patch 上我们的代码。最终尽可能的简化我们的心智负担</p>
+<h2 id="Python-3-13-的-JIT"><a href="#Python-3-13-的-JIT" class="headerlink" title="Python 3.13 的 JIT"></a>Python 3.13 的 JIT</h2><p>Python 3.13 目前的 JIT 方案已经确定下来了，它的核心就是 Copy And Patch，现在我们整体来看一下</p>
+<p>首先，Python 有一个 <code>Python/executor_cases.h</code> 文件，囊括了我们所有的字节码和对应的操作</p>
+<p>比如</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> _BINARY_OP_ADD_INT: {</span><br><span class="line">    PyObject *right;</span><br><span class="line">    PyObject *left;</span><br><span class="line">    PyObject *res;</span><br><span class="line">    right = stack_pointer[<span class="number">-1</span>];</span><br><span class="line">    left = stack_pointer[<span class="number">-2</span>];</span><br><span class="line">    STAT_INC(BINARY_OP, hit);</span><br><span class="line">    res = _PyLong_Add((PyLongObject *)left, (PyLongObject *)right);</span><br><span class="line">    _Py_DECREF_SPECIALIZED(right, (destructor)PyObject_Free);</span><br><span class="line">    _Py_DECREF_SPECIALIZED(left, (destructor)PyObject_Free);</span><br><span class="line">    <span class="keyword">if</span> (res == <span class="literal">NULL</span>) <span class="keyword">goto</span> pop_2_error_tier_two;</span><br><span class="line">    stack_pointer[<span class="number">-2</span>] = res;</span><br><span class="line">    stack_pointer += <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>然后我们新增加了一个 <code>tools/template.c</code> 文件，</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"Python.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_call.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_ceval.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_dict.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_emscripten_signal.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_intrinsics.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_jit.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_long.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_opcode_metadata.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_opcode_utils.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_range.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_setobject.h"</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"pycore_sliceobject.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"ceval_macros.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> CURRENT_OPARG</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CURRENT_OPARG() (_oparg)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> CURRENT_OPERAND</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CURRENT_OPERAND() (_operand)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> DEOPT_IF</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEOPT_IF(COND, INSTNAME) \</span></span><br><span class="line"><span class="meta">    do {                         \</span></span><br><span class="line"><span class="meta">        <span class="keyword">if</span> ((COND)) {            \</span></span><br><span class="line"><span class="meta">            goto deoptimize;     \</span></span><br><span class="line"><span class="meta">        }                        \</span></span><br><span class="line"><span class="meta">    } while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> ENABLE_SPECIALIZATION</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ENABLE_SPECIALIZATION (0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> GOTO_ERROR</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GOTO_ERROR(LABEL)        \</span></span><br><span class="line"><span class="meta">    do {                         \</span></span><br><span class="line"><span class="meta">        goto LABEL ## _tier_two; \</span></span><br><span class="line"><span class="meta">    } while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> LOAD_IP</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOAD_IP(UNUSED) \</span></span><br><span class="line"><span class="meta">    do {                \</span></span><br><span class="line"><span class="meta">    } while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PATCH_VALUE(TYPE, NAME, ALIAS)  \</span></span><br><span class="line"><span class="meta">    extern void ALIAS;                  \</span></span><br><span class="line"><span class="meta">    TYPE NAME = (TYPE)(uint64_t)&amp;ALIAS;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PATCH_JUMP(ALIAS)                                    \</span></span><br><span class="line"><span class="meta">    extern void ALIAS;                                       \</span></span><br><span class="line"><span class="meta">    __attribute__((musttail))                                \</span></span><br><span class="line"><span class="meta">    return ((jit_func)&amp;ALIAS)(frame, stack_pointer, tstate);</span></span><br><span class="line"></span><br><span class="line">_Py_CODEUNIT *</span><br><span class="line">_JIT_ENTRY(_PyInterpreterFrame *frame, PyObject **stack_pointer, PyThreadState *tstate)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Locals that the instruction implementations expect to exist:</span></span><br><span class="line">    PATCH_VALUE(_PyUOpExecutorObject *, current_executor, _JIT_EXECUTOR)</span><br><span class="line">    <span class="type">int</span> oparg;</span><br><span class="line">    <span class="type">int</span> opcode = _JIT_OPCODE;</span><br><span class="line">    _PyUOpInstruction *next_uop;</span><br><span class="line">    <span class="comment">// Other stuff we need handy:</span></span><br><span class="line">    PATCH_VALUE(<span class="type">uint16_t</span>, _oparg, _JIT_OPARG)</span><br><span class="line">    PATCH_VALUE(<span class="type">uint64_t</span>, _operand, _JIT_OPERAND)</span><br><span class="line">    PATCH_VALUE(<span class="type">uint32_t</span>, _target, _JIT_TARGET)</span><br><span class="line">    <span class="comment">// The actual instruction definitions (only one will be used):</span></span><br><span class="line">    <span class="keyword">if</span> (opcode == _JUMP_TO_TOP) {</span><br><span class="line">        CHECK_EVAL_BREAKER();</span><br><span class="line">        PATCH_JUMP(_JIT_TOP);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">switch</span> (opcode) {</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"executor_cases.c.h"</span></span></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            Py_UNREACHABLE();</span><br><span class="line">    }</span><br><span class="line">    PATCH_JUMP(_JIT_CONTINUE);</span><br><span class="line">    <span class="comment">// Labels that the instruction implementations expect to exist:</span></span><br><span class="line">unbound_local_error_tier_two:</span><br><span class="line">    _PyEval_FormatExcCheckArg(</span><br><span class="line">        tstate, PyExc_UnboundLocalError, UNBOUNDLOCAL_ERROR_MSG,</span><br><span class="line">        PyTuple_GetItem(_PyFrame_GetCode(frame)-&gt;co_localsplusnames, oparg));</span><br><span class="line">    <span class="keyword">goto</span> error_tier_two;</span><br><span class="line">pop_4_error_tier_two:</span><br><span class="line">    STACK_SHRINK(<span class="number">1</span>);</span><br><span class="line">pop_3_error_tier_two:</span><br><span class="line">    STACK_SHRINK(<span class="number">1</span>);</span><br><span class="line">pop_2_error_tier_two:</span><br><span class="line">    STACK_SHRINK(<span class="number">1</span>);</span><br><span class="line">pop_1_error_tier_two:</span><br><span class="line">    STACK_SHRINK(<span class="number">1</span>);</span><br><span class="line">error_tier_two:</span><br><span class="line">    _PyFrame_SetStackPointer(frame, stack_pointer);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">deoptimize:</span><br><span class="line">    _PyFrame_SetStackPointer(frame, stack_pointer);</span><br><span class="line">    <span class="keyword">return</span> _PyCode_CODE(_PyFrame_GetCode(frame)) + _target;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>其中，_JIT_OPCODE，由编译时传入，作为当前的 opcode，因为这是一个固定值，所以编译器在编译的时候，会 strip 掉其余的分支，只保留当前 opcode 的分支，某种意义上，核心的 switch 部分就编程这样了（以 _BINARY_OP_ADD_INT 为例）</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(_BINARY_OP_ADD_INT) {</span><br><span class="line">    <span class="keyword">case</span> _BINARY_OP_ADD_INT: {</span><br><span class="line">        PyObject *right;</span><br><span class="line">        PyObject *left;</span><br><span class="line">        PyObject *res;</span><br><span class="line">        right = stack_pointer[<span class="number">-1</span>];</span><br><span class="line">        left = stack_pointer[<span class="number">-2</span>];</span><br><span class="line">        STAT_INC(BINARY_OP, hit);</span><br><span class="line">        res = _PyLong_Add((PyLongObject *)left, (PyLongObject *)right);</span><br><span class="line">        _Py_DECREF_SPECIALIZED(right, (destructor)PyObject_Free);</span><br><span class="line">        _Py_DECREF_SPECIALIZED(left, (destructor)PyObject_Free);</span><br><span class="line">        <span class="keyword">if</span> (res == <span class="literal">NULL</span>) <span class="keyword">goto</span> pop_2_error_tier_two;</span><br><span class="line">        stack_pointer[<span class="number">-2</span>] = res;</span><br><span class="line">        stack_pointer += <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        Py_UNREACHABLE();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>我们最终能得到这样的汇编</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">// 0: 55                            pushq   %rbp</span><br><span class="line">// 1: 41 57                         pushq   %r15</span><br><span class="line">// 3: 41 56                         pushq   %r14</span><br><span class="line">// 5: 41 55                         pushq   %r13</span><br><span class="line">// 7: 41 54                         pushq   %r12</span><br><span class="line">// 9: 53                            pushq   %rbx</span><br><span class="line">// a: 48 83 ec 18                   subq    $0x18, %rsp</span><br><span class="line">// e: 48 89 54 24 10                movq    %rdx, 0x10(%rsp)</span><br><span class="line">// 13: 49 89 f7                      movq    %rsi, %r15</span><br><span class="line">// 16: 48 89 7c 24 08                movq    %rdi, 0x8(%rsp)</span><br><span class="line">// 1b: 4c 8b 66 f0                   movq    -0x10(%rsi), %r12</span><br><span class="line">// 1f: 48 8b 6e f8                   movq    -0x8(%rsi), %rbp</span><br><span class="line">// 23: 49 be 00 00 00 00 00 00 00 00 movabsq $0x0, %r14</span><br><span class="line">// 0000000000000025:  R_X86_64_64  _Py_stats</span><br><span class="line">// 2d: 49 8b 06                      movq    (%r14), %rax</span><br><span class="line">// 30: 48 85 c0                      testq   %rax, %rax</span><br><span class="line">// 33: 74 07                         je      0x3c &lt;_JIT_ENTRY+0x3c&gt;</span><br><span class="line">// 35: 48 ff 80 88 a4 01 00          incq    0x1a488(%rax)</span><br><span class="line">// 3c: 48 b8 00 00 00 00 00 00 00 00 movabsq $0x0, %rax</span><br><span class="line">// 000000000000003e:  R_X86_64_64  _PyLong_Add</span><br><span class="line">// 46: 4c 89 e7                      movq    %r12, %rdi</span><br><span class="line">// 49: 48 89 ee                      movq    %rbp, %rsi</span><br><span class="line">// 4c: ff d0                         callq   *%rax</span><br><span class="line">// 4e: 49 89 c5                      movq    %rax, %r13</span><br><span class="line">// 51: f6 45 03 80                   testb   $-0x80, 0x3(%rbp)</span><br><span class="line">// 55: 48 b9 00 00 00 00 00 00 00 00 movabsq $0x0, %rcx</span><br><span class="line">// 0000000000000057:  R_X86_64_64  PyInterpreterState_Get</span><br><span class="line">// 5f: 75 24                         jne     0x85 &lt;_JIT_ENTRY+0x85&gt;</span><br><span class="line">// 61: 49 8b 06                      movq    (%r14), %rax</span><br><span class="line">// 64: 48 85 c0                      testq   %rax, %rax</span><br><span class="line">// 67: 74 07                         je      0x70 &lt;_JIT_ENTRY+0x70&gt;</span><br><span class="line">// 69: 48 ff 80 78 58 09 00          incq    0x95878(%rax)</span><br><span class="line">// 70: 48 89 cb                      movq    %rcx, %rbx</span><br><span class="line">// 73: ff d1                         callq   *%rcx</span><br><span class="line">// 75: 48 89 d9                      movq    %rbx, %rcx</span><br><span class="line">// 78: 48 ff 88 c8 15 04 00          decq    0x415c8(%rax)</span><br><span class="line">// 7f: 48 ff 4d 00                   decq    (%rbp)</span><br><span class="line">// 83: 74 37                         je      0xbc &lt;_JIT_ENTRY+0xbc&gt;</span><br><span class="line">// 85: 41 f6 44 24 03 80             testb   $-0x80, 0x3(%r12)</span><br><span class="line">// 8b: 75 49                         jne     0xd6 &lt;_JIT_ENTRY+0xd6&gt;</span><br><span class="line">// 8d: 49 8b 06                      movq    (%r14), %rax</span><br><span class="line">// 90: 48 85 c0                      testq   %rax, %rax</span><br><span class="line">// 93: 74 07                         je      0x9c &lt;_JIT_ENTRY+0x9c&gt;</span><br><span class="line">// 95: 48 ff 80 78 58 09 00          incq    0x95878(%rax)</span><br><span class="line">// 9c: ff d1                         callq   *%rcx</span><br><span class="line">// 9e: 48 ff 88 c8 15 04 00          decq    0x415c8(%rax)</span><br><span class="line">// a5: 49 ff 0c 24                   decq    (%r12)</span><br><span class="line">// a9: 75 2b                         jne     0xd6 &lt;_JIT_ENTRY+0xd6&gt;</span><br><span class="line">// ab: 48 b8 00 00 00 00 00 00 00 00 movabsq $0x0, %rax</span><br><span class="line">// 00000000000000ad:  R_X86_64_64  PyObject_Free</span><br><span class="line">// b5: 4c 89 e7                      movq    %r12, %rdi</span><br><span class="line">// b8: ff d0                         callq   *%rax</span><br><span class="line">// ba: eb 1a                         jmp     0xd6 &lt;_JIT_ENTRY+0xd6&gt;</span><br><span class="line">// bc: 48 b8 00 00 00 00 00 00 00 00 movabsq $0x0, %rax</span><br><span class="line">// 00000000000000be:  R_X86_64_64  PyObject_Free</span><br><span class="line">// c6: 48 89 ef                      movq    %rbp, %rdi</span><br><span class="line">// c9: ff d0                         callq   *%rax</span><br><span class="line">// cb: 48 89 d9                      movq    %rbx, %rcx</span><br><span class="line">// ce: 41 f6 44 24 03 80             testb   $-0x80, 0x3(%r12)</span><br><span class="line">// d4: 74 b7                         je      0x8d &lt;_JIT_ENTRY+0x8d&gt;</span><br><span class="line">// d6: 49 8d 47 f0                   leaq    -0x10(%r15), %rax</span><br><span class="line">// da: 4d 85 ed                      testq   %r13, %r13</span><br><span class="line">// dd: 74 2e                         je      0x10d &lt;_JIT_ENTRY+0x10d&gt;</span><br><span class="line">// df: 49 83 c7 f8                   addq    $-0x8, %r15</span><br><span class="line">// e3: 4c 89 28                      movq    %r13, (%rax)</span><br><span class="line">// e6: 48 b8 00 00 00 00 00 00 00 00 movabsq $0x0, %rax</span><br><span class="line">// 00000000000000e8:  R_X86_64_64  _JIT_CONTINUE</span><br><span class="line">// f0: 48 8b 7c 24 08                movq    0x8(%rsp), %rdi</span><br><span class="line">// f5: 4c 89 fe                      movq    %r15, %rsi</span><br><span class="line">// f8: 48 8b 54 24 10                movq    0x10(%rsp), %rdx</span><br><span class="line">// fd: 48 83 c4 18                   addq    $0x18, %rsp</span><br><span class="line">// 101: 5b                            popq    %rbx</span><br><span class="line">// 102: 41 5c                         popq    %r12</span><br><span class="line">// 104: 41 5d                         popq    %r13</span><br><span class="line">// 106: 41 5e                         popq    %r14</span><br><span class="line">// 108: 41 5f                         popq    %r15</span><br><span class="line">// 10a: 5d                            popq    %rbp</span><br><span class="line">// 10b: ff e0                         jmpq    *%rax</span><br><span class="line">// 10d: 48 8b 4c 24 08                movq    0x8(%rsp), %rcx</span><br><span class="line">// 112: 48 29 c8                      subq    %rcx, %rax</span><br><span class="line">// 115: 48 83 c0 b8                   addq    $-0x48, %rax</span><br><span class="line">// 119: 48 c1 e8 03                   shrq    $0x3, %rax</span><br><span class="line">// 11d: 89 41 40                      movl    %eax, 0x40(%rcx)</span><br><span class="line">// 120: 31 c0                         xorl    %eax, %eax</span><br><span class="line">// 122: 48 83 c4 18                   addq    $0x18, %rsp</span><br><span class="line">// 126: 5b                            popq    %rbx</span><br><span class="line">// 127: 41 5c                         popq    %r12</span><br><span class="line">// 129: 41 5d                         popq    %r13</span><br><span class="line">// 12b: 41 5e                         popq    %r14</span><br><span class="line">// 12d: 41 5f                         popq    %r15</span><br><span class="line">// 12f: 5d                            popq    %rbp</span><br><span class="line">// 130: c3                            retq</span><br><span class="line">// 131: </span><br></pre></td></tr></tbody></table></figure>
+<p>OK，我们在编译器（目前 Python 选用的 LLVM 系列的工具链，编译器为 clang）开了 O3 编译后得到中间文件后，我们利用 <code>llvm-objdump</code> 和 <code>llvm-readobj</code> 来获取到我们需要的信息（这里其实也是一个非常棒的细节，因为我们要跨很多平台，要处理几种不同的二进制格式，比如 Linux 下 ELF，Windows 下 PE，MacOS 下 Mach-O，所以我们需要一个统一的工具来处理这些二进制格式，而 LLVM 的工具链就是这样的工具）我们能注意到，在上面的代码中，有这样一些重定向条目</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 0000000000000025:  R_X86_64_64  _Py_stats</span><br><span class="line">// 000000000000003e:  R_X86_64_64  _PyLong_Add</span><br><span class="line">// 0000000000000057:  R_X86_64_64  PyInterpreterState_Get</span><br><span class="line">// 00000000000000ad:  R_X86_64_64  PyObject_Free</span><br><span class="line">// 00000000000000be:  R_X86_64_64  PyObject_Free</span><br><span class="line">// 00000000000000e8:  R_X86_64_64  _JIT_CONTINUE</span><br></pre></td></tr></tbody></table></figure>
+<p>然后我们就可以根据从工具链中获取到的信息，来定位到我们需要 patch 的地址，然后生成一些运行时 patch 的 flag，最终生成这样一份 C 代码</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span> _BINARY_OP_ADD_INT_code_body[<span class="number">306</span>] = {<span class="number">0x55</span>, <span class="number">0x41</span>, <span class="number">0x57</span>, <span class="number">0x41</span>, <span class="number">0x56</span>, <span class="number">0x41</span>, <span class="number">0x55</span>, <span class="number">0x41</span>, <span class="number">0x54</span>, <span class="number">0x53</span>, <span class="number">0x48</span>, <span class="number">0x83</span>, <span class="number">0xec</span>, <span class="number">0x18</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0x54</span>, <span class="number">0x24</span>, <span class="number">0x10</span>, <span class="number">0x49</span>, <span class="number">0x89</span>, <span class="number">0xf7</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0x7c</span>, <span class="number">0x24</span>, <span class="number">0x08</span>, <span class="number">0x4c</span>, <span class="number">0x8b</span>, <span class="number">0x66</span>, <span class="number">0xf0</span>, <span class="number">0x48</span>, <span class="number">0x8b</span>, <span class="number">0x6e</span>, <span class="number">0xf8</span>, <span class="number">0x49</span>, <span class="number">0xbe</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x49</span>, <span class="number">0x8b</span>, <span class="number">0x06</span>, <span class="number">0x48</span>, <span class="number">0x85</span>, <span class="number">0xc0</span>, <span class="number">0x74</span>, <span class="number">0x07</span>, <span class="number">0x48</span>, <span class="number">0xff</span>, <span class="number">0x80</span>, <span class="number">0x88</span>, <span class="number">0xa4</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x48</span>, <span class="number">0xb8</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x4c</span>, <span class="number">0x89</span>, <span class="number">0xe7</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0xee</span>, <span class="number">0xff</span>, <span class="number">0xd0</span>, <span class="number">0x49</span>, <span class="number">0x89</span>, <span class="number">0xc5</span>, <span class="number">0xf6</span>, <span class="number">0x45</span>, <span class="number">0x03</span>, <span class="number">0x80</span>, <span class="number">0x48</span>, <span class="number">0xb9</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x75</span>, <span class="number">0x24</span>, <span class="number">0x49</span>, <span class="number">0x8b</span>, <span class="number">0x06</span>, <span class="number">0x48</span>, <span class="number">0x85</span>, <span class="number">0xc0</span>, <span class="number">0x74</span>, <span class="number">0x07</span>, <span class="number">0x48</span>, <span class="number">0xff</span>, <span class="number">0x80</span>, <span class="number">0x78</span>, <span class="number">0x58</span>, <span class="number">0x09</span>, <span class="number">0x00</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0xcb</span>, <span class="number">0xff</span>, <span class="number">0xd1</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0xd9</span>, <span class="number">0x48</span>, <span class="number">0xff</span>, <span class="number">0x88</span>, <span class="number">0xc8</span>, <span class="number">0x15</span>, <span class="number">0x04</span>, <span class="number">0x00</span>, <span class="number">0x48</span>, <span class="number">0xff</span>, <span class="number">0x4d</span>, <span class="number">0x00</span>, <span class="number">0x74</span>, <span class="number">0x37</span>, <span class="number">0x41</span>, <span class="number">0xf6</span>, <span class="number">0x44</span>, <span class="number">0x24</span>, <span class="number">0x03</span>, <span class="number">0x80</span>, <span class="number">0x75</span>, <span class="number">0x49</span>, <span class="number">0x49</span>, <span class="number">0x8b</span>, <span class="number">0x06</span>, <span class="number">0x48</span>, <span class="number">0x85</span>, <span class="number">0xc0</span>, <span class="number">0x74</span>, <span class="number">0x07</span>, <span class="number">0x48</span>, <span class="number">0xff</span>, <span class="number">0x80</span>, <span class="number">0x78</span>, <span class="number">0x58</span>, <span class="number">0x09</span>, <span class="number">0x00</span>, <span class="number">0xff</span>, <span class="number">0xd1</span>, <span class="number">0x48</span>, <span class="number">0xff</span>, <span class="number">0x88</span>, <span class="number">0xc8</span>, <span class="number">0x15</span>, <span class="number">0x04</span>, <span class="number">0x00</span>, <span class="number">0x49</span>, <span class="number">0xff</span>, <span class="number">0x0c</span>, <span class="number">0x24</span>, <span class="number">0x75</span>, <span class="number">0x2b</span>, <span class="number">0x48</span>, <span class="number">0xb8</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x4c</span>, <span class="number">0x89</span>, <span class="number">0xe7</span>, <span class="number">0xff</span>, <span class="number">0xd0</span>, <span class="number">0xeb</span>, <span class="number">0x1a</span>, <span class="number">0x48</span>, <span class="number">0xb8</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0xef</span>, <span class="number">0xff</span>, <span class="number">0xd0</span>, <span class="number">0x48</span>, <span class="number">0x89</span>, <span class="number">0xd9</span>, <span class="number">0x41</span>, <span class="number">0xf6</span>, <span class="number">0x44</span>, <span class="number">0x24</span>, <span class="number">0x03</span>, <span class="number">0x80</span>, <span class="number">0x74</span>, <span class="number">0xb7</span>, <span class="number">0x49</span>, <span class="number">0x8d</span>, <span class="number">0x47</span>, <span class="number">0xf0</span>, <span class="number">0x4d</span>, <span class="number">0x85</span>, <span class="number">0xed</span>, <span class="number">0x74</span>, <span class="number">0x2e</span>, <span class="number">0x49</span>, <span class="number">0x83</span>, <span class="number">0xc7</span>, <span class="number">0xf8</span>, <span class="number">0x4c</span>, <span class="number">0x89</span>, <span class="number">0x28</span>, <span class="number">0x48</span>, <span class="number">0xb8</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x48</span>, <span class="number">0x8b</span>, <span class="number">0x7c</span>, <span class="number">0x24</span>, <span class="number">0x08</span>, <span class="number">0x4c</span>, <span class="number">0x89</span>, <span class="number">0xfe</span>, <span class="number">0x48</span>, <span class="number">0x8b</span>, <span class="number">0x54</span>, <span class="number">0x24</span>, <span class="number">0x10</span>, <span class="number">0x48</span>, <span class="number">0x83</span>, <span class="number">0xc4</span>, <span class="number">0x18</span>, <span class="number">0x5b</span>, <span class="number">0x41</span>, <span class="number">0x5c</span>, <span class="number">0x41</span>, <span class="number">0x5d</span>, <span class="number">0x41</span>, <span class="number">0x5e</span>, <span class="number">0x41</span>, <span class="number">0x5f</span>, <span class="number">0x5d</span>, <span class="number">0xff</span>, <span class="number">0xe0</span>, <span class="number">0x48</span>, <span class="number">0x8b</span>, <span class="number">0x4c</span>, <span class="number">0x24</span>, <span class="number">0x08</span>, <span class="number">0x48</span>, <span class="number">0x29</span>, <span class="number">0xc8</span>, <span class="number">0x48</span>, <span class="number">0x83</span>, <span class="number">0xc0</span>, <span class="number">0xb8</span>, <span class="number">0x48</span>, <span class="number">0xc1</span>, <span class="number">0xe8</span>, <span class="number">0x03</span>, <span class="number">0x89</span>, <span class="number">0x41</span>, <span class="number">0x40</span>, <span class="number">0x31</span>, <span class="number">0xc0</span>, <span class="number">0x48</span>, <span class="number">0x83</span>, <span class="number">0xc4</span>, <span class="number">0x18</span>, <span class="number">0x5b</span>, <span class="number">0x41</span>, <span class="number">0x5c</span>, <span class="number">0x41</span>, <span class="number">0x5d</span>, <span class="number">0x41</span>, <span class="number">0x5e</span>, <span class="number">0x41</span>, <span class="number">0x5f</span>, <span class="number">0x5d</span>, <span class="number">0xc3</span>};</span><br><span class="line"><span class="type">static</span> <span class="type">const</span> Hole _BINARY_OP_ADD_INT_code_holes[<span class="number">7</span>] = {</span><br><span class="line">    {<span class="number">0x25</span>, HoleKind_R_X86_64_64, HoleValue_ZERO, &amp;_Py_stats, <span class="number">0x0</span>},</span><br><span class="line">    {<span class="number">0x3e</span>, HoleKind_R_X86_64_64, HoleValue_ZERO, &amp;_PyLong_Add, <span class="number">0x0</span>},</span><br><span class="line">    {<span class="number">0x57</span>, HoleKind_R_X86_64_64, HoleValue_ZERO, &amp;PyInterpreterState_Get, <span class="number">0x0</span>},</span><br><span class="line">    {<span class="number">0xad</span>, HoleKind_R_X86_64_64, HoleValue_ZERO, &amp;PyObject_Free, <span class="number">0x0</span>},</span><br><span class="line">    {<span class="number">0xbe</span>, HoleKind_R_X86_64_64, HoleValue_ZERO, &amp;PyObject_Free, <span class="number">0x0</span>},</span><br><span class="line">    {<span class="number">0xe8</span>, HoleKind_R_X86_64_64, HoleValue_CONTINUE, <span class="literal">NULL</span>, <span class="number">0x0</span>},</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+<p>最终所有指令编译完成后，最终会生成 <code>jit_stencils.h</code> 文件，被我们其余 CPython 代码引用，编译进我们的二进制中</p>
+<p>然后我们来看下，我们的 JIT 是如何工作的</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span></span><br><span class="line">_PyJIT_Compile(_PyUOpExecutorObject *executor)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Loop once to find the total compiled size:</span></span><br><span class="line">    <span class="type">size_t</span> code_size = <span class="number">0</span>;</span><br><span class="line">    <span class="type">size_t</span> data_size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (Py_ssize_t i = <span class="number">0</span>; i &lt; Py_SIZE(executor); i++) {</span><br><span class="line">        _PyUOpInstruction *instruction = &amp;executor-&gt;trace[i];</span><br><span class="line">        <span class="type">const</span> StencilGroup *group = &amp;stencil_groups[instruction-&gt;opcode];</span><br><span class="line">        code_size += group-&gt;code.body_size;</span><br><span class="line">        data_size += group-&gt;data.body_size;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// Round up to the nearest page (code and data need separate pages):</span></span><br><span class="line">    <span class="type">size_t</span> page_size = get_page_size();</span><br><span class="line">    assert((page_size &amp; (page_size - <span class="number">1</span>)) == <span class="number">0</span>);</span><br><span class="line">    code_size += page_size - (code_size &amp; (page_size - <span class="number">1</span>));</span><br><span class="line">    data_size += page_size - (data_size &amp; (page_size - <span class="number">1</span>));</span><br><span class="line">    <span class="type">char</span> *memory = jit_alloc(code_size + data_size);</span><br><span class="line">    <span class="keyword">if</span> (memory == <span class="literal">NULL</span>) {</span><br><span class="line">        <span class="keyword">goto</span> fail;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// Loop again to emit the code:</span></span><br><span class="line">    <span class="type">char</span> *code = memory;</span><br><span class="line">    <span class="type">char</span> *data = memory + code_size;</span><br><span class="line">    <span class="keyword">for</span> (Py_ssize_t i = <span class="number">0</span>; i &lt; Py_SIZE(executor); i++) {</span><br><span class="line">        _PyUOpInstruction *instruction = &amp;executor-&gt;trace[i];</span><br><span class="line">        <span class="type">const</span> StencilGroup *group = &amp;stencil_groups[instruction-&gt;opcode];</span><br><span class="line">        <span class="comment">// Think of patches as a dictionary mapping HoleValue to uint64_t:</span></span><br><span class="line">        <span class="type">uint64_t</span> patches[] = GET_PATCHES();</span><br><span class="line">        patches[HoleValue_CODE] = (<span class="type">uint64_t</span>)code;</span><br><span class="line">        patches[HoleValue_CONTINUE] = (<span class="type">uint64_t</span>)code + group-&gt;code.body_size;</span><br><span class="line">        patches[HoleValue_DATA] = (<span class="type">uint64_t</span>)data;</span><br><span class="line">        patches[HoleValue_EXECUTOR] = (<span class="type">uint64_t</span>)executor;</span><br><span class="line">        patches[HoleValue_OPARG] = instruction-&gt;oparg;</span><br><span class="line">        patches[HoleValue_OPERAND] = instruction-&gt;operand;</span><br><span class="line">        patches[HoleValue_TARGET] = instruction-&gt;target;</span><br><span class="line">        patches[HoleValue_TOP] = (<span class="type">uint64_t</span>)memory;</span><br><span class="line">        patches[HoleValue_ZERO] = <span class="number">0</span>;</span><br><span class="line">        emit(group, patches);</span><br><span class="line">        code += group-&gt;code.body_size;</span><br><span class="line">        data += group-&gt;data.body_size;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (mark_executable(memory, code_size) ||</span><br><span class="line">        mark_readable(memory + code_size, data_size))</span><br><span class="line">    {</span><br><span class="line">        jit_free(memory, code_size + data_size);</span><br><span class="line">        <span class="keyword">goto</span> fail;</span><br><span class="line">    }</span><br><span class="line">    executor-&gt;base.execute = execute;</span><br><span class="line">    executor-&gt;jit_code = memory;</span><br><span class="line">    executor-&gt;jit_size = code_size + data_size;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">fail:</span><br><span class="line">    <span class="keyword">return</span> PyErr_Occurred() ? <span class="number">-1</span> : <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>这一部分代码看似很复杂，实际上核心代码很简单，利用 <code>jit_alloc</code> 生成一块内存，然后利用 <code>emit</code> 将我们的汇编代码写入到这块内存中，然后利用 <code>mark_executable</code> 和 <code>mark_readable</code> 将这块内存标记为可执行和可读，最终将这块内存的地址赋值给我们的 executor，这样我们的 executor 就可以执行我们的 JIT 代码了</p>
+<p>然后</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">patches[HoleValue_CODE] = (<span class="type">uint64_t</span>)code;</span><br><span class="line">patches[HoleValue_CONTINUE] = (<span class="type">uint64_t</span>)code + group-&gt;code.body_size;</span><br><span class="line">patches[HoleValue_DATA] = (<span class="type">uint64_t</span>)data;</span><br><span class="line">patches[HoleValue_EXECUTOR] = (<span class="type">uint64_t</span>)executor;</span><br><span class="line">patches[HoleValue_OPARG] = instruction-&gt;oparg;</span><br><span class="line">patches[HoleValue_OPERAND] = instruction-&gt;operand;</span><br><span class="line">patches[HoleValue_TARGET] = instruction-&gt;target;</span><br><span class="line">patches[HoleValue_TOP] = (<span class="type">uint64_t</span>)memory;</span><br><span class="line">patches[HoleValue_ZERO] = <span class="number">0</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>这一部分就是将我们提前预置的一些 flag 设定具体的值，以便后续的 patch</p>
+<p>然后 patch 核心的部分，就是根据各平台的 LDD 规则来将我们动态的一些地址 patch 到 relocate 的位置</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (hole-&gt;kind) {</span><br><span class="line">    <span class="keyword">case</span> HoleKind_IMAGE_REL_I386_DIR32:</span><br><span class="line">        <span class="comment">// 32-bit absolute address.</span></span><br><span class="line">        <span class="comment">// Check that we're not out of range of 32 unsigned bits:</span></span><br><span class="line">        assert(value &lt; (<span class="number">1ULL</span> &lt;&lt; <span class="number">32</span>));</span><br><span class="line">        *loc32 = (<span class="type">uint32_t</span>)value;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_ARM64_RELOC_UNSIGNED:</span><br><span class="line">    <span class="keyword">case</span> HoleKind_IMAGE_REL_AMD64_ADDR64:</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_ABS64:</span><br><span class="line">    <span class="keyword">case</span> HoleKind_X86_64_RELOC_UNSIGNED:</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_X86_64_64:</span><br><span class="line">        <span class="comment">// 64-bit absolute address.</span></span><br><span class="line">        *loc64 = value;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_CALL26:</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_JUMP26:</span><br><span class="line">        <span class="comment">// 28-bit relative branch.</span></span><br><span class="line">        assert(IS_AARCH64_BRANCH(*loc32));</span><br><span class="line">        value -= (<span class="type">uint64_t</span>)location;</span><br><span class="line">        <span class="comment">// Check that we're not out of range of 28 signed bits:</span></span><br><span class="line">        assert((<span class="type">int64_t</span>)value &gt;= -(<span class="number">1</span> &lt;&lt; <span class="number">27</span>));</span><br><span class="line">        assert((<span class="type">int64_t</span>)value &lt; (<span class="number">1</span> &lt;&lt; <span class="number">27</span>));</span><br><span class="line">        <span class="comment">// Since instructions are 4-byte aligned, only use 26 bits:</span></span><br><span class="line">        assert(get_bits(value, <span class="number">0</span>, <span class="number">2</span>) == <span class="number">0</span>);</span><br><span class="line">        set_bits(loc32, <span class="number">0</span>, <span class="number">26</span>, value, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_MOVW_UABS_G0_NC:</span><br><span class="line">        <span class="comment">// 16-bit low part of an absolute address.</span></span><br><span class="line">        assert(IS_AARCH64_MOV(*loc32));</span><br><span class="line">        <span class="comment">// Check the implicit shift (this is "part 0 of 3"):</span></span><br><span class="line">        assert(get_bits(*loc32, <span class="number">21</span>, <span class="number">2</span>) == <span class="number">0</span>);</span><br><span class="line">        set_bits(loc32, <span class="number">5</span>, <span class="number">16</span>, value, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_MOVW_UABS_G1_NC:</span><br><span class="line">        <span class="comment">// 16-bit middle-low part of an absolute address.</span></span><br><span class="line">        assert(IS_AARCH64_MOV(*loc32));</span><br><span class="line">        <span class="comment">// Check the implicit shift (this is "part 1 of 3"):</span></span><br><span class="line">        assert(get_bits(*loc32, <span class="number">21</span>, <span class="number">2</span>) == <span class="number">1</span>);</span><br><span class="line">        set_bits(loc32, <span class="number">5</span>, <span class="number">16</span>, value, <span class="number">16</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_MOVW_UABS_G2_NC:</span><br><span class="line">        <span class="comment">// 16-bit middle-high part of an absolute address.</span></span><br><span class="line">        assert(IS_AARCH64_MOV(*loc32));</span><br><span class="line">        <span class="comment">// Check the implicit shift (this is "part 2 of 3"):</span></span><br><span class="line">        assert(get_bits(*loc32, <span class="number">21</span>, <span class="number">2</span>) == <span class="number">2</span>);</span><br><span class="line">        set_bits(loc32, <span class="number">5</span>, <span class="number">16</span>, value, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_R_AARCH64_MOVW_UABS_G3:</span><br><span class="line">        <span class="comment">// 16-bit high part of an absolute address.</span></span><br><span class="line">        assert(IS_AARCH64_MOV(*loc32));</span><br><span class="line">        <span class="comment">// Check the implicit shift (this is "part 3 of 3"):</span></span><br><span class="line">        assert(get_bits(*loc32, <span class="number">21</span>, <span class="number">2</span>) == <span class="number">3</span>);</span><br><span class="line">        set_bits(loc32, <span class="number">5</span>, <span class="number">16</span>, value, <span class="number">48</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_ARM64_RELOC_GOT_LOAD_PAGE21:</span><br><span class="line">        <span class="comment">// 21-bit count of pages between this page and an absolute address's</span></span><br><span class="line">        <span class="comment">// page... I know, I know, it's weird. Pairs nicely with</span></span><br><span class="line">        <span class="comment">// ARM64_RELOC_GOT_LOAD_PAGEOFF12 (below).</span></span><br><span class="line">        assert(IS_AARCH64_ADRP(*loc32));</span><br><span class="line">        <span class="comment">// Number of pages between this page and the value's page:</span></span><br><span class="line">        value = (value &gt;&gt; <span class="number">12</span>) - ((<span class="type">uint64_t</span>)location &gt;&gt; <span class="number">12</span>);</span><br><span class="line">        <span class="comment">// Check that we're not out of range of 21 signed bits:</span></span><br><span class="line">        assert((<span class="type">int64_t</span>)value &gt;= -(<span class="number">1</span> &lt;&lt; <span class="number">20</span>));</span><br><span class="line">        assert((<span class="type">int64_t</span>)value &lt; (<span class="number">1</span> &lt;&lt; <span class="number">20</span>));</span><br><span class="line">        <span class="comment">// value[0:2] goes in loc[29:31]:</span></span><br><span class="line">        set_bits(loc32, <span class="number">29</span>, <span class="number">2</span>, value, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">// value[2:21] goes in loc[5:26]:</span></span><br><span class="line">        set_bits(loc32, <span class="number">5</span>, <span class="number">19</span>, value, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> HoleKind_ARM64_RELOC_GOT_LOAD_PAGEOFF12:</span><br><span class="line">        <span class="comment">// 12-bit low part of an absolute address. Pairs nicely with</span></span><br><span class="line">        <span class="comment">// ARM64_RELOC_GOT_LOAD_PAGE21 (above).</span></span><br><span class="line">        assert(IS_AARCH64_LDR_OR_STR(*loc32) || IS_AARCH64_ADD_OR_SUB(*loc32));</span><br><span class="line">        <span class="comment">// There might be an implicit shift encoded in the instruction:</span></span><br><span class="line">        <span class="type">uint8_t</span> shift = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (IS_AARCH64_LDR_OR_STR(*loc32)) {</span><br><span class="line">            shift = (<span class="type">uint8_t</span>)get_bits(*loc32, <span class="number">30</span>, <span class="number">2</span>);</span><br><span class="line">            <span class="comment">// If both of these are set, the shift is supposed to be 4.</span></span><br><span class="line">            <span class="comment">// That's pretty weird, and it's never actually been observed...</span></span><br><span class="line">            assert(get_bits(*loc32, <span class="number">23</span>, <span class="number">1</span>) == <span class="number">0</span> || get_bits(*loc32, <span class="number">26</span>, <span class="number">1</span>) == <span class="number">0</span>);</span><br><span class="line">        }</span><br><span class="line">        value = get_bits(value, <span class="number">0</span>, <span class="number">12</span>);</span><br><span class="line">        assert(get_bits(value, <span class="number">0</span>, shift) == <span class="number">0</span>);</span><br><span class="line">        set_bits(loc32, <span class="number">10</span>, <span class="number">12</span>, value, shift);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>整体上的思路就是差不多这样一些，剩下的就是一些 corner case 的处理，本文先不在展开。大家感兴趣的话，我单独开单篇再来聊一些</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们能发现 Python 3.13 JIT 方案的一个很大的特点是，尽可能的利用了 LLVM 生态的东西，编译器用 clang，编译参数开 -o3 获取最大的性能，二进制用具用 <code>llvm-objdump</code> 和 <code>llvm-readelf</code>，这样做相较于其余方案的好处非常非常的明显</p>
+<ol>
+<li>clang 的编译器优化能力非常强，能够生成非常高效的代码</li>
+<li>能够利用 LLVM 生态的工具链，能够更好的处理跨平台的问题</li>
+<li>避免了人工维护的困境，大部分的改动也能通过自动化的方式生成与集成，避免低级错误的诞生</li>
+</ol>
+<p>所以我说 Python 3.13 的 JIT 方案可谓是又新又好</p>
+</article>
+<div class="article-tags slide-up"><a class="tag" href="/tags/%E7%BC%96%E7%A8%8B/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>编程</a><a class="tag" href="/tags/Linux/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>Linux</a><a class="tag" href="/tags/Python/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>Python</a><a class="tag" href="/tags/%E7%AC%94%E8%AE%B0/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>笔记</a><a class="tag" href="/tags/%E6%B0%B4%E6%96%87/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>水文</a></div>
+
+
+  <div class="article-share slide-up" id="share">
+    <div class="body">
+      <div class="social-wrap dis-select"><a class="social share-item qrcode ui-interactive is-icon-only" onclick="util.toggle(&quot;share-qrcode&quot;)" aria-label="分享文章: QR Code" title="分享文章: QR Code"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="M10.553 13.447c-.424-.424-.95-.596-1.535-.675c-.553-.074-1.25-.074-2.086-.074H5.827c-.58 0-1.065 0-1.459.037c-.411.04-.795.124-1.146.34c-.345.21-.634.5-.845.844c-.216.352-.3.735-.34 1.147C2 15.459 2 15.944 2 16.525v.068c0 .884 0 1.597.055 2.17c.056.592.175 1.108.459 1.571c.288.47.682.864 1.152 1.152c.463.284.979.403 1.57.46C5.81 22 6.524 22 7.407 22h.07c.58 0 1.064 0 1.458-.037c.412-.04.795-.124 1.147-.34c.344-.21.633-.5.844-.844c.216-.352.3-.736.34-1.147c.037-.394.037-.879.037-1.46v-1.104c0-.836 0-1.533-.074-2.086c-.079-.584-.251-1.111-.675-1.535m-1.62-11.41c.412.04.795.124 1.147.34c.344.21.633.5.844.845c.216.351.3.735.34 1.146c.037.394.037.879.037 1.46v1.104c0 .836 0 1.533-.074 2.086c-.079.584-.251 1.111-.675 1.535s-.95.596-1.535.675c-.553.074-1.25.074-2.086.074H5.827c-.58 0-1.065 0-1.459-.037c-.411-.04-.795-.124-1.146-.34a2.56 2.56 0 0 1-.845-.844c-.216-.352-.3-.735-.34-1.147C2 8.54 2 8.056 2 7.475v-.068c0-.884 0-1.597.055-2.17c.056-.592.175-1.108.459-1.571c.288-.47.682-.864 1.152-1.152c.463-.284.979-.403 1.57-.46C5.81 2 6.524 2 7.407 2h.07c.58 0 1.064 0 1.458.037M16.593 2h-.068c-.58 0-1.065 0-1.46.037c-.41.04-.794.124-1.146.34c-.344.21-.633.5-.844.845c-.216.351-.3.735-.34 1.146c-.037.394-.037.879-.037 1.46v1.104c0 .836 0 1.533.074 2.086c.079.584.251 1.111.675 1.535s.95.596 1.535.675c.553.074 1.25.074 2.086.074h1.105c.58 0 1.065 0 1.459-.037c.411-.04.795-.124 1.146-.34c.345-.21.634-.5.845-.844c.216-.352.3-.735.34-1.147C22 8.54 22 8.056 22 7.475v-.068c0-.884 0-1.597-.055-2.17c-.056-.592-.175-1.108-.459-1.571a3.5 3.5 0 0 0-1.152-1.152c-.463-.284-.979-.403-1.57-.46C18.19 2 17.477 2 16.594 2" opacity=".5"></path><path fill="currentColor" d="M14.093 21.302a.698.698 0 1 1-1.396 0v-2.79h1.396z" opacity=".4"></path><path fill="currentColor" d="M21.302 12.698a.7.7 0 0 0-.697.697v3.256H22v-3.256a.7.7 0 0 0-.698-.697" opacity=".5"></path><path fill="currentColor" d="M16.076 16.617c-.076.184-.076.417-.076.883s0 .699.076.883a1 1 0 0 0 .541.54c.184.077.417.077.883.077s.699 0 .883-.076a1 1 0 0 0 .54-.541c.077-.184.077-.417.077-.883s0-.699-.076-.883a1 1 0 0 0-.541-.54C18.199 16 17.966 16 17.5 16s-.699 0-.883.076a1 1 0 0 0-.54.541"></path><path fill="currentColor" d="M22 18.535v-.023h-1.396c0 .443 0 .74-.016.97c-.015.224-.043.333-.073.405a1.16 1.16 0 0 1-.629.63c-.072.029-.18.056-.405.072c-.23.015-.527.016-.97.016h-1.86V22h1.883c.414 0 .759 0 1.042-.02a2.6 2.6 0 0 0 .844-.175a2.56 2.56 0 0 0 1.384-1.384c.112-.27.156-.549.176-.844c.02-.283.02-.628.02-1.042" opacity=".7"></path><path fill="currentColor" d="M12.697 16.616v.035h1.396c0-.668 0-1.116.035-1.458c.034-.33.093-.482.16-.583a1.2 1.2 0 0 1 .321-.32c.101-.068.254-.128.584-.161c.342-.035.79-.036 1.458-.036h1.86v-1.395h-1.896c-.623 0-1.142 0-1.563.043c-.44.044-.85.142-1.218.388c-.28.187-.519.426-.706.706c-.246.368-.343.777-.388 1.217c-.043.421-.043.94-.043 1.564" opacity=".6"></path><path fill="currentColor" d="M5.508 18.69c.219.155.528.155 1.146.155c.619 0 .928 0 1.146-.155a.8.8 0 0 0 .2-.199c.154-.218.154-.527.154-1.146s0-.927-.155-1.146A.8.8 0 0 0 7.8 16c-.218-.155-.527-.155-1.146-.155s-.927 0-1.146.155a.8.8 0 0 0-.199.2c-.155.218-.155.527-.155 1.145c0 .619 0 .928.155 1.146a.8.8 0 0 0 .2.2M6.654 8.155c-.618 0-.927 0-1.146-.155a.8.8 0 0 1-.199-.2c-.155-.217-.155-.527-.155-1.145c0-.619 0-.928.155-1.146a.8.8 0 0 1 .2-.2c.218-.154.527-.154 1.145-.154c.619 0 .928 0 1.146.155a.8.8 0 0 1 .2.199c.154.218.154.527.154 1.146s0 .928-.155 1.146A.8.8 0 0 1 7.8 8c-.218.155-.527.155-1.146.155M16.2 8c.218.155.527.155 1.146.155s.927 0 1.146-.155a.8.8 0 0 0 .199-.199c.155-.218.155-.528.155-1.146c0-.619 0-.928-.155-1.146a.8.8 0 0 0-.2-.2c-.218-.154-.527-.154-1.145-.154c-.619 0-.928 0-1.146.155a.8.8 0 0 0-.2.199c-.154.218-.154.527-.154 1.146s0 .928.155 1.146A.8.8 0 0 0 16.2 8"></path></svg></span></a><a class="social share-item weibo ui-interactive is-icon-only" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2024%2F01%2F03%2Fa-simple-introduction-about-python-jit%2F&amp;title=%E7%AE%80%E5%8D%95%E8%81%8A%E8%81%8A%20Python%203.13%20%E7%9A%84%20JIT%20%E6%96%B9%E6%A1%88%20-%20Manjusaka&amp;pics=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2023%2F02%2F06%2F16%2F46%2Fsea-7772372_1280.jpg&amp;summary=Python%203.13%20%E7%9A%84%20JIT%20%E6%96%B9%E6%A1%88%E6%9C%80%E7%BB%88%E7%A1%AE%E5%AE%9A%E4%BA%86%EF%BC%8C%E6%88%91%E8%A7%89%E5%BE%97%E5%8F%AF%E4%BB%A5%E8%AF%B4%E5%8F%88%E6%96%B0%E5%8F%88%E5%A5%BD%E3%80%82%E6%89%80%E4%BB%A5%E6%B7%B1%E5%A4%9C%E6%B0%B4%E4%B8%80%E7%AF%87%E6%B0%B4%E6%96%87%EF%BC%8C%E6%9D%A5%E8%81%8A%E8%81%8A%E8%BF%99%E4%B8%AA%20JIT%20%E6%96%B9%E6%A1%88%0A%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E6%9C%89%E4%BA%9B%E6%9E%AF%E7%87%A5%EF%BC%8C%E6%89%80%E4%BB%A5%E5%A6%82%E6%9E%9C%E5%AF%B9%E6%AD%A4%E4%B8%8D%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E5%90%8C%E5%AD%A6%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%20x%20%E6%8E%89" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: Weibo" title="分享文章: Weibo"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"></path></svg></span></a><a class="social share-item x ui-interactive is-icon-only" href="https://x.com/intent/tweet?text=%E7%AE%80%E5%8D%95%E8%81%8A%E8%81%8A%20Python%203.13%20%E7%9A%84%20JIT%20%E6%96%B9%E6%A1%88%20-%20Manjusaka&amp;url=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2024%2F01%2F03%2Fa-simple-introduction-about-python-jit%2F" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: X" title="分享文章: X"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M14.234 10.162L22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299l-.929-1.329L3.076 1.56h3.182l5.965 8.532l.929 1.329l7.754 11.09h-3.182z"></path></svg></span></a><a class="social share-item telegram ui-interactive is-icon-only" href="https://t.me/share/url?url=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2024%2F01%2F03%2Fa-simple-introduction-about-python-jit%2F&amp;text=%E7%AE%80%E5%8D%95%E8%81%8A%E8%81%8A%20Python%203.13%20%E7%9A%84%20JIT%20%E6%96%B9%E6%A1%88%20-%20Manjusaka" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: Telegram" title="分享文章: Telegram"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.5.5 0 0 1 .171.325c.016.093.036.306.02.472c-.18 1.898-.962 6.502-1.36 8.627c-.168.9-.499 1.201-.82 1.23c-.696.065-1.225-.46-1.9-.902c-1.056-.693-1.653-1.124-2.678-1.8c-1.185-.78-.417-1.21.258-1.91c.177-.184 3.247-2.977 3.307-3.23c.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.159.037-5.061 3.345q-.72.495-1.302.48c-.428-.008-1.252-.241-1.865-.44c-.752-.245-1.349-.374-1.297-.789q.04-.324.893-.663q5.247-2.286 6.998-3.014c3.332-1.386 4.025-1.627 4.476-1.635"></path></svg></span></a><a class="social share-item email ui-interactive is-icon-only" href="mailto:?subject=%E7%AE%80%E5%8D%95%E8%81%8A%E8%81%8A%20Python%203.13%20%E7%9A%84%20JIT%20%E6%96%B9%E6%A1%88%20-%20Manjusaka&amp;body=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2024%2F01%2F03%2Fa-simple-introduction-about-python-jit%2F" rel="external nofollow noreferrer" aria-label="分享文章: Email" title="分享文章: Email"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M3.172 5.172C2 6.343 2 8.229 2 12s0 5.657 1.172 6.828C4.343 20 6.229 20 10 20h4c3.771 0 5.657 0 6.828-1.172C22 17.657 22 15.771 22 12s0-5.657-1.172-6.828C19.657 4 17.771 4 14 4h-4C6.229 4 4.343 4 3.172 5.172m15.404 2.348a.75.75 0 0 1-.096 1.056l-2.196 1.83c-.887.739-1.605 1.338-2.24 1.746-.66.424-1.303.693-2.044.693s-1.384-.269-2.045-.693c-.634-.408-1.352-1.007-2.239-1.745L5.52 8.576a.75.75 0 1 1 .96-1.152l2.159 1.799c.933.777 1.58 1.315 2.128 1.667.529.34.888.455 1.233.455s.704-.115 1.233-.455c.547-.352 1.195-.89 2.128-1.667l2.159-1.8a.75.75 0 0 1 1.056.097" clip-rule="evenodd"></path></svg></span></a></div>
+      <div class="share-qrcode" id="share-qrcode" style="opacity:0;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&amp;data=https%3A%2F%2Fwww.manjusaka.blog%2Fposts%2F2024%2F01%2F03%2Fa-simple-introduction-about-python-jit%2F" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></div>
+    </div>
+  </div>
+
+<div class="article-footer slide-up">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section></div>
+
+<div class="related-wrap slide-up" id="read-next"><section class="body"><div class="item" id="prev"><div class="note"><svg class="icon" viewBox="0 0 1 1" data-icon="default:arrow-left" aria-hidden="true"></svg> 较新文章</div><a href="/posts/2024/02/10/CVE-2024-21626/">简单聊聊 CVE-2024-21626</a></div><div class="item" id="next"><div class="note">较早文章 <svg class="icon" viewBox="0 0 1 1" data-icon="default:arrow-right" aria-hidden="true"></svg></div><a href="/posts/2023/12/29/per-aspera-ad-astra/">Per aspera, Ad astra</a></div></section></div>
+
+
+
+
+  <div class="related-wrap md-text slide-up" id="comments">
+    
+    
+    <section class="header cmt-title cap theme">
+      <p>参与讨论</p>
+
+    </section>
+    
+    <section class="body cmt-body giscus">
+      
+
+<div class="lazy-icon"></div>
+
+<div id="giscus" data-repo="Zheaoli/zheaoli.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnk2Mzk3MjI3MQ==" data-category="General" data-category-id="DIC_kwDOA9Ajr84DL0rq" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+<footer class="page-footer slide-up footnote"><hr><div class="sitemap" style="column-count:4;"><div class="sitemap-group"><span class="fs15">博客</span><a href="/">近期发布</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archives/">归档</a></div><div class="sitemap-group"><span class="fs15">笔记</span><a href="/weekly/">周报</a><a href="/leetcode/">刷题</a></div><div class="sitemap-group"><span class="fs15">社交</span><a href="https://github.com/Zheaoli" rel="external nofollow noreferrer">GitHub</a><a href="https://twitter.com/Manjusaka_Lee" rel="external nofollow noreferrer">X</a><a href="mailto:me@manjusaka.me" rel="external nofollow noreferrer">Email</a></div><div class="sitemap-group"><span class="fs15">订阅</span><a href="/atom.xml">RSS</a><a href="/about/">关于我</a></div></div><div class="text"><p>© 2020 - 2026 <a href="/">Manjusaka</a> · 由 <a href="https://github.com/xaoxuu/hexo-theme-stellar/tree/2.0.0" rel="external nofollow noreferrer">Stellar 2.0.0</a> 驱动。<br>除特别声明外，本站文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+</main>
+<aside data-stellar-runtime-region="" id="rightbar-region" class="site-region site-region--rightbar" data-region="rightbar" aria-label="Rightbar"><div class="site-region__surface ui-drawer-surface"><div class="site-region__viewport"><div class="widgets widget-stack widget-stack--rightbar widget-stack--rightbar"><div class="widget-instance widget-instance--toc" data-widget-id="rightbar:0:toc" data-presentation="rightbar">
+
+
+<widget class="widget-wrapper slide-up toc" id="data-toc" collapse="false">
+  
+    <div class="widget-header dis-select">
+      <span class="name">本文目录</span>
+      <button type="button" class="cap-action ui-interactive card-hover card-hover--spotlight" data-shell-action="toggle-toc" aria-label="Toggle table of contents" aria-pressed="false"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg></span></button>
+    </div>
+  
+  <div class="widget-body"><ol class="toc ui-collection-adapter"><li class="toc-item toc-level-2"><a class="toc-link ui-interactive" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive" href="#Python-3-13-%E7%9A%84-JIT"><span class="toc-text">Python 3.13 的 JIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div>
+  <div class="widget-footer"><a class="top ui-interactive" onclick="util.scrollTop()"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="M20.536 3.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464" opacity=".5"></path><path fill="currentColor" d="M9.53 12.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 1 1-1.06 1.06L12 9.56z"></path><path fill="currentColor" d="M9.53 16.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 1 1-1.06 1.06L12 13.56z"></path></svg></span><span>回到顶部</span></a><a class="buttom ui-interactive" onclick="util.scrollComment()"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"></path><path fill="currentColor" d="M7.25 9A.75.75 0 0 1 8 8.25h8a.75.75 0 0 1 0 1.5H8A.75.75 0 0 1 7.25 9m0 3.5a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1-.75-.75"></path></svg></span><span>参与讨论</span></a></div>
+</widget>
+
+
+</div></div></div></div></aside>
+</div><button type="button" class="site-scrim" data-shell-action="dismiss-drawer" aria-label="Close navigation" tabindex="-1"></button><div data-stellar-runtime-region="" class="site-dock" role="group" aria-label="Layout panels">
+  <button type="button" class="site-dock__button site-dock__button--rightbar ui-interactive" aria-label="Open rightbar" aria-controls="rightbar-region" aria-expanded="false" data-shell-action="toggle-rightbar-drawer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+  </button>
+  <button type="button" class="site-dock__button site-dock__button--leftbar ui-interactive" aria-label="Open leftbar" aria-controls="leftbar-region" aria-expanded="false" data-shell-action="toggle-leftbar-drawer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"></path><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"></path></g></svg>
+  </button>
+</div>
+
+<dialog data-stellar-runtime-region="" class="search-dialog" id="site-search-dialog" aria-labelledby="site-search-title">
+  <div class="search-dialog__panel search-wrapper" id="site-search-wrapper" searching="false">
+    <div class="search-dialog__header">
+      <div class="search-form" role="search">
+        <span class="search-button" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Adapted from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3M3 13h3M3 18h8M16.83 13.83l3.76 3.76"></path><circle cx="14" cy="11" r="4"></circle></g></svg></span>
+        <input type="search" class="search-input" id="site-search-input" aria-labelledby="site-search-title" placeholder="搜索">
+      </div>
+      <button type="button" class="search-dialog__close" data-shell-action="close-search" aria-label="关闭搜索">×</button>
+    </div>
+    
+      <div class="search-dialog__scope" role="radiogroup" aria-labelledby="site-search-title" hidden="">
+        <label class="search-dialog__scope-option" data-search-scope-option="all">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="all">
+          <span>全站</span>
+        </label>
+        <label class="search-dialog__scope-option" data-search-scope-option="blog" hidden="">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="blog">
+          <span>博客</span>
+        </label>
+        <label class="search-dialog__scope-option" data-search-scope-option="current" hidden="">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="current">
+          <span data-search-scope-current-label=""></span>
+        </label>
+      </div>
+    
+    <h2 class="search-dialog__title" id="site-search-title">站内搜索</h2>
+    <div class="search-result" id="site-search-result"></div>
+    <div class="search-no-result">没有找到内容！</div>
+  </div>
+</dialog>
+</div><div class="site-scripts">
+<script data-stellar-script="core" src="/js/stellar-icons.js?v=39c6ac17e854ffe2"></script>
+
+<script data-stellar-script="defines">
+  window.canonical = window.stellarClientData.canonical;
+  const ctx = window.stellarClientData.ctx;
+  window.canonical.param = {permalink: "https://www.manjusaka.blog/posts/2024/01/03/a-simple-introduction-about-python-jit/", checklink: ctx.services.video.js};
+  ctx.date_suffix = {"just":"刚刚","min":"分钟前","hour":"小时前","day":"天前"};
+  if (ctx.search) Object.assign(ctx.search, {"more":"更多","no_more":"没有更多了"});
+  const def = window.stellarClientData.def;
+  window.ctx = ctx;
+  window.def = def;
+</script>
+
+
+<!-- core: 迁移期 DOM/资源兼容工具；Extension 注册与生命周期由 ESM runtime 所有 -->
+<script data-stellar-script="core" src="/js/utils.js?v=2.0.0"></script>
+<script data-stellar-script="core" src="/js/main.js?v=2.0.0" defer=""></script>
+<script data-stellar-script="core" defer="" src="/js/profile.js?v=2.0.0"></script>
+
+
+
+
+
+<script data-stellar-script="core" type="application/json" id="stellar-runtime-config">{"version":1,"root":"/","policy":{"cache":{"enabled":true,"defaultTtl":3600,"ttl":{"giscus":600,"waline":600,"artalk":600,"memos":600,"memos-user":86400,"sites":86400,"friends":86400,"friends_and_posts":86400,"siteinfo":86400},"maxEntries":200},"request":{"retries":2,"timeoutMs":5000,"idleTimeoutMs":3000,"maxCacheEntryBytes":204800},"features":{"codeCopyToastMs":2500},"providers":{"linkPrefetch":"flying_pages","lightbox":"fancybox","diagrams":"mermaid"}},"extensions":[{"id":"pin-slider","module":"/js/runtime/extensions/pin-slider.js","scope":"region","when":{"selector":".pin-slider"},"config":{}},{"id":"page-controls","module":"/js/runtime/extensions/page-controls.js","scope":"region","when":{"always":true},"config":{"highlight":"/js/search/highlight.js","tagtree":"/js/tagtree.js"}},{"id":"partial-navigation","module":"/js/runtime/extensions/partial-navigation.js","scope":"document","when":{"always":true},"config":{}},{"id":"color-scheme-switch","module":"/js/runtime/extensions/color-scheme-switch.js","scope":"document","when":{"always":true},"config":{"messages":{"light":"切换到浅色模式","dark":"切换到深色模式","auto":"切换到跟随系统配色"}}},{"id":"search","module":"/js/runtime/extensions/search.js","scope":"document","when":{"selector":".search-input"},"config":{"provider":"local","options":{"scope":"all","includeContent":true,"cacheTtlSeconds":86400},"assets":{"client":null,"provider":"/js/search/local-search.js","shortcut":"/js/search/shortcut.js"}}},{"id":"hero-parallax","module":"/js/runtime/extensions/hero-parallax.js","scope":"region","when":{"selector":".wiki-hero"},"config":{}},{"id":"hero-effect","module":"/js/runtime/extensions/hero-effect.js","scope":"region","when":{"selector":"canvas[data-hero-effect]"},"config":{}},{"id":"lazy-loading","module":"/js/runtime/extensions/lazy-loading.js","scope":"document","when":{"always":true},"config":{"asset":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"}},{"id":"deferred-icons","module":"/js/runtime/extensions/deferred-icons.js","scope":"region","when":{"selector":"svg.icon[data-icon]"},"config":{}},{"id":"dropdown","module":"/js/runtime/extensions/dropdown.js","scope":"region","when":{"selector":"details.dropdown"},"config":{}},{"id":"services","module":"/js/runtime/extensions/services.js","scope":"region","when":{"selector":"#artalk_container, #twikoo_container, #waline_container, .data-service, [class*='ds-'], a[cardlink], a[data-md-link][data-siteinfo-api], .site-card [data-siteinfo-api], .voice\u003eaudio, .video\u003evideo, .chat-file"},"config":{"marked":"https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js"}},{"id":"comments","module":"/js/runtime/extensions/comments.js","scope":"region","when":{"selector":"#comments"},"config":{"provider":"giscus","options":{"data-repo":"Zheaoli/zheaoli.github.io","data-repo-id":"MDEwOlJlcG9zaXRvcnk2Mzk3MjI3MQ==","data-category":"General","data-category-id":"DIC_kwDOA9Ajr84DL0rq","data-mapping":"pathname","data-strict":0,"data-reactions-enabled":1,"data-emit-metadata":0,"data-input-position":"top","data-theme":"preferred_color_scheme","data-lang":"zh-CN","data-loading":"lazy","crossorigin":"anonymous"},"pageTitle":"简单聊聊 Python 3.13 的 JIT 方案","assets":{"js":"https://giscus.app/client.js"}}},{"id":"settings","module":"/js/runtime/extensions/settings.js","scope":"region","when":{"selector":".settings-page"},"config":{}},{"id":"link-prefetch","module":"/js/runtime/extensions/link-prefetch.js","scope":"document","when":{"always":true},"config":{"asset":"https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"}},{"id":"lightbox","module":"/js/runtime/extensions/lightbox.js","scope":"region","when":{"selector":"[data-fancybox]:not(.error), .with-fancybox, .ds-memos, .md-text img:not([class]), .timenode p\u003eimg"},"config":{"enabled":true,"selector":".md-text img:not([class]), .timenode p\u003eimg","assets":{"localCss":"/css/plugins/fancybox.css","js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"}}},{"id":"reveal","module":"/js/runtime/extensions/reveal.js","scope":"region","when":{"selector":".slide-up"},"config":{"enabled":true,"duration":800,"interval":200,"distance":8,"blur":4}},{"id":"diagrams","module":"/js/runtime/extensions/diagrams.js","scope":"region","when":{"selector":".mermaid"},"config":{"theme":"neutral","provider":"mermaid","assets":{"js":"https://gcore.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"},"colorScheme":"auto"}},{"id":"code-copy","module":"/js/runtime/extensions/code-copy.js","scope":"region","when":{"selector":".code"},"config":{"assets":{"js":"/js/plugins/copycode.js"},"messages":{"label":"复制","copied":"复制成功","denied":"未获得剪贴板权限","unsupported":"当前浏览器不支持剪贴板或页面不是 HTTPS"}}},{"id":"adaptive-text","module":"/js/runtime/extensions/adaptive-text.js","scope":"region","when":{"selector":"[data-text-adaptive]"},"config":{"assets":{"colorJs":"/js/color.js","js":"/js/plugins/adaptive-text.js"}}},{"id":"swiper","module":"/js/runtime/extensions/swiper.js","scope":"region","when":{"selector":"#swiper-api"},"config":{"assets":{"localCss":"/css/plugins/swiper.css","js":"https://unpkg.com/swiper@10.3/swiper-bundle.min.js","css":"https://unpkg.com/swiper@10.3/swiper-bundle.min.css"}}}]}</script>
+<script data-stellar-script="core" type="module" src="/js/runtime/index.js?v=2.0.0&amp;runtime=1"></script>
+
+
+<!-- inject -->
+
+
+<script data-stellar-script="core" defer="" src="/js/navigation-init.js?v=2.0.0"></script>
+</div>
+
+</body></html>
