@@ -82,6 +82,11 @@ footer:
     除特别声明外，本站文章均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。
 
 profiles:
+  # 首页右栏默认是空的，宽屏下右侧会留一大片空白
+  home:
+    rightbar:
+      widgets:
+        - tagcloud
   # 周报、刷题两个笔记本已经在左侧菜单里，不需要“全部笔记本”索引页
   notebooks:
     path: null
@@ -89,6 +94,31 @@ profiles:
     rightbar:
       widgets:
         - toc
+
+appearance:
+  colors:
+    # 曼珠沙华（红花石蒜）的红，和头像、站名呼应；主题默认是青色
+    primary: hsl(352 74% 52%)
+    accent: hsl(28 92% 52%)
+    link: hsl(352 70% 46%)
+  typography:
+    font_family:
+      # 中文优先落到各平台的黑体，而不是 system-ui 的回退结果
+      body: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif
+      code: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace
+  backgrounds:
+    leftbar:
+      gradient:
+        light:
+          - hsl(352 60% 88%)
+          - hsl(18 70% 88%)
+          - hsl(340 45% 84%)
+          - hsl(35 90% 88%)
+        dark:
+          - hsl(352 30% 34%)
+          - hsl(18 28% 36%)
+          - hsl(340 22% 32%)
+          - hsl(35 30% 38%)
 
 article:
   style: tech
@@ -144,6 +174,10 @@ structured_data:
   same_as:
     - https://github.com/Zheaoli
     - https://twitter.com/Manjusaka_Lee
+
+inject:
+  # 站点自己的样式补丁，见 source/css/site.css
+  head_end: '<link rel="stylesheet" href="/css/site.css">'
 
 # 预连接页面必然会用到的第三方源
 preconnect:

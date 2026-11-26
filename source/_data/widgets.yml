@@ -1,0 +1,10 @@
+# 覆盖 Stellar 自带的侧栏组件默认值
+tagcloud:
+  layout: tagcloud
+  title: 标签
+  # 默认 12–24px 落差太大，标签多了显得很乱
+  min_font: 12
+  max_font: 16
+  amount: 60
+  orderby: count
+  order: -1
