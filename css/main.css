@@ -30,17 +30,17 @@ body[data-page-layout='index_wiki'] {
   --width-main: var(--width-main-wiki-list);
 }
 :root {
-  --hue: 192deg;
-  --sat: 98%;
-  --light: 55%;
+  --hue: 352deg;
+  --sat: 74%;
+  --light: 52%;
   --alpha: 1;
   --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
   --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
   --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-  --accent: #ff5724;
-  --link: hsla(207deg 90% 54% / 1);
-  --link-a20: hsla(207deg 90% 54% / 0.2);
+  --accent: #f57d14;
+  --link: hsla(352deg 70% 46% / 1);
+  --link-a20: hsla(352deg 70% 46% / 0.2);
   --item-theme: var(--theme);
   --background: hsla(210deg 20% 98% / 1);
   --card: #fff;
@@ -324,50 +324,50 @@ body[data-page-layout='index_wiki'] {
   --link-a20: hsla(291.24087591240874deg 95% 32% / 0.2);
 }
 .colorful[color='theme'] {
-  --hue: 192deg;
-  --sat: 98%;
-  --light: 55%;
+  --hue: 352deg;
+  --sat: 74%;
+  --light: 52%;
   --alpha: 1;
   --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
   --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
   --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-  --link: hsla(192deg 98% 55% / 1);
-  --link-a20: hsla(192deg 98% 55% / 0.2);
-  --theme-border: hsla(192deg 50% 80% / var(--alpha));
-  --theme-block: hsla(192deg 90% 92% / var(--alpha));
-  --theme-mark: hsla(192deg 95% 80% / var(--alpha));
-  --theme-codeblock: hsla(192deg 50% 95% / var(--alpha));
-  --text: hsla(192deg 55% 16% / 1);
-  --text-p1: hsla(192deg 90% 20% / 1);
-  --text-p2: hsla(192deg 90% 20% / 0.8);
-  --text-p3: hsla(192deg 90% 20% / 0.6);
-  --text-p4: hsla(192deg 90% 20% / 0.4);
-  --link: hsla(192deg 95% 32% / 1);
-  --link-a20: hsla(192deg 95% 32% / 0.2);
+  --link: hsla(352deg 74% 52% / 1);
+  --link-a20: hsla(352deg 74% 52% / 0.2);
+  --theme-border: hsla(352deg 50% 80% / var(--alpha));
+  --theme-block: hsla(352deg 90% 92% / var(--alpha));
+  --theme-mark: hsla(352deg 95% 80% / var(--alpha));
+  --theme-codeblock: hsla(352deg 50% 95% / var(--alpha));
+  --text: hsla(352deg 55% 16% / 1);
+  --text-p1: hsla(352deg 90% 20% / 1);
+  --text-p2: hsla(352deg 90% 20% / 0.8);
+  --text-p3: hsla(352deg 90% 20% / 0.6);
+  --text-p4: hsla(352deg 90% 20% / 0.4);
+  --link: hsla(352deg 95% 32% / 1);
+  --link-a20: hsla(352deg 95% 32% / 0.2);
 }
 .colorful[color='accent'] {
-  --hue: 14deg;
-  --sat: 100%;
-  --light: 57%;
+  --hue: 28deg;
+  --sat: 92%;
+  --light: 52%;
   --alpha: 1;
   --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
   --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
   --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-  --link: hsla(14deg 100% 57% / 1);
-  --link-a20: hsla(14deg 100% 57% / 0.2);
-  --theme-border: hsla(14deg 50% 80% / var(--alpha));
-  --theme-block: hsla(14deg 90% 92% / var(--alpha));
-  --theme-mark: hsla(14deg 95% 80% / var(--alpha));
-  --theme-codeblock: hsla(14deg 50% 95% / var(--alpha));
-  --text: hsla(14deg 55% 16% / 1);
-  --text-p1: hsla(14deg 90% 20% / 1);
-  --text-p2: hsla(14deg 90% 20% / 0.8);
-  --text-p3: hsla(14deg 90% 20% / 0.6);
-  --text-p4: hsla(14deg 90% 20% / 0.4);
-  --link: hsla(14deg 95% 32% / 1);
-  --link-a20: hsla(14deg 95% 32% / 0.2);
+  --link: hsla(28deg 92% 52% / 1);
+  --link-a20: hsla(28deg 92% 52% / 0.2);
+  --theme-border: hsla(28deg 50% 80% / var(--alpha));
+  --theme-block: hsla(28deg 90% 92% / var(--alpha));
+  --theme-mark: hsla(28deg 95% 80% / var(--alpha));
+  --theme-codeblock: hsla(28deg 50% 95% / var(--alpha));
+  --text: hsla(28deg 55% 16% / 1);
+  --text-p1: hsla(28deg 90% 20% / 1);
+  --text-p2: hsla(28deg 90% 20% / 0.8);
+  --text-p3: hsla(28deg 90% 20% / 0.6);
+  --text-p4: hsla(28deg 90% 20% / 0.4);
+  --link: hsla(28deg 95% 32% / 1);
+  --link-a20: hsla(28deg 95% 32% / 0.2);
 }
 .colorful[color='light'] {
   --theme: #fff;
@@ -521,27 +521,27 @@ body[data-page-layout='index_wiki'] {
   --text-code: var(--text-p1);
 }
 :root[data-theme="dark"] .tag-plugin.tag {
-  --hue: 192deg;
-  --sat: 98%;
-  --light: 55%;
+  --hue: 352deg;
+  --sat: 74%;
+  --light: 52%;
   --alpha: 1;
   --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
   --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
   --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-  --link: hsla(192deg 98% 55% / 1);
-  --link-a20: hsla(192deg 98% 55% / 0.2);
-  --theme-border: hsla(192deg 40% 24% / var(--alpha));
-  --theme-block: hsla(192deg 24% 24% / var(--alpha));
-  --theme-mark: hsla(192deg 50% 32% / var(--alpha));
-  --theme-codeblock: hsla(192deg 12% 24% / var(--alpha));
-  --text: hsla(192deg 50% 75% / 1);
-  --text-p1: hsla(192deg 80% 80% / 1);
-  --text-p2: hsla(192deg 80% 80% / 0.8);
-  --text-p3: hsla(192deg 80% 80% / 0.6);
-  --text-p4: hsla(192deg 80% 80% / 0.4);
-  --link: hsla(192deg 80% 60% / 1);
-  --link-a20: hsla(192deg 80% 60% / 0.2);
+  --link: hsla(352deg 74% 52% / 1);
+  --link-a20: hsla(352deg 74% 52% / 0.2);
+  --theme-border: hsla(352deg 40% 24% / var(--alpha));
+  --theme-block: hsla(352deg 24% 24% / var(--alpha));
+  --theme-mark: hsla(352deg 50% 32% / var(--alpha));
+  --theme-codeblock: hsla(352deg 12% 24% / var(--alpha));
+  --text: hsla(352deg 50% 75% / 1);
+  --text-p1: hsla(352deg 80% 80% / 1);
+  --text-p2: hsla(352deg 80% 80% / 0.8);
+  --text-p3: hsla(352deg 80% 80% / 0.6);
+  --text-p4: hsla(352deg 80% 80% / 0.4);
+  --link: hsla(352deg 80% 60% / 1);
+  --link-a20: hsla(352deg 80% 60% / 0.2);
 }
 :root[data-theme="dark"] .colorful[color='red'] {
   --hue: 4.105263157894738deg;
@@ -728,74 +728,74 @@ body[data-page-layout='index_wiki'] {
   --link-a20: hsla(291.24087591240874deg 80% 60% / 0.2);
 }
 :root[data-theme="dark"] .colorful[color='theme'] {
-  --hue: 192deg;
-  --sat: 98%;
-  --light: 55%;
+  --hue: 352deg;
+  --sat: 74%;
+  --light: 52%;
   --alpha: 1;
   --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
   --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
   --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-  --link: hsla(192deg 98% 55% / 1);
-  --link-a20: hsla(192deg 98% 55% / 0.2);
-  --theme-border: hsla(192deg 40% 24% / var(--alpha));
-  --theme-block: hsla(192deg 24% 24% / var(--alpha));
-  --theme-mark: hsla(192deg 50% 32% / var(--alpha));
-  --theme-codeblock: hsla(192deg 12% 24% / var(--alpha));
-  --text: hsla(192deg 50% 75% / 1);
-  --text-p1: hsla(192deg 80% 80% / 1);
-  --text-p2: hsla(192deg 80% 80% / 0.8);
-  --text-p3: hsla(192deg 80% 80% / 0.6);
-  --text-p4: hsla(192deg 80% 80% / 0.4);
-  --link: hsla(192deg 80% 60% / 1);
-  --link-a20: hsla(192deg 80% 60% / 0.2);
+  --link: hsla(352deg 74% 52% / 1);
+  --link-a20: hsla(352deg 74% 52% / 0.2);
+  --theme-border: hsla(352deg 40% 24% / var(--alpha));
+  --theme-block: hsla(352deg 24% 24% / var(--alpha));
+  --theme-mark: hsla(352deg 50% 32% / var(--alpha));
+  --theme-codeblock: hsla(352deg 12% 24% / var(--alpha));
+  --text: hsla(352deg 50% 75% / 1);
+  --text-p1: hsla(352deg 80% 80% / 1);
+  --text-p2: hsla(352deg 80% 80% / 0.8);
+  --text-p3: hsla(352deg 80% 80% / 0.6);
+  --text-p4: hsla(352deg 80% 80% / 0.4);
+  --link: hsla(352deg 80% 60% / 1);
+  --link-a20: hsla(352deg 80% 60% / 0.2);
 }
 :root[data-theme="dark"] .colorful[color='accent'] {
-  --hue: 14deg;
-  --sat: 100%;
-  --light: 57%;
+  --hue: 28deg;
+  --sat: 92%;
+  --light: 52%;
   --alpha: 1;
   --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
   --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
   --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-  --link: hsla(14deg 100% 57% / 1);
-  --link-a20: hsla(14deg 100% 57% / 0.2);
-  --theme-border: hsla(14deg 40% 24% / var(--alpha));
-  --theme-block: hsla(14deg 24% 24% / var(--alpha));
-  --theme-mark: hsla(14deg 50% 32% / var(--alpha));
-  --theme-codeblock: hsla(14deg 12% 24% / var(--alpha));
-  --text: hsla(14deg 50% 75% / 1);
-  --text-p1: hsla(14deg 80% 80% / 1);
-  --text-p2: hsla(14deg 80% 80% / 0.8);
-  --text-p3: hsla(14deg 80% 80% / 0.6);
-  --text-p4: hsla(14deg 80% 80% / 0.4);
-  --link: hsla(14deg 80% 60% / 1);
-  --link-a20: hsla(14deg 80% 60% / 0.2);
+  --link: hsla(28deg 92% 52% / 1);
+  --link-a20: hsla(28deg 92% 52% / 0.2);
+  --theme-border: hsla(28deg 40% 24% / var(--alpha));
+  --theme-block: hsla(28deg 24% 24% / var(--alpha));
+  --theme-mark: hsla(28deg 50% 32% / var(--alpha));
+  --theme-codeblock: hsla(28deg 12% 24% / var(--alpha));
+  --text: hsla(28deg 50% 75% / 1);
+  --text-p1: hsla(28deg 80% 80% / 1);
+  --text-p2: hsla(28deg 80% 80% / 0.8);
+  --text-p3: hsla(28deg 80% 80% / 0.6);
+  --text-p4: hsla(28deg 80% 80% / 0.4);
+  --link: hsla(28deg 80% 60% / 1);
+  --link-a20: hsla(28deg 80% 60% / 0.2);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .tag-plugin.tag {
-    --hue: 192deg;
-    --sat: 98%;
-    --light: 55%;
+    --hue: 352deg;
+    --sat: 74%;
+    --light: 52%;
     --alpha: 1;
     --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
     --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
     --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
     --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-    --link: hsla(192deg 98% 55% / 1);
-    --link-a20: hsla(192deg 98% 55% / 0.2);
-    --theme-border: hsla(192deg 40% 24% / var(--alpha));
-    --theme-block: hsla(192deg 24% 24% / var(--alpha));
-    --theme-mark: hsla(192deg 50% 32% / var(--alpha));
-    --theme-codeblock: hsla(192deg 12% 24% / var(--alpha));
-    --text: hsla(192deg 50% 75% / 1);
-    --text-p1: hsla(192deg 80% 80% / 1);
-    --text-p2: hsla(192deg 80% 80% / 0.8);
-    --text-p3: hsla(192deg 80% 80% / 0.6);
-    --text-p4: hsla(192deg 80% 80% / 0.4);
-    --link: hsla(192deg 80% 60% / 1);
-    --link-a20: hsla(192deg 80% 60% / 0.2);
+    --link: hsla(352deg 74% 52% / 1);
+    --link-a20: hsla(352deg 74% 52% / 0.2);
+    --theme-border: hsla(352deg 40% 24% / var(--alpha));
+    --theme-block: hsla(352deg 24% 24% / var(--alpha));
+    --theme-mark: hsla(352deg 50% 32% / var(--alpha));
+    --theme-codeblock: hsla(352deg 12% 24% / var(--alpha));
+    --text: hsla(352deg 50% 75% / 1);
+    --text-p1: hsla(352deg 80% 80% / 1);
+    --text-p2: hsla(352deg 80% 80% / 0.8);
+    --text-p3: hsla(352deg 80% 80% / 0.6);
+    --text-p4: hsla(352deg 80% 80% / 0.4);
+    --link: hsla(352deg 80% 60% / 1);
+    --link-a20: hsla(352deg 80% 60% / 0.2);
   }
   :root:not([data-theme]) .colorful[color='red'] {
     --hue: 4.105263157894738deg;
@@ -982,54 +982,54 @@ body[data-page-layout='index_wiki'] {
     --link-a20: hsla(291.24087591240874deg 80% 60% / 0.2);
   }
   :root:not([data-theme]) .colorful[color='theme'] {
-    --hue: 192deg;
-    --sat: 98%;
-    --light: 55%;
+    --hue: 352deg;
+    --sat: 74%;
+    --light: 52%;
     --alpha: 1;
     --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
     --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
     --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
     --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-    --link: hsla(192deg 98% 55% / 1);
-    --link-a20: hsla(192deg 98% 55% / 0.2);
-    --theme-border: hsla(192deg 40% 24% / var(--alpha));
-    --theme-block: hsla(192deg 24% 24% / var(--alpha));
-    --theme-mark: hsla(192deg 50% 32% / var(--alpha));
-    --theme-codeblock: hsla(192deg 12% 24% / var(--alpha));
-    --text: hsla(192deg 50% 75% / 1);
-    --text-p1: hsla(192deg 80% 80% / 1);
-    --text-p2: hsla(192deg 80% 80% / 0.8);
-    --text-p3: hsla(192deg 80% 80% / 0.6);
-    --text-p4: hsla(192deg 80% 80% / 0.4);
-    --link: hsla(192deg 80% 60% / 1);
-    --link-a20: hsla(192deg 80% 60% / 0.2);
+    --link: hsla(352deg 74% 52% / 1);
+    --link-a20: hsla(352deg 74% 52% / 0.2);
+    --theme-border: hsla(352deg 40% 24% / var(--alpha));
+    --theme-block: hsla(352deg 24% 24% / var(--alpha));
+    --theme-mark: hsla(352deg 50% 32% / var(--alpha));
+    --theme-codeblock: hsla(352deg 12% 24% / var(--alpha));
+    --text: hsla(352deg 50% 75% / 1);
+    --text-p1: hsla(352deg 80% 80% / 1);
+    --text-p2: hsla(352deg 80% 80% / 0.8);
+    --text-p3: hsla(352deg 80% 80% / 0.6);
+    --text-p4: hsla(352deg 80% 80% / 0.4);
+    --link: hsla(352deg 80% 60% / 1);
+    --link-a20: hsla(352deg 80% 60% / 0.2);
   }
   :root:not([data-theme]) .colorful[color='accent'] {
-    --hue: 14deg;
-    --sat: 100%;
-    --light: 57%;
+    --hue: 28deg;
+    --sat: 92%;
+    --light: 52%;
     --alpha: 1;
     --theme: hsla(var(--hue) var(--sat) var(--light) / 1);
     --theme-a10: hsla(var(--hue) var(--sat) var(--light) / 0.1);
     --theme-a20: hsla(var(--hue) var(--sat) var(--light) / 0.2);
     --theme-a30: hsla(var(--hue) var(--sat) var(--light) / 0.3);
-    --link: hsla(14deg 100% 57% / 1);
-    --link-a20: hsla(14deg 100% 57% / 0.2);
-    --theme-border: hsla(14deg 40% 24% / var(--alpha));
-    --theme-block: hsla(14deg 24% 24% / var(--alpha));
-    --theme-mark: hsla(14deg 50% 32% / var(--alpha));
-    --theme-codeblock: hsla(14deg 12% 24% / var(--alpha));
-    --text: hsla(14deg 50% 75% / 1);
-    --text-p1: hsla(14deg 80% 80% / 1);
-    --text-p2: hsla(14deg 80% 80% / 0.8);
-    --text-p3: hsla(14deg 80% 80% / 0.6);
-    --text-p4: hsla(14deg 80% 80% / 0.4);
-    --link: hsla(14deg 80% 60% / 1);
-    --link-a20: hsla(14deg 80% 60% / 0.2);
+    --link: hsla(28deg 92% 52% / 1);
+    --link-a20: hsla(28deg 92% 52% / 0.2);
+    --theme-border: hsla(28deg 40% 24% / var(--alpha));
+    --theme-block: hsla(28deg 24% 24% / var(--alpha));
+    --theme-mark: hsla(28deg 50% 32% / var(--alpha));
+    --theme-codeblock: hsla(28deg 12% 24% / var(--alpha));
+    --text: hsla(28deg 50% 75% / 1);
+    --text-p1: hsla(28deg 80% 80% / 1);
+    --text-p2: hsla(28deg 80% 80% / 0.8);
+    --text-p3: hsla(28deg 80% 80% / 0.6);
+    --text-p4: hsla(28deg 80% 80% / 0.4);
+    --link: hsla(28deg 80% 60% / 1);
+    --link-a20: hsla(28deg 80% 60% / 0.2);
   }
 }
 pre {
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   font-size: 0.8125rem;
   tab-size: 4;
   -moz-tab-size: 4;
@@ -1754,7 +1754,7 @@ a.button.start.gradient {
 }
 code {
   -moz-osx-font-smoothing: auto;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
 }
 p>code:not([class]),
 li>code:not([class]) {
@@ -1769,7 +1769,7 @@ pre:not([class]):has(>code) {
   margin: var(--gap-p) 0;
   border-radius: 16px;
   overflow: hidden;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   box-sizing: border-box;
 }
 @media screen and (min-width: 500px) {
@@ -1880,7 +1880,7 @@ pre:not([class]):has(>code) {
 }
 .md-text .gist .blob-code-inner {
   color: var(--text-p1);
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
 }
 table:not([class]) {
   border-collapse: collapse;
@@ -2137,7 +2137,7 @@ html {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-  font-family: system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif;
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif;
   font-size: var(--fs-root);
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -2224,7 +2224,7 @@ input {
 }
 input.copy-area {
   display: block;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   font-size: calc(var(--fs-content-base) - 3px);
   font-weight: 700;
   color: var(--text-p3);
@@ -3587,7 +3587,7 @@ button.ui-collection__item:not(.is-icon-only) {
   color: var(--text-banner-theme);
   background: color-mix(in srgb, var(--text-banner-theme, var(--background)) 20%, transparent);
   backdrop-filter: blur(12px) brightness(0.8);
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
 }
 .cover-content.wiki-hero .wiki-cover-terminal .wiki-cover-terminal-toolbar {
   display: flex;
@@ -3922,7 +3922,7 @@ button.ui-collection__item:not(.is-icon-only) {
   border-right: 1px dashed var(--block-border);
 }
 .paginator-wrap .current {
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   background: var(--block);
 }
 .paginator-wrap .extend {
@@ -5468,7 +5468,7 @@ a.tag-plugin.button:hover {
   border-radius: 4px;
   background: hsla(var(--hue) var(--sat) var(--light) / 0.2);
   color: var(--theme);
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   font-size: calc(var(--fs-content-base) - 3px);
   font-weight: 700;
   flex-shrink: 0;
@@ -6500,7 +6500,7 @@ p>strong>span.tag-plugin.icon {
   border-bottom-width: 2px;
   background: var(--card);
   padding: 2px 4px 1px 4px;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   font-weight: 700;
 }
 .md-text psw {
@@ -6532,7 +6532,7 @@ p>strong>span.tag-plugin.icon {
   color: var(--theme);
   line-height: 1;
   font-weight: 700;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
 }
 .md-text h1 sup,
 .md-text h2 sup,
@@ -8486,7 +8486,7 @@ details.toc[open] >div.body section .header+.doc_tree {
   appearance: none;
   width: 100%;
   box-sizing: border-box;
-  font-family: system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif;
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif;
   font-size: calc(var(--fs-content-base) - 2px);
   padding: 12px 0;
   color: var(--text);
@@ -8579,7 +8579,7 @@ details.toc[open] >div.body section .header+.doc_tree {
   margin: 0;
   padding: 0.75rem 1rem;
   border-radius: 12px;
-  font-family: system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif;
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif;
   font-size: calc(var(--fs-content-base) - 2px);
   color: var(--text-p1);
 }
@@ -8686,7 +8686,7 @@ details.toc[open] >div.body section .header+.doc_tree {
   min-width: 0;
   border-radius: 4px;
   color: var(--text-meta);
-  font-family: system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif;
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif;
   font-size: calc(var(--fs-content-base) - 4px);
   font-weight: 600;
   line-height: 1;
@@ -10052,7 +10052,7 @@ html[data-leftbar-state='collapsed'] .site-shell:not([data-drawer='leftbar']) .s
 }
 .post-list #archive .archive-header {
   display: inline-block;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 0.5em;
@@ -10083,7 +10083,7 @@ html[data-leftbar-state='collapsed'] .site-shell:not([data-drawer='leftbar']) .s
   border-bottom: 1px dashed var(--text-meta);
 }
 .post-list .archive-list a.post time {
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   margin-right: 1em;
   font-weight: 700;
   flex-shrink: 0;
@@ -10124,7 +10124,7 @@ html[data-leftbar-state='collapsed'] .site-shell:not([data-drawer='leftbar']) .s
 }
 .post-list #cats a.cat .badge {
   font-weight: 700;
-  font-family: Menlo, Monaco, Consolas, system-ui, monospace, sans-serif;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
   opacity: 0.5;
   font-size: calc(var(--fs-content-base) - 4px);
 }
@@ -10286,7 +10286,7 @@ body[data-article-style='story'] .md-text.content h2:not([class]):after {
   top: 50%;
   width: 8px;
   height: 100%;
-  background: #ff5724;
+  background: #f57d14;
   transform: translateY(-50%) skewX(-20deg);
 }
 body[data-article-style='story'] .md-text.content h2:not([class]):before {
@@ -12019,7 +12019,7 @@ html[data-leftbar-state='collapsed'] .site-shell:not([data-drawer='leftbar']) .s
   top: 50%;
   width: 8px;
   height: 100%;
-  background: #ff5724;
+  background: #f57d14;
   transform: translateY(-50%) skewX(-20deg);
 }
 .post-list.topic .post-card.topic article .topic-title:before {

@@ -76,7 +76,7 @@
   
 
   <script type="application/ld+json" data-stellar-page-meta="">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"dateCreated":"2026-03-23T14:30:00+00:00","dateModified":"2026-03-23T14:30:00+00:00","datePublished":"2026-03-23T14:30:00+00:00","description":"最近给一个后端服务做 perf，跑了一发 py-spy 出来火焰图，盯着看了一会儿，发现 pydantic.main.__init__ 这一条在主热路径上占了一个让人挺难绷的比例。做了几轮调整之后顺手把这件事记一下——核心想说的是：对一个 web 服务来说，数据校验从来不是免费的，pydantic 也一样。它有它的边界，越界使用就要付出对应的代价。","headline":"Pydantic 不是免费的——聊聊数据校验的边界","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.manjusaka.blog/posts/2026/03/23/the-boundary-of-pydantic/"},"publisher":{"@type":"Organization","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"url":"https://www.manjusaka.blog/posts/2026/03/23/the-boundary-of-pydantic/","image":["https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg"],"keywords":"编程, Python, FastAPI, Pydantic, Perf, 笔记","thumbnailUrl":"https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg"}</script>
-  
+  <link rel="stylesheet" href="/css/site.css">
 
   <link rel="stylesheet" href="/css/stellar-icons.css?v=7c185ad1a9a79674">
   <link rel="preload" as="script" href="/js/stellar-icons.js?v=39c6ac17e854ffe2">

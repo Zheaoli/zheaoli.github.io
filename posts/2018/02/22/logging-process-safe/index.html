@@ -74,7 +74,7 @@
   
 
   <script type="application/ld+json" data-stellar-page-meta="">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"dateCreated":"2018-02-22T18:54:21+00:00","dateModified":"2018-02-22T18:54:21+00:00","datePublished":"2018-02-22T18:54:21+00:00","description":"日常辣鸡水文:关于 logging 的进程安全问题团队聚餐喝了点酒，作为一个垃圾文档工程师来写一篇日常水文\n正文现在团队的日志搜集方式从原本的 TCP 直传 logstash 的方式改进为写入一个单文件后，改用 FileBeat 来作为日志搜集的前端。但是这样时常带来一个问题，即日志丢失\n嗯，我们线上服务是 Gunicorn 启用多个 Worker 来处理的。这就有个问题了，我们都知道，logging 模块是 Thread Safe 的，在标准的 Log Handler 内部加了一系列锁来确保线程安全，但是 logging 直写文件是不是进程安全的呢？","headline":"日常辣鸡水文:关于 logging 的进程安全问题","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.manjusaka.blog/posts/2018/02/22/logging-process-safe/"},"publisher":{"@type":"Organization","name":"Manjusaka","sameAs":["https://github.com/Zheaoli","https://twitter.com/Manjusaka_Lee"]},"url":"https://www.manjusaka.blog/posts/2018/02/22/logging-process-safe/","image":["https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg"],"keywords":"Python, 编程, Flask, 源码阅读","thumbnailUrl":"https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg"}</script>
-  
+  <link rel="stylesheet" href="/css/site.css">
 
   <link rel="stylesheet" href="/css/stellar-icons.css?v=7c185ad1a9a79674">
   <link rel="preload" as="script" href="/js/stellar-icons.js?v=39c6ac17e854ffe2">
