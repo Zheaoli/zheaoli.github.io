@@ -1,0 +1,86 @@
+/* 站点对 Stellar 的样式补丁。只放主题配置项覆盖不到的部分。 */
+
+/* 正文：中文长文需要比主题默认的 1.6 更松的行距；中西文之间自动留空 */
+.md-text {
+  line-height: 1.8;
+  text-autospace: normal;
+  text-wrap: pretty;
+  hanging-punctuation: allow-end;
+}
+.md-text p,
+.md-text li {
+  line-height: inherit;
+}
+.md-text h1,
+.md-text h2,
+.md-text h3,
+.md-text h4 {
+  text-wrap: balance;
+  letter-spacing: 0.01em;
+}
+.md-text h2 {
+  margin-top: 2.4em;
+}
+.md-text h3 {
+  margin-top: 1.8em;
+}
+
+/* 引用块：主题默认只把文字变淡，和正文分不开 */
+.md-text blockquote {
+  padding: 0.75em 1.1em;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--theme) 6%, transparent);
+  color: var(--text-p2);
+}
+.md-text blockquote::before {
+  display: none;
+}
+.md-text blockquote > :first-child {
+  margin-top: 0;
+}
+.md-text blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* 行内代码：去掉默认的橙色，改成和主色同系的底色 */
+.md-text :not(pre) > code {
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--theme) 9%, transparent);
+  color: color-mix(in oklab, var(--theme) 55%, var(--text-p0));
+}
+
+/* 代码块：行距和连字 */
+.md-text pre,
+.md-text figure.highlight {
+  line-height: 1.65;
+  font-variant-ligatures: none;
+  tab-size: 2;
+}
+
+/* 选中文字用主色 */
+::selection {
+  background: color-mix(in oklab, var(--theme) 28%, transparent);
+}
+
+/* 键盘焦点 */
+:focus-visible {
+  outline: 2px solid var(--theme);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 文章题图：主题把高度锁死在 2:1，手机上标题超过两行就会被裁掉。
+   改成 2:1 只是下限，标题长就把题图撑高。 */
+.article.banner .bg + .content {
+  min-height: auto;
+}
