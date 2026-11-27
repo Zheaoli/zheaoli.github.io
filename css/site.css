@@ -1,0 +1,222 @@
+/* 站点对 Stellar 的样式补丁。只放主题配置项覆盖不到的部分。 */
+
+/* 正文：中文长文需要比主题默认的 1.6 更松的行距；中西文之间自动留空 */
+.md-text {
+  line-height: 1.8;
+  text-autospace: normal;
+  text-wrap: pretty;
+  hanging-punctuation: allow-end;
+}
+.md-text p,
+.md-text li {
+  line-height: inherit;
+}
+.md-text h1,
+.md-text h2,
+.md-text h3,
+.md-text h4 {
+  text-wrap: balance;
+  letter-spacing: 0.01em;
+}
+.md-text h2 {
+  margin-top: 2.4em;
+}
+.md-text h3 {
+  margin-top: 1.8em;
+}
+
+/* 引用块：主题默认只把文字变淡，和正文分不开 */
+.md-text blockquote {
+  padding: 0.75em 1.1em;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--theme) 6%, transparent);
+  color: var(--text-p2);
+}
+.md-text blockquote::before {
+  display: none;
+}
+.md-text blockquote > :first-child {
+  margin-top: 0;
+}
+.md-text blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* 行内代码：去掉默认的橙色，改成和主色同系的底色 */
+.md-text :not(pre) > code {
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--theme) 9%, transparent);
+  color: color-mix(in oklab, var(--theme) 55%, var(--text-p0));
+}
+
+/* 代码块：行距和连字 */
+.md-text pre,
+.md-text figure.highlight {
+  line-height: 1.65;
+  font-variant-ligatures: none;
+  tab-size: 2;
+}
+
+/* 选中文字用主色 */
+::selection {
+  background: color-mix(in oklab, var(--theme) 28%, transparent);
+}
+
+/* 键盘焦点 */
+:focus-visible {
+  outline: 2px solid var(--theme);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 文章题图：主题把高度锁死在 2:1，手机上标题超过两行就会被裁掉。
+   改成 2:1 只是下限，标题长就把题图撑高。 */
+.article.banner .bg + .content {
+  min-height: auto;
+}
+
+/* 侧栏标签：主题默认是一段大小不一的连排文字，读起来像一团。
+   改成等大的小标签，靠换行和间距分开。 */
+.widget-wrapper.tagcloud .widget-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+}
+.widget-wrapper.tagcloud .widget-body .tag {
+  font-size: 12.5px !important; /* 盖掉主题按文章数写进行内样式的字号 */
+  line-height: 1;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: color-mix(in oklab, currentColor 8%, transparent);
+  color: var(--text-p2);
+  white-space: nowrap;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+.widget-wrapper.tagcloud .widget-body .tag:hover {
+  background: color-mix(in oklab, var(--theme) 16%, transparent);
+  color: var(--theme);
+}
+
+/* 首页文章卡片（classic 布局）：主题默认是题图在上、文字在下，一张卡片近 600px 高。
+   宽屏下改成文字在左、题图在右，一屏能看到四五篇。窄屏保持上下堆叠，但把题图压扁一些。 */
+.post-card > article.md-text .post-cover {
+  aspect-ratio: 5 / 2;
+  height: auto;
+}
+.post-card > article.md-text .post-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 正文里把 h2 上边距加大了，卡片标题也是 h2，这里收回来 */
+.post-card > article.md-text .post-title {
+  margin-top: 0;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+.post-card > article.md-text .excerpt {
+  margin: 8px 0 12px;
+}
+.post-card > article.md-text .excerpt p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  line-height: 1.7;
+}
+@media (min-width: 768px) {
+  /* 周报、刷题的卡片没有题图，不能给它们留右边那一栏 */
+  .post-card > article.md-text:has(> .post-cover) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 216px;
+    grid-template-rows: auto auto 1fr;
+    column-gap: 20px;
+    padding: 16px;
+  }
+  .post-card > article.md-text:has(> .post-cover) > * {
+    grid-column: 1;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .post-card > article.md-text .post-cover {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .post-card > article.md-text:has(> .post-cover) .meta {
+    align-self: end;
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 767.98px) {
+  /* 手机上日期、分类、标签会折成三行且缩进不齐；标签在文章页和标签页都能看到，这里省掉 */
+  .post-card > article.md-text .meta .card-tags {
+    display: none;
+  }
+}
+
+/* 深色模式下的代码高亮：主题在深色里沿用了浅色那套颜色，
+   深蓝、深紫的字压在深色底上对比度只有 2:1 左右，看不清。这里换成同色相的浅色。 */
+:root[data-theme="dark"] .code > pre .comment, :root[data-theme="dark"] .code > pre .quote {
+  color: hsl(210 12% 62%);
+}
+:root[data-theme="dark"] .code > pre .keyword, :root[data-theme="dark"] .code > pre .meta-keyword, :root[data-theme="dark"] .code > pre .selector-tag {
+  color: hsl(280 62% 78%);
+}
+:root[data-theme="dark"] .code > pre .title, :root[data-theme="dark"] .code > pre .attr, :root[data-theme="dark"] .code > pre .section, :root[data-theme="dark"] .code > pre .selector-id, :root[data-theme="dark"] .code > pre .selector-class {
+  color: hsl(215 88% 76%);
+}
+:root[data-theme="dark"] .code > pre .string, :root[data-theme="dark"] .code > pre .regexp, :root[data-theme="dark"] .code > pre .addition {
+  color: hsl(120 38% 68%);
+}
+:root[data-theme="dark"] .code > pre .number, :root[data-theme="dark"] .code > pre .literal, :root[data-theme="dark"] .code > pre .variable, :root[data-theme="dark"] .code > pre .template-variable, :root[data-theme="dark"] .code > pre .symbol, :root[data-theme="dark"] .code > pre .bullet {
+  color: hsl(28 95% 68%);
+}
+:root[data-theme="dark"] .code > pre .built_in, :root[data-theme="dark"] .code > pre .type, :root[data-theme="dark"] .code > pre .meta {
+  color: hsl(180 48% 66%);
+}
+:root[data-theme="dark"] .code > pre .tag, :root[data-theme="dark"] .code > pre .name, :root[data-theme="dark"] .code > pre .deletion {
+  color: hsl(352 82% 76%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .code > pre .comment, :root:not([data-theme]) .code > pre .quote {
+    color: hsl(210 12% 62%);
+  }
+  :root:not([data-theme]) .code > pre .keyword, :root:not([data-theme]) .code > pre .meta-keyword, :root:not([data-theme]) .code > pre .selector-tag {
+    color: hsl(280 62% 78%);
+  }
+  :root:not([data-theme]) .code > pre .title, :root:not([data-theme]) .code > pre .attr, :root:not([data-theme]) .code > pre .section, :root:not([data-theme]) .code > pre .selector-id, :root:not([data-theme]) .code > pre .selector-class {
+    color: hsl(215 88% 76%);
+  }
+  :root:not([data-theme]) .code > pre .string, :root:not([data-theme]) .code > pre .regexp, :root:not([data-theme]) .code > pre .addition {
+    color: hsl(120 38% 68%);
+  }
+  :root:not([data-theme]) .code > pre .number, :root:not([data-theme]) .code > pre .literal, :root:not([data-theme]) .code > pre .variable, :root:not([data-theme]) .code > pre .template-variable, :root:not([data-theme]) .code > pre .symbol, :root:not([data-theme]) .code > pre .bullet {
+    color: hsl(28 95% 68%);
+  }
+  :root:not([data-theme]) .code > pre .built_in, :root:not([data-theme]) .code > pre .type, :root:not([data-theme]) .code > pre .meta {
+    color: hsl(180 48% 66%);
+  }
+  :root:not([data-theme]) .code > pre .tag, :root:not([data-theme]) .code > pre .name, :root:not([data-theme]) .code > pre .deletion {
+    color: hsl(352 82% 76%);
+  }
+}
