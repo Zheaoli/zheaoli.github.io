@@ -84,3 +84,26 @@
 .article.banner .bg + .content {
   min-height: auto;
 }
+
+/* 侧栏标签：主题默认是一段大小不一的连排文字，读起来像一团。
+   改成等大的小标签，靠换行和间距分开。 */
+.widget-wrapper.tagcloud .widget-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+}
+.widget-wrapper.tagcloud .widget-body .tag {
+  font-size: 12.5px !important; /* 盖掉主题按文章数写进行内样式的字号 */
+  line-height: 1;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: color-mix(in oklab, currentColor 8%, transparent);
+  color: var(--text-p2);
+  white-space: nowrap;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+.widget-wrapper.tagcloud .widget-body .tag:hover {
+  background: color-mix(in oklab, var(--theme) 16%, transparent);
+  color: var(--theme);
+}
