@@ -2,9 +2,9 @@
 tagcloud:
   layout: tagcloud
   title: 标签
-  # 默认 12–24px 落差太大，标签多了显得很乱
+  # 字号在 source/css/site.css 里统一，这里的 min/max 不再起作用
   min_font: 12
-  max_font: 16
-  amount: 60
+  max_font: 12
+  amount: 36
   orderby: count
   order: -1
