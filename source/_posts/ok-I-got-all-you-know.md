@@ -3,7 +3,7 @@ title: 好了，现在你的知识也是我的了.jpg
 date: 2024-12-07 02:00:00
 tags: [编程,杂记,人生]
 categories: [编程,随笔]
-cover: https://cdn.pixabay.com/photo/2023/02/06/16/46/sea-7772372_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766587_1280.jpg
 ---
 
 最近给朋友介绍了一下我对于一些外部资料的吸收的经验。我想了想整理了下聊天记录，将我整个思路以博客的形式展现出来。希望能帮到看这篇博客的人。

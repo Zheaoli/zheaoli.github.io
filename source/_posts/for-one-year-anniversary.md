@@ -3,7 +3,7 @@ title: 写在一周年
 date: 2019-11-04 22:27:15
 tags: [杂记,人生]
 categories: [杂记,人生]
-cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/08/15/10/sculpture-7776861_1280.jpg
 ---
 
 说实话，突然体会到了老祖宗说的『光阴似箭，日月如梭』的感觉了，感觉告白还在昨天，但是转眼就一年了。所以来写篇文章纪念这短短却有很丰富的一年吧

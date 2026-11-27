@@ -3,7 +3,7 @@ title: Python concurrent.future 使用教程及源码初剖
 date: 2017-11-28 00:09:54
 tags: [Python,编程,并发编程,编程技巧,源码剖析]
 categories: [编程,Python]
-cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 
 # 垃圾话

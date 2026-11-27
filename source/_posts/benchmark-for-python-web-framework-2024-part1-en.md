@@ -3,7 +3,7 @@ title: In 2024, Gevent or asyncio? Part 1
 date: 2024-08-20 01:00:00
 tags: [编程, CPython, Notes, Casual Writing]
 categories: [编程, CPython]
-cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 
 The choice between Gevent and asyncio has always been a classic question. Here, we'll use data to help you make a decision.

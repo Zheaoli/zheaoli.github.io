@@ -3,7 +3,7 @@ title: 简单聊聊 Maglev ，来自 Google 的软负载均衡实践
 date: 2020-05-23 03:09:00
 tags: [编程,分布式,论文,笔记,水文]
 categories: [编程,水文,论文]
-cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
 ---
 
 好久没博客了，来写个简单的读论文笔记吧，这篇文章是来自 Google 2016 年发表的一篇论文 [Maglev: A Fast and Reliable Software Network Load Balancer](https://research.google/pubs/pub44824/) 分享了他们内部从08年开始大规模使用的软负载均衡系统的实现。里面很多很有趣的细节，我看我能写多少，算多少吧

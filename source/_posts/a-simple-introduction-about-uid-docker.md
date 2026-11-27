@@ -3,7 +3,7 @@ title: 简单聊聊容器中的 UID 中的一点小坑
 date: 2021-12-03 21:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 
 今天不太舒服，在家请假了一天。突然想起最近因为一些小问题，看了下关于容器中 UID 的东西。所以简单来聊聊这方面的东西。算个新手向的文章
