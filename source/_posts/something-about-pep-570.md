@@ -3,7 +3,7 @@ title: 随便聊聊 PEP570
 date: 2019-04-27 18:48:30
 tags: [Python,编程,PEP,编程技巧]
 categories: [编程,Python]
-cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/01/30/19/40/gulls-7756481_1280.jpg
 ---
 
 最近沉迷与 MIT 6.824 这门分布式系统的课，无心写文章。不过看到 [PEP570](https://www.python.org/dev/peps/pep-0570) 被接受了，决定还是写篇水文随便聊聊 PEP 570

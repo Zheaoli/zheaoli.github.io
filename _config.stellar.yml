@@ -123,6 +123,8 @@ appearance:
 article:
   style: tech
   listing:
+    # hero 是整幅题图压标题，一屏只能看到不到两篇；classic 是题图在侧、标题和摘要在旁
+    card_layout: classic
     show_tags: true
   show_reading_time: true
   related_posts_limit: 0 # 开启需要另装 hexo-related-popular-posts
@@ -178,6 +180,11 @@ structured_data:
 inject:
   # 站点自己的样式补丁，见 source/css/site.css
   head_end: '<link rel="stylesheet" href="/css/site.css">'
+  # 正文图片是懒加载的：加载前 src 是一张 1x1 的占位图，浏览器会按 1:1 给它留位置，
+  # 于是每张图加载完都要把下面的内容顶一下。主题已经把真实宽高写进了 width/height，
+  # 这里据此固定宽高比，图片没到之前就留出正确的高度。
+  body_end: >-
+    <script>document.querySelectorAll('.md-text img[width][height]').forEach(function(i){var w=+i.getAttribute('width'),h=+i.getAttribute('height');if(w>0&&h>0)i.style.aspectRatio=w+' / '+h})</script>
 
 # 预连接页面必然会用到的第三方源
 preconnect:

@@ -3,7 +3,7 @@ title: 实现 NES 中的一些笔记：nametable 的 mirror 计算
 date: 2024-05-25 01:00:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,计算机体系,汇编]
-cover: https://cdn.pixabay.com/photo/2023/02/07/14/45/snow-7774312_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/daisy-7766609_1280.jpg
 ---
 
 随便记录一些写 NES 中的笔记，这次写一下关于 nametable 的 mirror 计算。

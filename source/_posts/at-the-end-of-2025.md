@@ -3,7 +3,7 @@ title: 笑ってほしくて
 date: 2026-01-01 23:00:00
 tags: [杂记,总结]
 categories: [杂记,总结,秀恩爱]
-cover: https://cdn.pixabay.com/photo/2023/02/06/01/14/superb-fairywren-7770904_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/01/14/19/50/flower-7718952_1280.jpg
 ---
 
 每年都会选一句话作为年终总结的标题，去年是“本当の僕らをありがとう”，今年我选择“笑ってほしくて”。

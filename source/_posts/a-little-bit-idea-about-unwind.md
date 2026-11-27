@@ -3,7 +3,7 @@ title: 关于用户态栈回溯（Unwind）的一些杂记和想法
 date: 2023-08-23 00:09:00
 tags: [编程,Linux,笔记,水文]
 categories: [编程,Linux]
-cover: https://cdn.pixabay.com/photo/2023/02/04/07/50/flower-7766608_1280.jpg
+cover: https://cdn.pixabay.com/photo/2023/02/04/07/38/cherry-blossoms-7766588_1280.jpg
 ---
 
 随手记录一些关于用户态栈回溯（Unwind）的一些杂记和想法。
